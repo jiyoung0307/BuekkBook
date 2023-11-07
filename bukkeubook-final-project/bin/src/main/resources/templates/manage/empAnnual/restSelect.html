@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+    <h2 class="mb-4" id="main-text">사원관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text">휴가조회</h5>
+    <br>
+            <div class="searchEmp">
+            <form class="search select">
+              <select class="searchback">
+                <option value="">None</option>
+                <option value="Dept">부서</option>
+                <option value="EmpNo">사번</option>
+                <option value="EmpName">사원명</option>
+              </select>
+              <input class="searchinput" type="text" placeholder="검색어를 입력해주세요">
+            <button class="searchBtn" type="submit">검색하기</button>
+            </form>
+          </div><br><br>
+
+        <div id="restTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">휴가번호</th>
+                <th class="th1">부서명</th>
+                <th class="th1">사번</th>
+                <th class="th1">사원명</th>
+                <th class="th1">시작일</th>
+                <th class="th1">종료일</th>
+                <th class="th1">상세보기</th>
+              </tr>
+              
+              <tr th:each="appVac : ${ restList }">
+                <td th:text="${ appVac.vacNo }"></td>
+                <td th:text="${ appVac.empAndDept.getDept().getDeptName() }"></td>
+                <td th:text="${ appVac.empAndDept.getEmpNo() }"></td>
+                <td th:text="${ appVac.empAndDept.getEmpName() }"></td>
+                <td th:text="${ appVac.vacStartDate  }"></td>
+                <td th:text="${ appVac.vacEndDate }"></td>
+                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/manage/restDetailSelect/(vacNo=${appVac.vacNo})} + '\''" >상세보기</button></td>
+              </tr>
+          </table>
+          <br><br>
+			
+			
+          <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a class="active" href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+          </div>
+        </div>
+     
+</body>
+</html>

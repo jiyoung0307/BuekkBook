@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 상세정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/lookupList">재고관리</a></h2>
+    <hr><br><br>
+    <div id="textTable" style="text-align:-webkit-center">
+        <h5 class="mb-4" id="sub-text"></h5>
+        	<form>
+            <table id="bookInfoTable" border="1">
+                <tr th:each="book : ${ bookList }">
+                    <th>도서코드</th>
+                    <td th:text="${ book.no }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>도서 명</th>
+                    <td th:text="${ book.name }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>저자</th>
+                    <td th:text="${ book.author }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>출판사</th>
+                    <td th:text="${ book.pub }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>장르</th>
+                    <td th:text="${ book.cate }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>가격</th>
+                    <td th:text="${ book.price }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>매장 재고수량</th>
+                    <td th:text="${ book.storeSt }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>창고 재고수량</th>
+                    <td th:text="${ book.whSt }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>최근입고일</th>
+                    <td th:text="${#dates.format(book.lastDate, 'yyyy-MM-dd')}"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>ISBN</th>
+                    <td th:text="${ book.isbn }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>판매여부</th>
+                    <td th:text="${ book.sellYn }"></td>
+                </tr>
+            </table>
+            </form>
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/order/regist'">발주신청</button>
+            <button type="button" class="productBtn newBookBtn damageBtn">훼손등록</button>
+            <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
+            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+          </div>
+        </div> <!------------------------ 본문 종료---------------------------->
+      </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
+    	 
+    	 var bb = [[${bookList[0].no}]];
+    	 
+    	 $('.updateBtn').click(function(){
+    		 location.href='/book/bookInfoUpdate?no=' + bb;
+     	 });
+    	 
+    	 $('.damageBtn').click(function(){
+    		 location.href='/book/damageAmount?bkNo=' + bb;
+     	 });
+      </script>
+</body>
+</html>

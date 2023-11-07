@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/document/expenditureWrite.css}">
+<link rel="stylesheet" th:href="@{/css/document/HR.css}">
+<title>Write Draft</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+		 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    
+	</script>
+	 
+	<script src="/js/document/expenditureUpdate.js"></script>
+	<h4 class="mb-4" id="main-text">지출결의서 작성</h4>
+	<hr><br><br>
+
+	<!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+	<div>
+		<button style="float: right; margin-right: 5%;" class="select btn"
+			type="button" id="back">목록으로</button>
+	</div>
+
+	<div class="total">
+		<br><br><br>
+		<h4 style="margin-left: 25px;">결재라인 지정</h4>
+		<table class="tbl2" border="1px solid gray">
+			<tr>
+				<th></th>
+				<th>부서명</th>
+				<th>사원명</th>
+			</tr>
+			<tr>
+				<th>1단계 :</th>
+				<td id="selectDept"><select name="deptCode" id="deptCode">
+						<option value="">선택</option>
+						<!-- ajax -->
+				</select></td>
+				<td><select name="empList" id="empList">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>2단계 :</th>
+				<td><select name="deptCode2" id="deptCode2">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList2" id="empList2">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>3단계 :</th>
+				<td><select name="deptCode3" id="deptCode3">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList3" id="empList3">
+						<option value=""></option>
+				</select></td>
+			</tr>
+		</table>
+		<br>
+		<button style="margin-left:80px;" class="select btn" type="button" id="clear">초기화</button>
+		<button style="margin-left:20px;"class="select btn" type="button" onclick="selectacc()">결재라인
+			지정</button>
+	</div>
+	<div class="total tbl3">
+		<br><br>
+		<h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
+            <tr>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
+            </tr>
+            <form action="/document/submitTempReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="hidden" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo2" value="2" >
+	          <input type="hidden" id="draftcnt2" name="tagCnt2">
+	          <input type="hidden" id="wrDate2" name="wrDate2">
+	          <input type="hidden" id="docStatus2" name="docStatus2">
+	          <!-- <input type="text" value="10" id="empNo2" name="empNo2"> -->
+	          <input type="hidden" id="submitTitle" name="submitTitle">
+	          <input type="hidden" id="cnttt2" name="cnt2" readonly>
+	          <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo2" name="docNo2"readonly>
+          </form>
+          <br>
+      </div>
+	<br clear="both">
+	<div class="total">
+		<div id="writein">
+			<p th:utext="${oneTempDoc.cnt}"/>
+		</div>
+		<div style="margin-left:25px; margin-top:30px;">
+			<form id="temp" action="/document/tempUpdate" method="post">
+				<input type="hidden" name="formNo1" value="2" >
+		        <input type="hidden" id="draftcnt1" name="tagCnt1">
+		        <input type="hidden" id="wrDate1" name="wrDate1">
+		        <input type="hidden" id="docStatus1" name="docStatus1">
+		        <!-- <input type="text" value="10" id="empNo" name="empNo1"> -->
+		        <input type="hidden" id="docTitle1" name="docTitle1">
+		        <input type="hidden" id="cnttt1" name="cnt1" readonly>
+		        <input type="hidden" th:value="${oneTempDoc.docNo}" id="docNo1" name="docNo1"readonly>
+				<button class="select btn" type="button" onclick="takeout()">반영하기</button>
+			</form>
+		</div>
+	</div>
+	
+	<div class="total" id="insertin">
+		<table th:utext="${oneTempDoc.tagCnt}">
+			<br>
+
+			</div>
+			<br clear="both">
+			<div class="right">
+				<button class="select btn in" type="button" id="deleteTemp">삭제</button>
+				<button class="select btn in" type="button" onclick="sendData()">상신</button>
+				<button class="select btn in" type="button" id="tempStore">임시저장</button>
+			</div>
+</body>
+
+</html>

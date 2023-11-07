@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 상세정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/lookupList">재고관리</a></h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text"></h5>
+    <div id="textTable" style="text-align:-webkit-center">
+        <form action="/book/newBook2" method="post" id="updateForm">
+            <table id="bookInfoTable" border="1">
+                <tr>
+                    <th>도서코드</th>
+                    <!-- <td th:text="${bookCode}"></td> -->
+                    <td><input class="updateInput" type="text" th:value="${bookCode}" name="no" readonly></td>
+                </tr>
+                <tr>
+                    <th>도서명</th>
+                    <td><input class="updateInput" type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <th>저자</th>
+                    <td><input class="updateInput" type="text" name="author"></td>
+                </tr>
+                <tr>
+                    <th>출판사</th>
+                    <td><input class="updateInput" type="text" name="pub"></td>
+                </tr>
+                <tr>
+                    <th>장르</th>
+                    <td><input class="updateInput" type="text" name="cate"></td>
+                </tr>
+                <tr>
+                    <th>가격</th>
+                    <td><input class="updateInput" type="text" name="price"></td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td><input class="updateInput" type="text" name="isbn"></td>
+                </tr>
+                <tr>
+                    <th>발행일</th>
+                    <td><input class="updateInput" type="Date" name="pubDate"></td>
+                </tr>
+                <tr>
+                    <th>판매여부</th>
+                    <td>
+                    	<!-- <button type="button" class="btnYn btnY">Y</button>
+                        <button type="button" class="btnYn btnN">N</button> -->
+                        <label for="Y">Y&nbsp;</label><input type="radio" value="Y" id="Y" name="sellYn">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="N">N&nbsp;</label><input type="radio" value="N" id="N" name="sellYn">
+                    </td>
+                </tr>
+            </table>
+            
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn updateBtn">등록완료</button>
+            <button type="button" class="productBtn newBookBtn backBtn">뒤로가기</button>
+          </div>
+          </form>
+        </div> <!------------------------ 본문 종료---------------------------->
+      </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+		
+        $(".updateBtn").click(function () {
+			$("#updateForm").submit();
+        });
+      </script> 
+      
+</body>
+</html>

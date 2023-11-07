@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>상세 급여 계산내역 조회</title>
+    <meta charset="utf-8">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/manage/empPayDetail.js"></script>
+	 <h2 class="mb-4" id="main-text">급여관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">상세 급여</h5>
+        <br>
+	<div class="emp detail list2">
+		<input type="hidden" id="salNo" th:value="${pay.salNo}"> 
+          <table border="1">
+          <thead>
+            <tr class="detailtitle3">
+              <td colspan="2" th:text="${ pay.empInfo.dept.deptName }"></td>
+              <td colspan="2" th:text="${ pay.empInfo.empName }"></td>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">지급내역</th>
+              <th colspan="2">공제내역</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <!-- "${ #numbers.formatInteger(pay.salPension, 3, 'COMMA') + '원' }" -->
+              <td class="payft">기본급
+              	<input th:value="${ pay.salBase }" id="salBase" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="base">
+              </td>
+              <td class="payft">국민연금
+              	<input th:value="${pay.salPension}" id="salPension" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="pension">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft">건강보험
+              	<input th:value="${pay.salHealth}" id="salHealth" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="health">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft">요양보험
+              	<input th:value="${pay.salCare}" id="salCare" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="care">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft">고용보험
+              	<input th:value="${pay.salHire}" id="salHire" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="hire">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft">소득세
+              	<input th:value="${pay.salIncTax}" id="salIncTax" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="incTax">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft">지방소득세
+              	<input th:value="${pay.salLocalTax}" id="salLocalTax" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="localTax">
+              </td>
+            </tr>
+            <tr>
+              <td class="payft">기본급
+              	<input th:value="${pay.salBase}" id="salBase" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="base2">
+              </td>
+              <td class="payft">공제액 계
+              	<input th:value="${pay.salTotalMinus}" id="salTotalMinus" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" id="totalMinus">
+              </td>
+            </tr>
+            <tr>
+              <td class="payft">차인 지급액
+              	<input th:value="${pay.salRealAmount}" id="salRealAmount" style="border:none;" type="hidden" readonly>
+              </td>
+              <td class="payft" colspan="3" id="realAmount">
+              </td>
+            </tr>
+           </tbody>
+           </table>
+           <br> <br>
+           <div id="newBookDiv">
+      	  <button type="button" id="delete" class="modify btn">삭제</button>
+          <button type="button" id="backBtn" class="list btn backBtn">목록으로</button> 
+    	</div>
+       </div>  
+
+	</body>
+</html>

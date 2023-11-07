@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+  	<title>LOGIN</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet"  th:href="@{/css/main/login/login.css}">
+  </head>
+  <body>
+    <div class="login_img">
+      <img src="images/main/login/mainImage.png" alt="">
+    </div>
+    <div class="wrap">
+      <div class="login">
+        <form action="/member/login" method="post"><!-- 액션바꿈 -->
+          <div class="login_input">
+            <div class="login_id">
+              <h4>사번</h4>
+              <input type="text" name="username" id="" placeholder="사번" maxlength=30>
+            </div>
+			
+            <div class="login_pw">
+              <h4>비밀번호</h4>
+              <input type="password" name="password" id="" placeholder="Password" maxlength=30>
+            </div>
+
+            <div class="login_submit">
+              <input class="loginBtn" type="submit" name="" id="" value="LOGIN">
+            </div>
+
+            <div>
+              <a href="/member/changePw">비밀번호변경</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script th:inline="javascript">
+	    const updateSuccessMessage = "[[${updateSuccessMessage}]]";
+	    console.log(updateSuccessMessage);
+			if(updateSuccessMessage == "성공"){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '비밀번호 변경이 성공적으로 완료되었습니다!',
+	            })
+			}
+    </script>
+    
+  </body>
+</html>

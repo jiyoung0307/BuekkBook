@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	 <h2 class="mb-4" id="main-text">급여관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">급여계산</h5>
+        <br>
+        <div class="search">
+          <form action="">
+            <button class="search btn" type="submit">검색</button>
+            <select class="search select" required>
+              <option value="month">월</option>
+              <option value="jan">1월</option>
+              <option value="feb">2월</option>
+              <option value="mar">3월</option>
+              <option value="apr">4월</option>
+              <option value="may">5월</option>
+              <option value="jun">6월</option>
+              <option value="jul">7월</option>
+              <option value="aug">8월</option>
+              <option value="sep">9월</option>
+              <option value="oct">10월</option>
+              <option value="nov">11월</option>
+              <option value="dec">12월</option>
+            </select>
+            <select class="search select" required>
+              <option value="year">년도</option>
+              <option value="2022">2022년</option>
+              <option value="2021">2021년</option>
+            </select>
+          </form>
+        </div>
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+            <thead>
+              <tr class="th1">
+                <th>사원코드</th>
+                <th>사원명</th>
+                <th>부서명</th>
+                <th>기본급</th>
+                <th>공제총액</th>
+                <th>차인지급액</th>
+                <th>상세</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>코드</td>
+                <td>이름~~</td>
+                <td>부서</td>
+                <td>기본급</td>
+                <td>공제총액</td>
+                <td>차인지급액</td>
+                <td><button type="button" class="select btn" onclick="location.href='empPayDetail.html'">확인</button></td>
+              </tr>
+            </tbody>
+            </table>
+        </div>
+</body>
+</html>

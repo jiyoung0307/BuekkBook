@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/finance/clientSelect.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래처 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래처 조회</h5>
+        <br>
+
+         <div class="search-area" align="center">
+			<form id="loginForm" action="/client/select" method="get" style="display: inline-block">
+				<input type="hidden" name="searchCondition" value=1>
+				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" maxlength="30" th:value="${selectCriteria.searchValue}">
+				<button class="findBtn" id="findBtn" type="button">검색하기</button>
+			</form>
+            <button class="btn" type="button" onclick="location.href='/client/regist'">신규 등록</button>
+		</div>
+		<br>
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">거래처번호</th>
+                <th class="th1">거래처명</th>
+                <th class="th1">대표자</th>
+                <th class="th1">전화번호</th>
+                <th class="th1">담당자명</th>
+                <th class="th1">담당자 연락처</th>
+                <th class="th1">거래여부</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(clientList)}">
+              		<th colspan="4">조회된 거래처가 없습니다.</th>
+              </tr>
+              <tr class="tr1 trs" th:each="client : ${ clientList }">
+	               <td th:text="${ client.cntNo }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntRepName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntPhone }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntManaName }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntManaPhone }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+	               <td th:text="${ client.cntTradeYn }" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''"></td>
+               </tr>
+          </table>
+        </div>
+        <br>
+	<div th:replace="/finance/clientSelectPaging.html"></div>
+    <script th:inline="javascript">
+    
+	    $(".trs").on( "mouseover", function() {
+			$(this).css( "background-color", "#eeeeee" );
+			$(this).children("td").css( "cursor", "pointer" );
+		});
+		$(".trs").on( "mouseleave", function() {
+			$(this).css( "background-color", "white" );
+		});
+      
+      $('#findBtn').click(function(){
+   			const pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/;
+   			if(pattern_spc.test(inputFind.value)){
+   				Swal.fire({
+   					icon: 'error',
+   					title: '',
+   					text: '특수문자 및 태그를 입력하지 마세요'
+   				})
+   			} else{
+      			$("#loginForm").submit();
+   			}
+		});
+    </script>
+  </body>
+</html>

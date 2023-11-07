@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">마이페이지</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">연차조회</h5>
+        <br>
+        <div class="annualDiv1">
+            <table class="bor">
+                <thead>
+                    <tr class="bor tabbor" > 
+                        <th class="annualTable1"> 2022년 총 연차</th>
+                        <th class="annualTable2"> 누적 사용 연차</th>
+                        <th class="annualTable2"> 잔여 연차</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bor tabbor" th:each="day : ${ dayoffList }">
+                        <td class="annualTable3" th:text="${ day.doffAmount }"></td>
+                        <td th:text="${ day.doffUse }"></td>
+                        <td th:text="${ day.doffRemain }"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+          <form action="">
+            <button class="search btn" type="submit">검색</button> 
+            <input class="search in" type="text" placeholder="검색어 입력" required>
+            <select class="search select" required>
+              <option value="1">None</option>
+              <option value="2">해당년도</option>
+              <option value="3">해당월</option>
+              <option value="4">해당일</option>
+            </select>
+          </form>
+        </div>
+        <div>
+          <table id="sampleTable" class="annualTable4">
+              <tr>
+                <th class="th1">휴가 시작일</th>
+                <th class="th1">휴가 종료일</th>
+                <th class="th1">신청 일자</th>
+ 
+              </tr>
+              <tr class="hover" th:each="vac : ${ vacationList }">
+                <td th:text="${ vac.vacAppNo }"></td>
+                <td th:text="${ vac.vacStartDate }"></td>
+                <td th:text="${ vac.vacEndDate }"></td>
+  
+              </tr>
+          </table>
+        </div> 
+	
+	
+</body>
+</html>

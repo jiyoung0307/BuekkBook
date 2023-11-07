@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Insert title here</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="..css/common/style.css">
+<link rel="stylesheet" th:href="@{/css/manage/employee/persist.css}">
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	
+	    <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">인원현황</h5>
+        <br>
+
+        <div class="searchEmp">
+          <form class="search select">
+            <select class="searchback">
+              <option value="Department">부서</option>
+            </select>
+            <input class="searchinput" type="text" placeholder="검색어를 입력해주세요">
+          <button class="searchBtn" type="submit">검색하기</button>
+          </form>
+        </div>
+
+        <div class="PersonnelStatus">
+          <table border="1px">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="persist">인사부</th>
+                <th class="persist">도서물류부</th>
+                <th class="persist">총무부</th>
+                <th class="persist">재무부</th>
+                <th class="totalMember">총 인원</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="persist">1월</td>
+                <td class="persist">2명</td>
+                <td class="persist">2명</td>
+                <td class="persist">2명</td>
+                <td class="persist">1명</td>
+                <td class="totalMember">7명</td>
+              </tr>
+              <tr>
+                <td class="persist">2월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">3월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">4월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">5월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">6월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">7월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">8월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">9월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">10월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">11월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+              <tr>
+                <td class="persist">12월</td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="persist"></td>
+                <td class="totalMember"></td>
+              </tr>
+            </tbody>
+            </table>
+            <br><br>
+        </div>
+	
+</body>
+</html>

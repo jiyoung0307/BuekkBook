@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/outputList">출고관리</a></h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/outputList">출고내역</a></h5>
+        <br>
+		
+		<div class="search-area" align="center">
+			<form id="loginForm" action="/book/outputList" method="get" style="display: inline-block">
+					<select th:with="searchCondition = ${selectCriteria.searchCondition}"
+						id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+						<option value="no" th:selected="${ searchCondition } == 'no'">출고번호</option>
+						<option value="name" th:selected="${ searchCondition } == 'name'">도서명</option>
+					</select>
+				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<button onclick="findTest()" class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
+			</form>
+		</div>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">출고번호</th>
+                <th class="th1">출고날짜</th>
+                <th class="th1">시간</th>
+                <th class="th1">출고자</th>
+              </tr>
+              <tr class="tr1" th:each="outputList : ${ outputList }">
+                <td th:text="${ outputList.relListAndEmp.relNo }"></td>
+            	<td th:text="${ outputList.relListAndEmp.relDate }"></td>
+                <td th:text="${ outputList.relBkCode }"></td>
+                <td th:text="${ outputList.relListAndEmp.emp.empName }"></td>
+              </tr>
+          </table>
+          <br>          
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn">신규도서등록</button>
+          </div>
+        </div> <!------------------------ 본문 종료---------------------------->
+	<div th:replace="books/bookList/bookpagingOutput.html"></div>
+	<br><br>
+	<script>
+		function findTest(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				alert('분류와 검색어를 입력 해 주세요.');
+				return;
+			} else if(searchCondition.value == 'select'){
+				alert('분류를 선택 해 주세요.');
+				return;
+			} else if(inputFind.value == ""){
+				alert('검색어를 입력 해 주세요.')
+				return;
+			} else {
+				$('#loginForm').submit();
+			}
+		}
+	</script>
+	
+
+</body>
+</html>

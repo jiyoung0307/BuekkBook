@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{/css/document/HR.css}">
+<title>Document Insert</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	 <h2 class="mb-4" id="main-text">결재 작성</h2>
+        <hr><br><br>
+        
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center; width:80%; margin-left:8%">
+          <table id="sampleTable">
+            <tr>
+              <th class="th1">번호</th>
+              <th class="th1">양식 이름</th>
+              <th class="th1"></th>
+            </tr>
+            <tr th:each="form : ${ formList }">
+              <td class="td1" th:text="${form.formNo}"></td>
+              <td class="td1" th:text="${form.formName}"></td>
+              <td class="td1">
+              	<a th:href="@{/document/insertTo/{formNo}/(formNo=${form.formNo})}"> 
+         			<button type="button" class="select btn">작성</button> 
+    			</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+</body>
+</html>

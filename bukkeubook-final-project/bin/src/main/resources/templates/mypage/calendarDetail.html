@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+
+	<h2 class="mb-4" id="main-text">마이페이지</h2>
+	       <hr><br><br>
+	       <h5 class="mb-4" id="sub-text">일정관리</h5>
+	       <br>
+	       
+	        <div class="leftMar20">
+         	 <table class="type03">
+            <tr>
+              <th>일정 제목</th>
+              <td th:text="${ detailCal.title }"></td>
+            </tr>
+            <tr>
+              <th>일정 시작일</th>
+              <td th:text="${ detailCal.start }"></td>
+            </tr>
+            <tr>
+              <th>일정 종료일</th>
+              <td th:text="${ detailCal.end }"></td>
+            </tr>
+            <tr>
+              <td colspan="2" style="height: 500px;" th:text="${ detailCal.content }"></td>
+            </tr>
+          </table>
+          <button class="btn btn-info leftMar500p" type="submit">수정하기</button>
+          <button class="btn btn-dark leftMar20p" type="submit">삭제하기</button>
+
+      </div>
+	
+</body>
+</html>

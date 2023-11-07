@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+    
+        <h2 class="mb-4" id="main-text">부서관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">신규 부서 등록</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="registForm">
+            <form action="/dept/regist" method="post">
+			      <table>
+			          <tr>
+			          	<td>부서명 : </td>
+			          	<td><input type="text" name="deptName" required></td>
+			          </tr>
+			          <tr>
+			          	<td>부서 대표 번호 : </td>
+			          	<td><input type="text" name="deptRepPhone" required></td>
+			          </tr>
+			    </table>
+			    <br><br>
+			    <button onclick="popup()" class="btn" type="button">사원 추가</button>
+                  <button onclick="deleteRows()" class="btn" type="button">목록에서 삭제</button>
+			    <table id="sampleTable">
+			    	<tr>
+			    		<td colspan="5">부서원</td>
+			    	</tr>
+			    	<tr>
+			    		<td></td>
+			    		<td>사원번호</td>
+			    		<td>사원명</td>
+			    		<td>직책</td>
+			    		<td>연락처</td>
+			    	</tr>
+	       		</table>
+				<input type="hidden" id="rownum" name="rownum" value="0">
+                <button type="submit">등록</button>
+            </form>
+                <button type="button" onclick="checkCancel()">취소</button>
+        </div>
+
+        <script th:inline="javascript">
+            function deleteRows(){
+                const table = document.getElementById("sampleTable");
+    
+                for(var i = 1; i < table.rows.length; i++){
+                	var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+    
+                    if(chkbox){
+                        table.deleteRow(i);
+                        i--;
+                    }
+                }
+            }
+
+            function popup(){
+                var url = "/dept/popup";
+                var name = "emp_search";
+                var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+                window.open(url, name, option);
+            }
+
+            function addEmp(tableInfo){
+                const parentTable = document.getElementById("sampleTable");
+
+                for(var i = 0; i < tableInfo.no.length; i++){
+
+                    const newRow = parentTable.insertRow();
+
+                    const newCell1 = newRow.insertCell(0);
+                    const newCell2 = newRow.insertCell(1);
+                    const newCell3 = newRow.insertCell(2);
+                    const newCell4 = newRow.insertCell(3);
+                    const newCell5 = newRow.insertCell(4);
+
+                    var index = newRow.rowIndex;
+                    var empNo = "empNo" + index;
+                    
+                    console.log("index : " + index);
+                    console.log("hidden 이름에 넣을 empNo : " + empNo);
+                    console.log(i + "번째 no : " + tableInfo.no[i].data);  
+                    console.log(i + "번째 name : " + tableInfo.name[i].data);
+                    console.log(i + "번째 role : " + tableInfo.role[i].data);
+                    console.log(i + "번째 phone : " + tableInfo.phone[i].data);
+
+                    console.log(tableInfo.no[i].data);
+
+                    newCell1.innerHTML = '<input type="checkbox" name="del">';
+                    newCell2.innerHTML = tableInfo.no[i].data + '<input type="hidden" name="' + empNo + '" value="' + tableInfo.no[i].data + '">';
+                    newCell3.innerText = tableInfo.name[i].data;
+                    newCell4.innerText = tableInfo.role[i].data;
+                    newCell5.innerText = tableInfo.phone[i].data;
+                    
+                    var rownum = document.getElementById("rownum");
+                    rownum.value = index;
+                }
+            }
+            
+            function checkCancel(){
+              var result = confirm("정말로 부서 등록을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+              console.log(result);
+
+              if(result == true){
+
+                alert("부서 등록을 취소하셨습니다.");
+
+                location = "department_select.html";
+              }
+            }
+        </script>
+
+  </body>
+</html>

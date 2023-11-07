@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>급여 계산내역 입력</title>
+    <meta charset="utf-8">
+      <link rel="stylesheet" href="/css/common/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/manage/empPay.js"></script>
+   		<h2 class="mb-4" id="main-text">사원 급여등록</h2>
+        <hr><br><br>
+        <div class="emp detail list2"> 
+          <table border="2">
+             <tr class="detailtitle3">
+              <td colspan="2" id="selectDept">부서
+             	 <select name="deptCode" id="deptCode">
+                 	<option value=""></option>
+				<!-- ajax -->
+               	  </select>
+              </td>
+              <td colspan="2">사원
+              	<select name="empList" id="empList" style="width:130px;">
+                   <option value=""></option>
+                </select>
+              </td>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">연봉
+              	<input type="hidden" id="totalSal" style="width:130px; border:none;" readonly>
+              </th>
+              <td colspan="2" id="totalSal2">
+              </td>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">전월내역</th>
+              <td colspan="2" id="message" ></td>
+            </tr>
+           </table>
+          <br><br>
+       </div>
+       <br clear="both">
+       <br><br><br><br><br><br><br><br>
+        <div class="emp detail list2"> 
+          <table border="2">
+          <thead>
+             <tr class="detailtitle3">
+              <td colspan="2">부서명 &nbsp;
+              	<input type="text" id="dept" style="border:none; width:65px;" readonly>
+              </td>
+	     <form action="/empPay/insertSalary" method="post" id="insertForm">
+              <td colspan="2">사원명 &nbsp;
+              	<input type="text" id="empName" style="border:none; width:115px;" readonly>
+              	<input type="hidden" id="empNo" name="empNo" style="border:none; width:20px;" readonly>
+              </td>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">지급일</th>
+              <th colspan="2"><input type="date" name="date" id="date"></th>
+            </tr>
+            <tr class="detailpay">
+              <th colspan="2">지급내역</th>
+              <th colspan="2" >공제내역</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="payft1">기본급</td>
+              <td class="payft1">
+              	<input id='salBase' name="salBase" type="text" style="border:none;" onkeyup="printName()"/>
+              </td>
+              <td class="payft1">국민연금</td>
+              <td class="payft1">
+              	<input type="text" id="salPension" name="salPension" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr> 
+              <td></td> 
+              <td></td> 
+              <td class="payft1">건강보험</td>
+              <td class="payft1">
+              	<input type="text" id="salHealth" name="salHealth" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">요양보험</td>
+              <td class="payft1">
+              	<input type="text" id="salCare" name="salCare" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">고용보험</td>
+              <td class="payft1">
+              	<input type="text" id="salHire" name="salHire" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">소득세</td>
+              <td class="payft1">
+              	<input type="text" id="salIncTax" name="salIncTax" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">지방소득세</td>
+              <td class="payft1">
+              	<input type="text" id="salLocalTax" name="salLocalTax" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="payft1">공제액 계</td>
+              <td class="payft1">
+              	<input type="text" id="salTotalMinus" name="salTotalMinus" style="border:none;" readonly>
+              </td>
+            </tr>
+            <tr>
+              <td class="payft1">차인 지급액</td>
+              <td colspan="3" class="payft1">
+              	<input type="text" id="salRealAmount" name="salRealAmount" style="border:none;" readonly>
+              </td>
+   	  </form>
+            </tr>
+           </tbody>
+           </table>
+          <br><br>
+           <div id="newBookDiv">
+          <button type="button" id="insert" class="modify btn">등록하기</button>
+          <button type="button" id="backBtn" class="list btn backBtn">목록으로</button> 
+    	</div>
+       </div>
+     
+	</body>
+</html>

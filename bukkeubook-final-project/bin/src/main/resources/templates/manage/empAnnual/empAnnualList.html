@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+        <h2 class="mb-4" id="main-text">근태관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">연차조회</h5>
+        <br>
+        <div class="search">
+          <form action="">
+            <button class="search btn" type="submit">검색</button>
+            <select class="search select" required>
+              <option value="year">년도</option>
+              <option value="2022">2022년</option>
+              <option value="2021">2021년</option>
+            </select>
+          </form>
+        </div>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">총 연차횟수</th>
+                <th class="th1">사용연차 횟수</th>
+                <th class="th1">잔여연차 횟수</th>
+                <th class="th1">상세조회</th>
+              </tr>
+              <tr class="hover">
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td><button type="button" class="select btn" onclick="location.href='empAnnualDetail.html'">확인</button></td>
+              </tr>
+          </table><br>
+          <button type="button" class="insert btn" onclick="location.href='empAnnualInsert.html'">등록</button>
+        </div>
+</body>
+</html>

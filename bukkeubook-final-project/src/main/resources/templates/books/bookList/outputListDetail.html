@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/outputList">출고관리</a></h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/outputList">상세출고내역</a></h5>
+        <br>
+        <br>
+		
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">출고번호</th>
+                <th class="th1">도서코드</th>
+                <th class="th1">도서제목</th>
+                <th class="th1">출고수량</th>
+                <th class="th1">출고자</th>
+              </tr>
+              <tr class="tr1" th:each="outputList : ${ outputList }">
+                <td th:text="${ outputList.relNo }"></td>
+                <td th:text="${ outputList.book.no }"></td>
+                <td th:text="${ outputList.book.name }"></td>
+                <td th:text="${ outputList.relBkAmount }"></td>
+            	<td th:text="${ outputList.relListEmp.emp.empName }"></td>
+              </tr>
+          </table>
+          <br><br>
+          <div id="newBookDiv">
+          <button type="button" class="productBtn newBookBtn" onclick="location.href='/book/output'">출고신청</button>
+          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+         </div>             
+        </div> <!------------------------ 본문 종료---------------------------->
+	<br><br>
+	
+	<script>
+		$('.backBtn').click(function(){
+			window.history.back();
+		});
+	</script>
+
+</body>
+</html>

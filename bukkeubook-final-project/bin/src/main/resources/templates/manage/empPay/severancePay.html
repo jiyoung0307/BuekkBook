@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Insert title here</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="..css/common/style.css">
+<!-- 이건 실험용 한번 해보자 -->
+<link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+<link rel="stylesheet"  th:href="@{/css/manage/employee/Listdetail.css}">
+<link rel="stylesheet"  th:href="@{/css/manage/empAnnual/rest.css}">
+
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">퇴직금 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">퇴직금 계산</h5>
+        <br>
+
+        <div>
+          <form class="search select1">
+            <select class="searchback">
+              <option value="">년도</option>
+              <option value="Department">2022년</option>
+              <option value="EmpNo">2021년</option>
+            </select>
+            <select class="searchback">
+              <option>월</option>
+              <option>1월</option>
+              <option>2월</option>
+              <option>3월</option>
+              <option>4월</option>
+              <option>5월</option>
+              <option>6월</option>
+              <option>7월</option>
+              <option>8월</option>
+              <option>9월</option>
+              <option>10월</option>
+              <option>11월</option>
+              <option>12월</option>
+            </select>
+          <button class="searchBtn" type="submit">검색하기</button>
+          </form>
+        </div>
+
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">부서명</th>
+                <th class="th1">사원명</th>
+                <th class="th1">연봉</th>
+                <th class="th1">재직일수</th>
+                <th class="th1">차인지급액</th>
+                <th class="th1">급여계산</th>
+              </tr>
+              <tr>
+                <td>EMP-01</td>
+                <td>인사부</td>
+                <td>장지영</td>
+                <td>7200만원</td>
+                <td>366일</td>
+                <td>4,153,300</td>
+                <!-- 상세 내역 조회 페이지로 이동 -->
+                <td><button type="button" class="detail contents" onclick="location.href='severancePaySelect.html'">계산</button></td>
+              </tr>
+              <tr>
+                <td>EMP-02</td>
+                <td>총무부</td>
+                <td>김퇴사</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <!-- 초기화 된 페이지로 이동 -->
+                <td><button type="button" class="detail contents" onclick="location.href='severancePayInsert.html'">계산</button></td>
+              </tr>
+            </table>
+            <br><br>
+
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a href="#">1</a>
+              <a class="active" href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+              <a href="#">6</a>
+              <a href="#">&raquo;</a>
+            </div>
+        </div>
+</body>
+</html>

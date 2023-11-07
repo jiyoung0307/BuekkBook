@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+    <h2 class="mb-4" id="main-text">근로계약서</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">근로계약서 등록</h5>
+        <br>
+        
+        
+        	 <div id="textTable" style="text-align:-webkit-center; overflow:auto; width: 1200px; height: 300px; margin:auto; border: 1px solid grey; border-radius: 20px;">
+          <table id="sampleTable" style=" border: 1px solid grey; border-radius: 20px;">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서명</th>
+                <th class="th1">직급</th>
+                <th class="th1">성별</th>
+                <th class="th1">이메일</th>
+              </tr>
+              <tr class="tr1" th:each="emp : ${ empList }">
+                <td th:text="${ emp.empNo }"></td>
+                <td th:text="${ emp.empName }"></td>
+                <td th:text="${ emp.dept.deptName }"></td>
+                <td th:text="${ emp.empJobCode }"></td>
+                <td th:text="${ emp.empGender }"></td>
+                <td th:text="${ emp.empEmail }"></td>
+              </tr>
+          </table>
+          </div>
+          <br><br><hr><br>
+       
+
+       <div id="textTable" style="text-align:-webkit-center">
+        <h5 class="mb-4" id="sub-text"></h5>
+        	<form action="/cont/registCont" method="post" id="contForm" encType="multipart/form-data">
+            <table id="bookInfoTable" border="1">
+                <tr>
+                    <th style="padding-top: 20px; padding-bottom: 20px;">사원 번호</th>
+                    <td><input type="text" class="form-control" name="empNo" id="empNo1" placeholder="사원번호"></td>
+                </tr>
+                <tr>
+                    <th style="padding-top: 20px; padding-bottom: 20px;">계약서 명</th>
+                    <td><input type="text" class="form-control" name="contName" id="contName1" placeholder="계약서명"></td>
+                </tr>
+                <tr>
+                    <th style="padding-top: 20px; padding-bottom: 20px;">근로계약서 파일</th>
+                    <td><input type="file" class="form-control" name="singleFile" id="singleFile1"></td>
+                </tr>
+                <tr>
+                    <th style="padding-top: 20px; padding-bottom: 20px;">만료일</th>
+                    <td><input type="date" class="form-control" name="contExpDate" id="contExpDate1"></td>
+                </tr>
+                
+            </table>
+            </form>
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn backBtn" id="registCont">등록</button>
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/cont/findCont'">목록으로</button>
+          </div>
+        </div> <!------------------------ 본문 종료---------------------------->
+          
+          <br><br>
+          
+          
+          <script>
+          $("#registCont").click(function(){
+				Swal.fire({
+		            title: '근로계약서를 등록하시겠습니까?',
+		            text: "해당 입력 정보로 근로계약서 정보를 등록합니다.",
+		            icon: 'question',
+		            showCancelButton: true,
+		            confirmButtonColor: '#3085d6',
+		            cancelButtonColor: '#d33',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		            	if($('#empNo1').val() !== "" && $('#contName1').val() !== "" && $('#singleFile1').val() !== "" && $('#contExpDate1').val() !== ""){
+		            		$("#contForm").submit();
+		            	}else{
+		            		Swal.fire({
+		    		            icon: 'error',                        
+		    		            title: '잘못된 값이 입력되었습니다.',         
+		    		            text: '입력칸들을 다시 한번 확인해 주세요.',  
+		    		        });
+		            	}
+		            }
+		        })
+		});
+          
+          </script>
+     
+</body>
+</html>

@@ -1,0 +1,31 @@
+인터페이스
+
+xml(쿼리 작성)
+
+Service
+- DML 작업
+- 트랜잭션 작업 ➡️ @Transactional 붙여줄 것
+
+
+MenuServiceTests
+- 단위 테스트를 하는 공간
+
+컨트롤러
+
+html
+
+menucontrollertest
+- mock객체
+
+
+
+===========================
+1. Bbcrypt 암호화
+
+관련 dependency 추가 및 
+home.jsp까지만 동작하는 프로젝트
+
+2. MYBATIS-SPRING 메뉴 전체 조회
+
+관련 라이브러리 설치 및 index.html 화면까지만 동작
+[Bean 설정] spring-context.xml까지 작성 된 상태

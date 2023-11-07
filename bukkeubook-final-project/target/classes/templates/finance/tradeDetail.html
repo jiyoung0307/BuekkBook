@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/finance/tradeDetail.css}">
+</head>
+  <body>
+		<div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래내역 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래내역 상세 조회</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+            <table id="sampleTable" align="center">
+                <tr>
+                    <td>거래일자</td>
+                    <td colspan="5" th:text="${ trade.tlDate }"></td>
+                </tr>
+                <tr>
+                    <td>거래처 번호</td>
+                    <td th:text="${ trade.client.getCntNo() }"></td>
+                    <td>거래처명</td>
+                    <td colspan="3" th:text="${ trade.client.getCntName() }"></td>
+                </tr>
+                <tr>
+                    <td>도서번호</td>
+                    <td th:text="${ trade.book.getNo() }"></td>
+                    <td>도서명</td>
+                    <td th:text="${ trade.book.getName() }"></td>
+                    <td>수량</td>
+                    <td th:text="${ trade.tlAmount }"></td>
+                </tr>
+                <tr>
+                    <td>담당 사원 번호</td>
+                    <td th:text="${ trade.empNo }"></td>
+                    <td>담당 사원명</td>
+                    <td colspan="3" th:text="${ trade.emp.getEmpName() }"></td>
+                </tr>
+                <tr>
+                    <td>상세내용</td>
+                    <td class="td2" colspan="5" th:text="${ trade.tlDetail }"></td>
+                </tr>
+            </table>
+            <form action="/trade/modify" method="get">
+            	<input type="hidden" name="tlNo" th:value="${ trade.tlNo }">
+            	<button class="btn" type="submit" onclick="location.href='/trade/modify'">수정</button>
+	            <button class="btn" type="button" onclick="location.href='/trade/select'">목록</button>
+            </form>
+        </div> <!------------------------ 본문 종료---------------------------->
+
+  </body>
+</html>

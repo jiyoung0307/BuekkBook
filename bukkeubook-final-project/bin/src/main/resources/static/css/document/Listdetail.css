@@ -1,0 +1,71 @@
+.emp.detail.list{
+    /* width: 60%; */
+    margin-top: 50px;
+    margin-right: 100px;
+    margin-left: 130px;
+    text-align:center;
+    height: 1000px;
+}
+.emp.detail.list1{
+    /* width: 60%; */
+    margin-top: 50px;
+    margin-left: 160px;
+    text-align:center;
+    height: 70px;
+    width: 1370px;
+}
+
+.detailtitle{
+    height: 100px;
+    width: 1900px;
+    font-size: 30px;
+}
+.detailpay{
+    height: 70px;
+    width: 50px;
+    font-size: 20px;
+}
+
+.deemp{
+    height: 50px;
+    font-size:18px;
+}
+.deemp2{
+    height: 60px;
+    font-size:18px;
+    
+}
+.deemp3{
+    height: 60px;
+    font-size:18px;
+    width: 250px;
+}
+.deempfile{
+    height: 50px;
+    font-size:18px;
+    width: 22%;
+}
+.sel1{
+    width: 100px;
+    height:40px;
+}
+.sel2{
+    width: 400px;
+    height:40px;
+}
+.sel3{
+    width: 100px;
+    height:40px;
+}
+
+.input1{
+    width: 500px;
+}
+.input2{
+    width: 150px;
+    margin-left:20px;
+}
+.input3{
+    width: 330px;
+}
+

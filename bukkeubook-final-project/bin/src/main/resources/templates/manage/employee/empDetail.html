@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
+        <br>
+        <div class="emp detail list"> 
+          <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">사원정보</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>사원번호</td>
+                <td th:text="${ emp.empNo }"></td>
+                <td class="deempfile">도장사진</td>
+                <td class="deempfile">프로필사진</td>
+              </tr>
+              <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>사원명</td>
+                <td th:text="${ emp.empName }"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+              </tr>
+               <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>부서명</td>
+                <td th:text="${ emp.dept.deptName }"></td>
+              </tr>
+              <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>직급</td>
+                <td th:text="${ emp.empJobCode }"></td>
+              </tr>
+              <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>입사일자</td>
+<!--                 <td th:text="${#dates.format(emp.emp.empEntDate, 'yyyy-MM-dd')}"></td> -->
+                <td th:text="${ emp.empEntDate }"></td>
+              </tr>
+              <tr class="deemp2" th:each="emp : ${ empList }">
+                <td>퇴사여부</td>
+                <td th:text="${ emp.empEndYn }"> </td>
+              </tr>
+              <tr class="deemp" th:each="emp : ${ empList }">
+                <td>성별</td>
+                <td colspan="3" th:text="${ emp.empGender }"></td>
+              </tr>
+              <tr class="deemp" th:each="emp : ${ empList }">
+                <td>생년월일</td>
+<!--                 <td colspan="3" th:text="${#dates.format(emp.empBirth, 'yyyy-MM-dd')}"></td> -->
+				 <td colspan="3" th:text="${ emp.empBirth }">
+              </tr>
+              <tr class="deemp" >
+                <td>연락처</td>
+                <td colspan="3"></td>
+              </tr>
+              <tr class="deemp" th:each="emp : ${ empList }">
+                <td>이메일</td>
+                <td colspan="3" th:text="${ emp.empEmail }"></td>
+              </tr>
+              <tr class="deemp" th:each="emp : ${ empList }">
+                <td>주소</td>
+                <td colspan="3" th:text="${ emp.empAddress1 }"></td>
+              </tr>
+              <tr class="deemp" th:each="emp : ${ empList }">
+                <td>상세주소</td>
+                <td colspan="3" th:text="${ emp.empAddress2 }"></td>
+              </tr>
+            </tbody>
+          </table><br>
+          <td><button type="button" class="modify btn" onclick="location.href='empUpdate.html'">수정하기</button></td>
+         <!--  <td><button type="button" class="list btn" th:onclick="'location.href = @{/manage/empList/">목록으로</button></td> -->
+          </div>
+        </div>
+
+</body>
+</html>

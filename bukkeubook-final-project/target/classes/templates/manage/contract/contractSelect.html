@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+<link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+    <h2 class="mb-4" id="main-text">사원관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text">근로계약서 조회</h5>
+    <br>
+    	<div>
+          <form action="/cont/findCont" method="get">
+           <button class="search btn">검색</button> 
+           <input type="hidden" name="currentPage" value="1">
+		   <input type="search" id="inputFind" name="searchValue" class="search in">
+           <select class="search select" 
+            id="searchCondition" name="searchCondition">
+              <option value="empName">이름</option>
+              <option value="contName">계약서명</option>
+           </select>
+         </form>
+       </div>
+    
+         <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">파일번호</th>
+                <th class="th1">개시일</th>
+                <th class="th1">계약서명</th>
+                <th class="th1">이름</th>
+                <th class="th1">만료일</th>
+                <th class="th1">작성자</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(contList)}">
+               		    <td class="td1" colspan="6">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
+              <tr class="tr1" th:each="cont : ${ contList }" th:onclick="'location.href = \'' + @{/cont/findDetailCont/(no=${cont.contNo})} + '\''">
+                <td th:text="${ cont.contNo }"></td>
+                <td th:text="${ cont.contDate }"></td>
+                <td th:text="${ cont.contName }"></td>
+                <td th:text="${ cont.emp.empName }"></td>
+                <td th:text="${ cont.contExpDate }"></td>
+                <td th:text="${ cont.contWriter }"></td>
+              </tr>
+          </table>
+			
+		
+        </div> <!------------------------ 본문 종료---------------------------->
+        <br><br>
+        <div th:replace="/manage/contract/contractpaging.html"></div>
+     
+</body>
+
+	<script>
+
+			const successMessage = "[[${ successMessage }]]";
+			const failMessage = "[[${ failMessage }]]";
+
+			if(successMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '정상적으로 처리되었습니다!',
+	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업 진행을 실패하셨습니다.',
+	            })
+				
+			}
+			
+	</script>
+</html>

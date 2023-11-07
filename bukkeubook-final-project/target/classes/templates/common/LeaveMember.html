@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="utf-8">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/main/login/login.css}">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="login_img">
+      <img src="/images/main/login/mainImage.png" alt="">
+    </div>
+	<div align=center>
+		<img src="/images/main/fail/pngegg2.png" alt="" style="width: 700px;">
+	</div>
+	<script th:inline="javascript">
+	const LeaveMemberMessage = "[[${LeaveMemberMessage}]]"
+		if(LeaveMemberMessage){
+			Swal.fire({
+                icon: 'warning',
+                title: '퇴사처리 되셨습니다.',
+                text: '인사과에 문의 해 주세요.',
+            }).then(function(){
+            	/* location.href="/member/login" */
+            	location.href="/member/logout"
+            })
+		}
+	</script>
+</body>
+</html>

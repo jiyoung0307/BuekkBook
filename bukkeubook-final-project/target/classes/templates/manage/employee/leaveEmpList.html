@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>퇴사사원조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  </head>
+  <body>
+	<div th:replace="/common/topSideBar.html"></div>
+	    <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">퇴사사원조회</h5>
+        <br>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서</th>
+                <th class="th1">직급</th>
+                <th class="th1">퇴사일자</th>
+                <th class="th1">상세보기</th>
+              </tr>
+              <tr th:each="emp : ${ leaveEmpList }" class="hover">
+ 				<td th:text="${ emp.empNo }"></td>
+                <td th:text="${ emp.empName }"></td>
+                <td th:text="${ emp.dept.deptName }"></td>
+                <td th:text="${ emp.empJobCode }"></td>
+                <td th:text="${ emp.empEndDate }"></td>
+                <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/manage/oneLeaveEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
+              </tr>
+          </table>
+          
+      <script>
+      	const leaveUpdateSuccessMessage = "[[${leaveUpdateSuccessMessage}]]" 
+      		
+      		if(leaveUpdateSuccessMessage){
+      			Swal.fire({
+      	            icon: 'success',
+      	            title: 'Success!',
+      	            text: '퇴사처리가 성공적으로 완료되었습니다!',
+      	        })
+      		}
+     </script>
+  </body>
+</html>

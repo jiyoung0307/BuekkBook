@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="installedFeatures">
+		<item value="com.ianbrandt.tools.m2e.mdp.feature:0.0.4.201409291703"/>
+		<item value="net.mihai-nita.ansicon:1.4.7.202206130310"/>
+		<item value="org.eclipse.buildship:3.1.6.v20220511-1359"/>
+		<item value="org.eclipse.egit.gitflow.feature:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.egit:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.emf.common:2.26.0.v20220325-0806"/>
+		<item value="org.eclipse.emf.ecore:2.28.0.v20220426-0617"/>
+		<item value="org.eclipse.epp.mpc:1.10.0.v20220502-0731"/>
+		<item value="org.eclipse.help:2.3.1000.v20220607-0700"/>
+		<item value="org.eclipse.jdt:3.18.1200.v20220607-0700"/>
+		<item value="org.eclipse.jgit.gpg.bc:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.jgit.http.apache:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.jgit.lfs:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.jgit.ssh.apache:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.jgit:6.2.0.202206071550-r"/>
+		<item value="org.eclipse.jst.common.fproj.enablement.jdt:3.24.0.v202111201707"/>
+		<item value="org.eclipse.justj.openjdk.hotspot.jre.full:17.0.3.v20220515-1416"/>
+		<item value="org.eclipse.m2e.feature:1.20.1.20220227-1319"/>
+		<item value="org.eclipse.m2e.logback.feature:1.17.2.20211002-1029"/>
+		<item value="org.eclipse.m2e.wtp.feature:1.4.4.20201128-1705"/>
+		<item value="org.eclipse.mylyn.wikitext.editors_feature:3.0.42.202201072301"/>
+		<item value="org.eclipse.pde:3.14.1200.v20220607-0700"/>
+		<item value="org.eclipse.platform:4.24.0.v20220607-0700"/>
+		<item value="org.eclipse.rcp:4.24.0.v20220607-0700"/>
+		<item value="org.eclipse.tm.terminal.connector.ssh.feature:10.7.0.202204200013"/>
+		<item value="org.eclipse.tm.terminal.control.feature:10.7.0.202204200013"/>
+		<item value="org.eclipse.tm.terminal.feature:10.7.0.202204110055"/>
+		<item value="org.eclipse.tm.terminal.view.feature:10.7.0.202204200013"/>
+		<item value="org.eclipse.userstorage:1.2.0.v20210517-0327"/>
+		<item value="org.eclipse.wst.common.fproj:3.7.3.v202111212041"/>
+		<item value="org.eclipse.wst.json_ui.feature:1.1.10.v202103121626"/>
+		<item value="org.eclipse.wst.web_ui.feature:3.26.0.v202204091445"/>
+		<item value="org.eclipse.wst.xml.xpath2.processor.feature:2.0.400.v202204112029"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.26.0.v202204091445"/>
+		<item value="org.eclipse.wst.xsl.feature:1.3.1100.v202204040421"/>
+		<item value="org.jboss.tools.m2e.wro4j.feature:1.1.0.201406251020"/>
+		<item value="org.jboss.tools.maven.apt.feature:1.5.2.201812241535"/>
+		<item value="org.sonatype.m2e.buildhelper.feature:0.15.0.201207090124"/>
+		<item value="org.sonatype.m2e.mavenarchiver.feature:0.17.5.202002191804"/>
+	</list>
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\00.second_BuekkBook"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
+		<item key="ShowStatusLine" value="true"/>
+		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;History&gt;&#x0D;&#x0A;&lt;historyRootNode&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/books/model/service/OrderService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/books/bookList/bookInfoUpdate.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/books/model/repository/StockBookListAndBookAndStockListAndEmpRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/books/model/service/BookService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/repository/EmpAnnualRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/books/model/entity/RelBkListAndBookAndRelList.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/test/java/com/bukkeubook/book/document/model/repository/repositoryTest.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/service/EmpAnnualService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/dto/AppVacationDTO.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/controller/DeptController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/service/EmpService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/service/SignService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/mypage/model/service/MypageService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/member/model/service/MemberServiceImpl.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/mypage/controller/MypageController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/mypage/controller/MyInfoModifyController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/mypage/model/repository/EmployeeRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/mypage/model/repository/SignRepository.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/document/model/dto/EmpDTO.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/entity/Emp.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/dto/SignDTO.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/entity/Sign.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/employee/empInsert.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/dto/joinDTO/DayOffAndEmpAndDeptDTO.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/employee/empDetailUpdate.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/controller/EmpDayOffController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/model/service/EmpDayOffService.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/empAnnual/restCancelSelect.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/controller/EmployeeController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/empAnnual/restCancleDetailSelect.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/static/css/manage/employee/Listdetail.css&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/empAnnual/restSelect.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/empAnnual/restDetailSelect.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/resources/templates/manage/employee/empDetail.html&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;infoNode path=&quot;/bukkeubook-final-project/src/main/java/com/bukkeubook/book/manage/controller/EmpAnnualController.java&quot; type=&quot;1&quot;/&gt;&#x0D;&#x0A;&lt;/historyRootNode&gt;&#x0D;&#x0A;&lt;/History&gt;"/>
+		<item key="ShowDerived" value="false"/>
+		<item key="FilterByLocation" value="false"/>
+		<item key="WorkingSet" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0D;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;"/>
+		<section name="DialogBoundsSettings">
+			<item key="DIALOG_HEIGHT" value="500"/>
+			<item key="DIALOG_WIDTH" value="1350"/>
+			<item key="DIALOG_X_ORIGIN" value="9"/>
+			<item key="DIALOG_Y_ORIGIN" value="163"/>
+			<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+		</section>
+	</section>
+	<section name="ResourceNavigator">
+		<item key="ResourceViewer.STORE_SORT_TYPE" value="1"/>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="663"/>
+		<item key="DIALOG_Y_ORIGIN" value="91"/>
+		<item key="DIALOG_WIDTH" value="613"/>
+		<item key="DIALOG_HEIGHT" value="642"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="CleanDialogSettings">
+		<item key="BUILD_NOW" value="true"/>
+		<item key="BUILD_ALL" value="true"/>
+		<item key="TOGGLE_SELECTED" value="false"/>
+		<item key="DIALOG_WIDTH" value="581"/>
+		<item key="DIALOG_HEIGHT" value="529"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

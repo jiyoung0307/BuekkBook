@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>연차조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+   <div th:replace="/common/topSideBar.html"></div>
+        <h2 class="mb-4" id="main-text">근태관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">연차조회</h5>
+        <br>
+        <div id="sampleTable">
+          <form class="search select" action="/empDayOff/empDayOffList"></form>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">총 연차횟수</th>
+                <th class="th1">사용연차 횟수</th>
+                <th class="th1">잔여연차 횟수</th>
+                <th class="th1">상세조회</th>
+              </tr>
+              
+               <tr th:each="dayOffList : ${ dayOffList }" class="hover">
+                <td th:text="${ dayOffList.empNo }"></td>
+                <td th:text="${ dayOffList.empAndDept.empName }"></td>
+                <td th:text="${ dayOffList.doffAmount }"></td>
+                <td th:text="${ dayOffList.doffUse }"></td>
+                <td th:text="${ dayOffList.doffRemain }"></td> 
+                <td><button type="button" class="select btn" th:onclick="'location.href = \'' + @{/empDayOff/empDayOffDetail/{empNo}(empNo=${dayOffList.empNo})} + '\''">확인</button>
+                </td> 
+              </tr>
+          </table><br><br>
+       
+        </div>
+</body>
+</html>

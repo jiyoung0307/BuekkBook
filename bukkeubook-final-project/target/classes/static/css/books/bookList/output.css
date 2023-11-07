@@ -1,0 +1,90 @@
+@charset "UTF-8";
+#bottomTable td{
+    width: 100px;
+    height: 50px;
+}
+#bottomTable th{
+    width: 176px;
+    height: 50px;
+}
+.newBookBtn {
+    width: 7vw;
+    width: 90px;
+}
+.delBtn {
+    background-color: red !important;
+    color: black;
+    width: 70px;
+}
+.delBtn:hover {
+    background-color: #FEFCC6 !important;
+}
+/* book 서브 제목 */
+#sub-text {
+    font-size: 1.5vw !important;
+    margin-left: 8.3em;
+    color: #515151;
+}
+.sampleTable {
+text-align: center;
+}
+.sampleTable td{
+border-top: 1px solid;
+border-bottom: 1px solid !important;
+width: 200px;
+height: 50px;
+}
+.th1 {
+border-top: 2px solid;
+border-bottom: 1px solid;
+width: 200px;
+height: 50px;
+}
+#td2 {
+border-bottom: 1px solid !important;
+width: 200px;
+height: 50px;
+}
+/* book 헤더 메뉴 */
+.nav-link {
+color: white !important;
+}
+.outputValue {
+    width: 70px;
+    text-align: center;
+}
+.productBtn {
+    border-radius: 10px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 80px;
+    font-size: 13px;
+}
+/* .td5 {
+	color: black;
+	font-weight: 500;
+	border-bottom-color:#808080 !important;
+} */
+.selectInput {
+	margin-left: 160px;
+	font-size: 16px;
+}
+.inputSpan {
+	font-weight: bold;	
+}
+.searchTable1{
+	/* width: 1200px !important; */
+	height: 300px !important;
+	overflow: auto !important;
+}
+#sampleTable th{
+   position: sticky;
+   top: 0px !important;
+   text-align: center !important;
+   color: #808080 !important;
+   background-color: white !important;
+}
+#inputNum {
+	width: 70px;
+}

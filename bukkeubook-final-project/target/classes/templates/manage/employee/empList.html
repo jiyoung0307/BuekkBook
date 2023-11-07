@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+     <title>사원조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원조회</h5>
+        <br>
+
+        <div>
+          <form action="/manage/empList" method="get" id="loginForm">
+           <button class="search btn" id="findBtn" type="button">검색</button> 
+           <input type="hidden" name="currentPage" value="1">
+		   <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in" maxlength=10>
+           <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}" 
+            id="searchCondition" name="searchCondition" style="width:80px; height:42px;" >
+              <option value="select">분류</option>
+              <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
+              <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
+           </select>
+         </form>
+       </div>
+        <div>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서명</th>
+                <th class="th1">직급</th>
+                <th class="th1">상세보기</th>
+              </tr>
+               <tr th:each="emp : ${ empList }" class="hover">
+ 				<td th:text="${ emp.empNo }"></td>
+                <td th:text="${ emp.empName }"></td>
+                <td th:text="${ emp.dept.deptName }"></td>
+                <td th:text="${ emp.empJobCode }"></td>
+      <td><button type="button" class="select btn selectbtn"  th:onclick="'location.href = \'' + @{/manage/oneEmp/{empNo}(empNo=${emp.empNo})} + '\''">확인</button></td>
+              </tr>
+          </table>
+          <br>
+           <div id="newEmpDiv">
+         	 <button type="button" class="insert btn newbtn">등록</button>
+          </div> 
+        </div>
+	<div th:replace="/manage/employee/emppaging.html"></div>
+        <br><br>
+	
+  	<script>
+ 	$('.newbtn').click(function(){
+		location.href='/manage/empInsert';
+	}); 
+ 	
+	const insertSuccessmessage = "[[${insertSuccessMessage}]]" 
+	
+	if(insertSuccessmessage){
+		Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '등록이 성공적으로 완료되었습니다!',
+        })
+	}
+	
+	const updateSuccessmessage = "[[${updateSuccessMessage}]]" 
+		
+		if(updateSuccessmessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '정보 수정이 성공적으로 완료되었습니다!',
+	     })
+     }
+	
+	const signsuccessMessage = "[[${signsuccessMessage}]]" 
+		
+		if(signsuccessMessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '서명 사진이 성공적으로 변경 되었습니다!',
+	     })
+     }
+	const profilesuccessMessage = "[[${profilesuccessMessage}]]" 
+		
+		if(profilesuccessMessage){
+			Swal.fire({
+	            icon: 'success',
+	            title: 'Success!',
+	            text: '프로필 사진이 성공적으로 변경 되었습니다!',
+	     })
+     }
+	
+	</script> 
+	
+	<!--  검색기능 스크립트 -->
+	<script type="text/javascript">
+	$('#findBtn').click(function(){
+				if(inputFind.value == "" && searchCondition.value == 'select'){
+					Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '분류와 검색어를 입력 해 주세요.',
+		            })} else if(inputFind.value == ""){
+	            	Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
+		                
+	            	})} else if(searchCondition.value == 'select'){
+	           		Swal.fire({
+	   	                icon: 'question',
+	   	                title: '',
+	   	                text: '분류를 선택 해 주세요.',
+	            	})} else{
+			   			$('#loginForm').submit();
+		   			};
+				});
+	$('#inputFind').blur(function(){
+		const tagExp = /(<([^>]+)>)/gi;
+		if(tagExp.test($('#inputFind').val())){
+			Swal.fire({
+                icon: 'error',
+                title: '태그쓰지마세요',
+                text: '',
+            }).then(function(){
+            	$('#inputFind').val('');
+    			$('#inputFind').focus();
+            })
+		}
+	});
+	</script>
+</body>
+</html>

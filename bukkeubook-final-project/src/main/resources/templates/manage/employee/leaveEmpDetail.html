@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>퇴사사원 상세조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      
+  </head>
+	<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	    <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">퇴사사원 상세조회</h5>
+        <br>
+
+        <div class="emp detail list"> 
+          <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">퇴사 사원정보</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp4">
+                <td class="deemp5">사원번호</td>
+                <td colspan="3" th:text="${ emp.empNo }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>사원명</td>
+                <td colspan="3" th:text="${ emp.empName }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>직급</td>
+                <td colspan="3" th:text="${ emp.empJobCode }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>입사일자</td>
+                <td colspan="3" th:text="${ emp.empEntDate }"></td>
+              </tr>
+               <tr class="deemp4">
+                <td>퇴사일자</td>
+                <td colspan="3" th:text="${ emp.empEndDate }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>퇴사여부</td>
+                <td colspan="3" th:text="${ emp.empEndYn }"> </td>
+              </tr>
+              <tr class="deemp4">
+                <td>성별</td>
+                <td colspan="3" th:text="${ emp.empGender }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>생년월일</td>
+                <td colspan="3" th:text="${ emp.empBirth }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>연락처</td>
+                <td th:text="${ emp.empPhone1 }"></td>
+                <td th:text="${ emp.empPhone2 }"></td>
+                <td th:text="${ emp.empPhone3 }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>이메일</td>
+                <td colspan="3" th:text="${ emp.empEmail }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>주소</td>
+                <td colspan="3" th:text="${ emp.empAddress }"></td>
+              </tr>
+              <tr class="deemp4">
+                <td>상세주소</td>
+                <td colspan="3" th:text="${ emp.empDAddress }"></td>
+              </tr>
+            </tbody>
+            </table><br>
+             <div id="newBookDiv">
+            <button type="button" class="list btn backBtn">목록으로</button>
+            </div>
+         </div>
+         
+       <script th:inline="javascript">
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
+      </script>
+    </body>
+</html>

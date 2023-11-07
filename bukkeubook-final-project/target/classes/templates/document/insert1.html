@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script src="/js/summernote/summernote-lite.js"></script>
+	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+    <link rel="stylesheet"  th:href="@{/css/document/draftwriteStyle.css}">
+    <link rel="stylesheet"  th:href="@{/css/summernote/summernote-lite.css}">
+<title>Write Draft</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/document/draftWrite.js"></script>
+	<h4 class="mb-4" id="main-text">기안서 작성</h4>
+    <hr>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+        	<button style="float:right; margin-right:5%;"class="btnin" type="button" id="back">목록으로</button>
+        </div>
+        
+        <div class="totals left">
+        <br><br>
+          <h4>결재라인 지정</h4>
+          <table class="tbl2" border="1px solid gray">
+              <tr>
+                <th></th>
+                <th>부서명</th>
+                <th>사원명</th>
+              </tr>
+              <tr>
+                  <th>1단계 : </th>
+                  <td id="selectDept">
+                      <select name="deptCode" id="deptCode">
+                      	<option value=""></option>
+					  	<!-- ajax -->
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList" id="empList">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <th>2단계 : </th>
+                  <td>
+                      <select name="deptCode2" id="deptCode2">
+                          <option value=""></option>
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList2" id="empList2">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <th>3단계 : </th>
+                  <td>
+                      <select name="deptCode3" id="deptCode3">
+                          <option value=""></option>
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList3" id="empList3">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+          </table>
+          <br>
+          <div style="float:left;">
+          	<button style="margin-left:50px;" class="select btn" type="button" id="clear">초기화</button>
+            <button class="select btn" type="button" onclick="selectacc()">단계 지정</button><br><br>
+          </div>
+      </div>
+      <div class="totals tbl3">
+          <h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
+            <tr>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
+            </tr>
+            <form action="/document/submitReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="hidden" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3" readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo2" value="1" >
+	          <input type="hidden" id="draftcnt2" name="tagCnt2">
+	          <input type="hidden" id="wrDate2" name="wrDate2">
+	          <input type="hidden" id="docStatus2" name="docStatus2">
+	          <!-- <input type="text" value="10" id="empNo2" name="empNo2"> -->
+	          <input type="hidden" id="docTitle2" name="submitTitle" placeholder="여기가 상신할때">
+	          <input type="hidden" id="cnttt2" name="cnt2" readonly>
+          </form>
+          <br>
+      </div>
+      <br clear="both">
+      <div class="totals left" >
+      	<form action="/document/tempStore" method="post" id="temp">
+          <table border="1px solid black" class="tbl">
+              <tr class="tbl">
+                  <th class="tbl th">제목</th>
+                  <td class="tbl"><input type="text" id="title" name="docTitle1" required></td>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th">내용</th>
+                  <td class="tbl wid">
+                    <textarea class="description" id="desc"></textarea>
+                    <input type="hidden" name="formNo1" value="1" >
+                    <input type="hidden" id="draftcnt1" name="tagCnt1">
+                    <input type="hidden" id="wrDate1" name="wrDate1" placeholder="여기가 임시저장할때">
+                    <input type="hidden" id="docStatus1" name="docStatus1" placeholder="여기가 임시저장할때">
+                    <!-- <input type="text" value="10" id="empNo1" name="empNo1"> -->
+                    <input type="hidden" id="cnttt1" name="cnt1" readonly>
+                  </td>
+              </tr>
+          </table>
+      	</form>
+      </div>
+      <div class="totals draft">
+          <table class="tbl">
+              <tr class="tbl">
+                  <th class="tbl th coloring" colspan="7"><h4>기안서</h4></th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">문서번호</th>
+                  <th class="tbl th read" id="docnumber">1</th>
+                  <th rowspan="4" class="th coloring" style="width:60px">결재</th>
+                  <th class="tbl th coloring">담당</th>
+                  <th class="tbl th coloring sign" id="selacc1">결재1</th>
+                  <th class="tbl th coloring sign" id="selacc2">결재2</th>
+                  <th class="tbl th coloring sign" id="selacc3">결재3</th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">작성일자</th>
+                  <th class="tbl th" id="date2"><p id="day"></p></th>
+                  <th rowspan="3" class="tbl th sign" id="sign1">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign2">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign3">
+                  </th>
+                  <th rowspan="3" class="tbl th sign" id="sign4">
+                  </th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">부서명</th>
+                  <th class="tbl th" id="dept2"></th>
+                  
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">작성자</th>
+                  <th class="tbl th" id="writer2"></th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">제목</th>
+                  <td class="tbl" colspan="6" id="title2">제목을 입력해주세요</td>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th cnt coloring">내용</th>
+                  <td class="tbl cnt" colspan="6" id="cnt2">
+                      <div id="result">내용을 입력해주세요</div>
+                  </td>
+              </tr>
+          </table>
+          <br>
+          <input type="hidden" id="empSign">
+      </div>
+      <br clear="both">
+      <div class="right">
+        <button class="buto" type="button" onclick="sendData()">상신</button>
+        <button class="buto" type="button" id="tempStore">임시저장</button>
+      </div>
+</body>
+
+
+</html>

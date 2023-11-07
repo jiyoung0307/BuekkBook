@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">전사 게시판</h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text">게시글 등록</h5>
+        <br>
+        
+        <div>
+         <form action="/secretary/registBoard" method="post" id="registForm">
+          <table class="type04" style="width: 80%; margin-left: 10%;">
+            <tr>
+              <th style="text-align : center;">제목</th>
+	              <td>
+	              	<input type="text" class="form-control" name="title" id="boardName" placeholder="제목을 입력해 주세요."required>
+	              </td>
+	           </tr>
+	           <tr>
+              <th style="text-align : center;">카테고리</th>
+              <td>
+              	<select class="form-control" name="cateNo" id="category">
+				  <option value="1">회의</option>
+				  <option value="2">행사</option>
+				  <option value="3">공지</option>
+				</select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="height: 500px;">
+              	 <textarea class="form-control" style="resize:none; height: 480px;" name="content" id="boardText" placeholder="내용을 입력해 주세요." required></textarea> 
+              </td>
+            </tr>
+          </table>
+          <button class="btn btn-success" style="margin-left:10%"  type="button" id='resetBtn'>목록으로</button>
+          <button class="btn btn-info" style="margin-left:65%"  type="button" id="registBtn">등록하기</button>
+         </form>	
+      </div>
+			<br><br>
+			
+			
+			
+		<script>
+		$("#registBtn").click(function(){ 
+			Swal.fire({
+                title: '해당 게시글을 등록하시겠습니까?',
+                text: "해당 게시글은 전사 게시판에 등록됩니다.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                	if(($("#boardName").val() !== "")&& ($("#category").val() !== "") && ($("#boardText").val() !== "")){
+                		$("#registForm").submit();
+                	}else{
+                		Swal.fire({
+        		            icon: 'error',                        
+        		            title: '입력값을 확인해 주세요',   
+        		            text: '옳바르지 않은 값 혹은 빈 값을 입력하였습니다.', 
+        		        });
+                	}
+                }
+			})
+		})
+		
+		$("#resetBtn").click(function(){ 
+			Swal.fire({
+                title: '게시판 목록으로 이동 하시겠습니까??',
+                text: "작성된 내용은 일괄적으로 삭제됩니다.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '승인',
+                cancelButtonText: '취소'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                	location.href='/secretary/board';
+                }
+			})
+		})
+		
+		
+		</script>
+		        
+        
+		 
+		
+	
+	
+	
+</body>
+</html>

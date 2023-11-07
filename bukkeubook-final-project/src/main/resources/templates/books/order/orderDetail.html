@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+  
+		<h2 class="mb-4" id="main-text">발주관리</h2>
+		<hr><br><br>
+		<h5 class="mb-4" id="sub-text">발주상세내역</h5>
+		<br>
+
+      	<div id="textTable" style="text-align:-webkit-center">
+	        <table id="orderTable">
+	            <tr>
+	            	<td class="cate">발주번호</td>
+	            	<td th:text="${ order.orderNo }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">등록날짜</td>
+	            	<td th:text="${ order.orderDate }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">도서번호</td>
+	            	<td th:text="${ order.book.getNo() }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">도서명</td>
+	            	<td th:text="${ order.book.getName() }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">발주 수량</td>
+	            	<td th:text="${ order.orderAmount }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">담당자명</td>
+	            	<td th:text="${ order.emp.getEmpName() }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">담당자 연락처</td>
+	            	<td th:text="${ order.emp.getEmpPhone1 + '-' + order.emp.getEmpPhone2 + '-' + order.emp.getEmpPhone3 }"></td>
+	            </tr>
+	            <tr>
+	            	<td class="cate">승인현황</td>
+	            	<td colspan="5" th:text="${ order.orderApprYn }"></td>
+	            </tr>
+        	</table>
+        	<button class="btn" type="button" onclick="location.href='/order/regist'">발주신청</button>
+        	<button class="btn" type="button" onclick="location.href='/book/input'">입고등록</button>
+        	<button class="btn" type="button" onclick="location.href='/order/selectHistory'">목록으로</button>
+        </div> <!------------------------ 본문 종료---------------------------->
+
+    </body>
+</html>

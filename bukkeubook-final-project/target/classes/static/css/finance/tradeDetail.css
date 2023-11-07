@@ -1,0 +1,122 @@
+@charset "UTF-8";
+#lookUpBtnDiv {
+    margin-left: 17em;
+}
+#newBookDiv {
+    text-align: right !important;
+    margin-right: 20%;
+    font-size: 0.7vw;
+}
+#productFind {
+    font-size: 0.8vw;
+    text-align: center;
+}
+#inputFind {
+    border-width: 1px 1px 1px 1px;
+    background: #fafafa;
+    width: 20em;
+    margin-left: 230px !important;
+    text-align: center;
+}
+#inputFind:focus {
+    outline: none;
+}
+#selectFind {
+    text-align: center;
+}
+.lookup {
+    border-radius: 10px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 100px !important;
+    font-size: 13px;
+}
+.lookup:hover {
+    background-color: #FEFCC6;
+}
+.findBtn {
+    border-radius: 20px;
+    background: #c5bfbf;
+    border: none;
+    height: 28px;
+    width: 100px !important;
+    font-size: 13px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 10px;
+}
+.findBtn:hover {
+    background-color: #FEFCC6;
+}
+.btn {
+    border-radius: 10px !important;
+    background: #c5bfbf !important;
+    border: none !important;
+    height: 28px !important;
+    width: 100px !important;
+    font-size: 13px !important;
+    vertical-align: middle;
+    text-align: center;
+    margin-right: 10px;
+    margin-top: 28px;
+}
+.btn:hover {
+    background-color: #FEFCC6 !important;
+}
+
+.findBtn:hover{
+	background-color: #FEFCC6 !important;
+}
+
+#orderTable{
+	border: 1px solid black !important;
+}
+
+td{
+	font-size: 13pt;
+	width: 60px;
+	height: 10px;
+	border: 1px solid black !important;
+	text-align: center;
+}
+
+.cate{
+	border: 1px solid #444444;
+	width: 160px;
+}
+
+.short{
+	width: 20px;
+}
+
+.pagingArea button {
+	border-style: none;
+	margin: 3px;
+	background: #c5bfbf;
+	border-radius: 5px;
+	width: 30px;
+}
+.pagingArea button:hover {
+	background-color: #FEFCC6;
+}
+
+.search-area{
+	margin-bottom: 10px;
+}
+
+#searchValue{
+	height: 28px;
+    width: 100px;
+    font-size: 13px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#textTable{
+	margin-bottom: 15px;
+}
+
+
+
+

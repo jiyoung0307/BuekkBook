@@ -1,0 +1,90 @@
+@charset "UTF-8";
+#lookUpBtnDiv {
+    margin-left: 17em;
+}
+#newBookDiv {
+    text-align: right !important;
+    margin-right: 20%;
+    font-size: 0.7vw;
+}
+.findBtn {
+    margin-left: 20px;
+    border-radius: 20px;
+    width: 6vw;
+}
+#productFind {
+    font-size: 0.8vw;
+    text-align: center;
+}
+#inputFind {
+    border-width: 1px 1px 1px 1px;
+    background: #fafafa;
+    width: 20em;
+    margin-left: 2em;
+    text-align: center;
+}
+#inputFind:focus {
+    outline: none;
+}
+#searchCondition {
+    text-align: center;
+    height: 28px;
+}
+.lookup {
+    border-radius: 10px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 100px !important;
+    font-size: 13px;
+    color: #FFEBEB;
+}
+
+.findBtn {
+    border-radius: 20px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 100px !important;
+    font-size: 13px;
+}
+.findBtn:hover {
+    background-color: #FEFCC6;
+}
+.newBookBtn {
+    border-radius: 10px;
+    background: #c5bfbf;
+    border: none;
+    height: 37px;
+    width: 100px !important;
+    font-size: 13px;
+}
+.newBookBtn:hover {
+    background-color: #FEFCC6;
+}
+#lookup1 {
+	background: rgb(128, 128, 128);
+	border: 2px solid;
+	border-color: #4898E1;
+}
+.pagingArea button {
+	border-style: none;
+	margin: 3px;
+	background: #c5bfbf;
+	border-radius: 5px;
+	width: 30px;
+}
+.pagingArea button:hover {
+	background-color: #FEFCC6;
+}
+.tr1 {
+	cursor:pointer;
+}
+.tr1:hover {
+	background-color: #eeeeee;
+}
+
+
+
+
+

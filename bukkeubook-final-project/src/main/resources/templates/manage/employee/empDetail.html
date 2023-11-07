@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>사원 상세 정보조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+   <div th:replace="/common/topSideBar.html"></div>
+   <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 상세 정보조회</h5>
+        <br>
+        <div class="emp detail list"> 
+          <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">사원정보</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp2">
+                <td>사원번호</td>
+                <td th:text="${ emp.empNo }"></td>
+                <td class="deempfile">프로필 사진</td>
+                <td class="deempfile">서명 사진</td>
+              </tr>
+              <tr class="deemp2">
+                <td>사원명</td>
+                <td th:text="${ emp.empName }"></td>
+                <td rowspan="5"><img th:src="@{/images/mypage/{imageFile}(imageFile=${profile[0].photoSavedName})}" width="200px"/></td>
+                <td rowspan="5"><img th:src="@{/images/sign/{signFile}(signFile=${mySign.signSavedName})}" width="200px"></td> 
+              </tr>
+               <tr class="deemp2">
+                <td>부서명</td>
+                <td th:text="${ emp.dept.deptName }"></td>
+              </tr>
+              <tr class="deemp2">
+                <td>직급</td>
+                <td th:text="${ emp.empJobCode }"></td>
+              </tr>
+              <tr class="deemp2" >
+                <td>입사일자</td>
+                <td th:text="${ emp.empEntDate }"></td>
+              </tr>
+              <tr class="deemp2" >
+                <td>퇴사여부</td>
+                <td th:text="${ emp.empEndYn }"> </td>
+              </tr>
+              <tr class="deemp" >
+                <td>성별</td>
+                <td colspan="3" th:text="${ emp.empGender }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>생년월일</td>
+             <td colspan="3" th:text="${ emp.empBirth }">
+              </tr>
+              <tr class="deemp" >
+                <td>연락처</td>
+                <td th:text="${ emp.empPhone1 }"></td>
+                <td th:text="${ emp.empPhone2 }"></td>
+                <td th:text="${ emp.empPhone3 }"></td>
+              </tr>
+              <tr class="deemp">
+                <td>이메일</td>
+                <td colspan="3" th:text="${ emp.empEmail }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>주소</td>
+                <td colspan="3" th:text="${ emp.empAddress }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>상세주소</td>
+                <td colspan="3" th:text="${ emp.empDAddress }"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>연봉</td>
+                <td colspan="3" th:text="${ emp.empTotalSal }"></td>
+              </tr>
+            </tbody>
+          </table><br>
+          <div id="newBookDiv">
+              <button type="submit" class="modify btn" th:onclick="'location.href = \'' +  @{/manage/detailUpdate/{empNo}(empNo=${emp.empNo})} + '\''">수정하기</button>
+              <button type="button" class="list btn backBtn">목록으로</button> 
+         </div>            
+        </div>
+      <script th:inline="javascript">
+        $('.backBtn').click(function(){
+             window.history.back(); 
+           }); 
+       
+          $('.updateBtn').click(function(){
+           }); 
+          
+        const updateSuccessmessage = "[[${updateSuccessMessage}]]"
+                   
+        if(updateSuccessmessage){
+             Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '정보수정이 성공적으로 완료되었습니다!',
+             })
+        } 
+
+      </script>
+   </body>
+</html>

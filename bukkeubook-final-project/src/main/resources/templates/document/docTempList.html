@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{/css/document/HR.css}">
+<link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<title>Document docList</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">임시저장 내역</h2>
+        <hr><br><br>
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+		
+		const failMessage = "[[${ insertFail }]]";
+		if(failMessage){
+			 Swal.fire({
+	                icon: 'warning',
+	                title: '실패',
+	                text: '다시 시도해주세요!',
+	            })
+		}
+	</script>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div style="text-align:-webkit-center; width:80%; margin-left:8%">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">No</th>
+                <th class="th1">문서번호</th>
+                <th class="th1">제목</th>
+                <th class="th1">작성일자</th>
+                <th class="th1">작성자</th>
+                <th class="th1">문서종류</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(tempDocList)}">
+              	<td class="td1" colspan="6">임시저장된 서류가 존재하지 않습니다.</td>
+              </tr>
+              <tr class="hover" th:each="temp : ${ tempDocList }" th:onclick="'location.href = \'' + @{|/document/tempInfo/${temp.docNo}|} + '\''" style="cursor: pointer;">
+                <td class="td1" th:text="${tempStat.count}"></th>
+                <td class="td1" th:text="${temp.docNo}"></th>
+                <td class="td1" th:text="${temp.docTitle}" style="width:300px;"></th>
+                <td class="td1" th:text="${temp.wrDate}"></th>
+                <td class="td1" th:text="${temp.emp.empName}"></th>
+                <td class="td1" th:text="${temp.formCate.formName}"></th>
+              </tr>
+          </table>
+          <br>
+          <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>
+          <br><br><br><br><br><br><br><br><br>
+        </div> <!------------------------ 본문 종료---------------------------->
+</body>
+</html>

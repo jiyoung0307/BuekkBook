@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/finance/clientDetail.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래처 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래처 상세 조회</h5>
+        <br>
+
+        <div id="textTable" style="text-align:-webkit-center">
+                <table id="sampleTable" align="center">
+                    <tr>
+                        <td>거래처명</td>
+                        <td colspan="3" th:text="${ client.cntName }"></td>
+                    </tr>
+                    <tr>
+                        <td>거래여부</td>
+                        <td colspan="3" th:text="${ client.cntTradeYn }"></td>
+                    </tr>
+                    <tr>
+                        <td>업종</td>
+                        <td th:text="${ client.cntCate }"></td>
+                        <td>사업자등록번호</td>
+                        <td th:text="${ client.cntRegNo }"></td>
+                    </tr>
+                    <tr>
+                        <td>업태</td>
+                        <td th:text="${ client.cntType }"></td>
+                        <td>법인등록번호</td>
+                        <td th:text="${ client.corpRegNo }"></td>
+                    </tr>
+                    <tr>
+                        <td>대표자</td>
+                        <td colspan="3" th:text="${ client.cntRepName }"></td>
+                    </tr>
+                    <tr>
+                        <td>개업일</td>
+                        <td colspan="3" th:text="${ client.cntOpenDate }"></td>
+                    </tr>
+                    <tr>
+                        <td>소재지</td>
+                        <td colspan="3" th:text="${ client.cntAddress }"></td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td th:text="${ client.cntPhone }"></td>
+                        <td>담당자</td>
+                        <td th:text="${ client.cntManaName }"></td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td th:text="${ client.cntEmail }"></td>
+                        <td>담당자 연락처</td>
+                        <td th:text="${ client.cntManaPhone }"></td>
+                    </tr>
+                    <tr>
+                        <td>FAX</td>
+                        <td th:text="${ client.cntFax }"></td>
+                        <td>담당자 이메일</td>
+                        <td th:text="${ client.cntManaEmail }"></td>
+                    </tr>
+                </table>
+                <br>
+                <div id="btns"> 
+	                <form class="f1" action="/client/modify/" method="get">
+	                	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">
+		                <button class="btn" type="submit" th:onclick="'location.href = \'' + @{/client/detail/(cntNo=${client.cntNo})} + '\''">수정</button>
+		            </form>
+		            <form id="stopForm" class="f1" action="/client/stop/" method="get">
+		            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+		                <button class="btn" type="button" onclick="checkStop()" th:if="${client.cntTradeYn.toString().equals('Y')}">거래중지</button>
+					</form>
+					<form id="startForm" class="f1" action="/client/start/" method="get">
+		            	<input type="hidden" name="cntNo" th:value="${ client.cntNo }">	
+		                <button class="btn" type="button" onclick="checkStart()" th:if="${client.cntTradeYn.toString().equals('N')}">거래재개</button>
+					</form>
+					<form class="f1">
+			            <button class="btn" type="button" onclick="location.href='/client/select'">목록</button>
+					</form>
+                </div>
+        </div>
+
+    <script>
+      function checkStop(){
+    	  
+    	  Swal.fire({
+        		icon: 'warning',
+        		title: '거래 중지 확인',
+        		text: '해당 거래처를 거래 중지 상태로 바꾸시겠습니까?',
+        		showCancelButton: true,
+        		confirmButtonText: '확인',
+        		cancelButtonText: '취소'
+        	}).then((result) => {
+        		if(result.isConfirmed){
+        			$("#stopForm").submit();
+        		}
+        	});
+      }
+      
+	function checkStart(){
+    	  
+    	  Swal.fire({
+        		icon: 'warning',
+        		title: '거래 재개 확인',
+        		text: '해당 거래처와 거래를 재개하시겠습니까?',
+        		showCancelButton: true,
+        		confirmButtonText: '확인',
+        		cancelButtonText: '취소'
+        	}).then((result) => {
+        		if(result.isConfirmed){
+        			$("#startForm").submit();
+        		}
+        	});
+      }
+    </script>
+  </body>
+</html>

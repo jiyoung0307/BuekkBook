@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>직원연차 상세조회</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+   <div th:replace="/common/topSideBar.html"></div>
+        <h2 class="mb-4" id="main-text">근태관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">직원연차 상세조회</h5>
+        <br>
+		
+		<div class="emp detail list">
+        <table border="1px">
+          
+          <tbody>
+            <tr>
+              <td class="deemp3">사원번호</td>
+              <td th:text="${ emp.empAndDept.empNo }"></td>
+            </tr>
+              <tr>
+              <td class="deemp3">부서</td>
+              <td th:text="${ emp.empAndDept.dept.deptName }"></td>
+            </tr> 
+            <tr>
+              <td class="deemp3">사원명</td>
+              <td th:text="${ emp.empAndDept.empName }"></td>
+            </tr>
+            <tr>
+              <td class="deemp3">해당 연차연도</td>
+              <td th:text="${ emp.doffYear }"></td>
+            </tr>
+            <tr>
+              <td class="deemp3">총연차 횟수</td>
+              <td th:text="${ emp.doffAmount }"></td>
+            </tr>
+            <tr>
+              <td class="deemp3">사용 연차 횟수</td>
+              <td th:text="${ emp.doffUse }"></td>
+            </tr>
+            <tr>
+              <td class="deemp3">잔여 연차 횟수</td>
+              <td th:text="${ emp.doffRemain }"></td>
+            </tr>
+          </tbody>
+          </table>
+          <br>
+          <div id="newBookDiv">
+          <button type="button" class="list btn backBtn">목록으로</button>
+          </div>
+        </div> 
+        <!------------------------ 본문 종료---------------------------->
+      <script th:inline="javascript">
+    	 
+    	 $('.updateBtn').click(function(){
+    		 location.href='/book/bookInfoUpdate?no=' + bb;
+     	 });
+    	 
+    	 $('.backBtn').click(function(){
+    		window.history.back(); 
+    	 });
+      </script>
+</body>
+</html>

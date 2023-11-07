@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	
+	<script>
+		const successMessage = "[[${ updateSuccessMessage }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
+	
+    <h2 class="mb-4" id="main-text">사원관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/empAnnual/restCancelSelect">휴가 취소 조회</a></h5>
+    <br>
+        <div class="searchEmp"  align="center">
+            <form class="search select" action="/empAnnual/restCancelSelect" method="get">
+              <select class="searchback" th:with="searchCondition = ${selectCriteria.searchCondition}"
+            id="searchCondition" name="searchCondition">
+                <option value="select">None</option>
+                <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option>
+                <option value="EmpName" th:selected="${ searchCondition } == 'EmpName'">사원명</option>
+              </select>
+              <input type="hidden" name="currentPage" value="1">
+              <input class="searchinput" type="search" placeholder="검색어를 입력해주세요" name="searchValue" th:value="${selectCriteria.searchValue}">
+            <button class="searchBtn" type="submit">검색하기</button>
+            </form>
+          </div><br><br>
+
+        <div id="restTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">휴가취소번호</th>
+                <th class="th1">휴가번호</th>
+                <th class="th1">부서</th>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">취소 신청일자</th>
+                <th class="th1">상세보기</th>
+              </tr>
+              <tr th:each="cancelVac : ${ cancelVacList }">
+                <td th:text="${ cancelVac.vacCancNo }"></td>
+                <td th:text="${ cancelVac.vacNo }"></td>
+                <td th:text="${ cancelVac.appvacEMP.empAndDept.dept.deptName }"></td>
+                <td th:text="${ cancelVac.empNo }"></td>
+                <td th:text="${ cancelVac.appvacEMP.empAndDept.empName }"></td>
+                <td th:text="${ cancelVac.vacCancDate }"></td>													
+                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/empAnnual/restCancleDetailSelect/{vacCancNo}(vacCancNo=${cancelVac.vacCancNo})} + '\''">상세보기</button></td>
+          </table><br><br>
+        <div th:replace="manage/empAnnual/restCancelSelectPaging.html"></div>
+        
+        </div>
+</body>
+</html>

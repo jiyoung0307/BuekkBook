@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderSelect.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+  <body>
+		<div th:replace="/common/topSideBar.html"></div>
+    
+        <h2 class="mb-4" id="main-text">발주관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">발주내역</h5>
+        <br>
+
+        <div class="search-area" align="center">
+			<form id="loginForm" action="/order/selectHistory" method="get" style="display: inline-block">
+				<input type="hidden" name="searchCondition">
+				<input type="hidden" name="currentPage" value="1">
+				<select th:with="searchValue = ${selectCriteria.searchValue}"
+						id="searchValue" name="searchValue">
+						<option value="">전체보기</option>
+						<option value="대기" th:selected="${ searchValue } == '대기'">대기</option>
+						<option value="승인" th:selected="${ searchValue } == '승인'">승인</option>
+						<option value="반려" th:selected="${ searchValue } == '반려'">반려</option>
+				</select>
+				<button class="findBtn" type="submit">검색하기</button>
+        	<button class="btn" type="button" onclick="location.href='/order/regist'">발주신청</button>
+            <button class="btn" type="button" onclick="location.href='/book/input'">입고등록</button>
+			</form>
+		</div>
+		<br>
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">NO</th>
+                <th class="th1">발주신청날짜</th>
+                <th class="th1">신청자</th>
+                <th class="th1">상태</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(orderList)}">
+              	<th colspan="4">해당하는 날짜의 발주 내역이 없습니다.</th>
+              </tr>
+              <tr class="trs" th:each="order : ${ orderList }" th:onclick="'location.href = \'' + @{/order/detail/(orderNo=${order.orderNo})} + '\''">
+                <td th:text="${ order.orderNo }"></td>
+                <td th:text="${ order.orderDate }"></td>
+                <td th:text="${ order.emp.getEmpName() }"></td>
+                <td th:text="${ order.orderApprYn }"></td>
+              </tr>
+          </table>
+        </div>
+        <br>
+        <div th:replace="books/order/OrderHistorypaging.html"></div>
+        
+        <script th:inline="javascript">
+	        
+        	$(".trs").on( "mouseover", function() {
+        		$(this).css( "background-color", "#eeeeee" );
+        		$(this).children("td").css( "cursor", "pointer" );
+        	});
+        	$(".trs").on( "mouseleave", function() {
+        		$(this).css( "background-color", "white" );
+        	});
+        </script>
+  </body>
+</html>

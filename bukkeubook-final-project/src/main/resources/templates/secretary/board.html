@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">전사 게시판</h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text">게시판 목록</h5>
+        <br>
+		 
+		<div class="search-area" align="center">
+			<form id="loginForm" action="/secretary/board" method="get" style="display: inline-block">
+					<select id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+             		 	<option value="empName">작성자</option>
+             		 	<option value="title">제목</option>
+						<option value="cateName">카테고리</option>
+					</select>
+				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 --> 
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue">
+				<button class="productBtn findBtn" id="findBtn" type="submit">검색하기</button>
+			</form>
+
+		</div>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">번호</th>
+                <th class="th1">카테고리</th>
+                <th class="th1" style="width:700px">제목</th>
+                <th class="th1">작성일</th>
+                <th class="th1">작성자</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(boardList)}">
+               		    <td class="td1" colspan="6">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
+              <tr class="tr1" th:each="board : ${ boardList }" th:onclick="'location.href = \'' + @{/secretary/boardDetail/(no=${board.no})} + '\''">
+                <td th:text="${ board.no }"></td>
+                <td th:text="${ board.cate.cateName }"></td>
+                <td th:text="${ board.title }"></td>
+            	<td th:text="${ board.date }"></td>
+            	<td th:text="${ board.emp.empName }"></td>
+              </tr>
+          </table>
+          <br>
+          <div>
+          	<div th:replace="/secretary/boardPaging.html"></div>
+					<button class="btn btn-info" type="submit" onclick="location.href='/secretary/boardRegist'" style="margin-left:70%;">게시글 등록</button>
+			</div>
+          <br>    
+        </div> <!------------------------ 본문 종료---------------------------->
+	<br><br>
+	
+	
+		<script>
+				const successMessage = "[[${ successMessage }]]";
+				const failMessage = "[[${ failMessage }]]";
+					if(successMessage){
+						Swal.fire({
+			                icon: 'success',
+			                title: 'Success!',
+			                text: '성공적으로 완료되었습니다!',
+	         	  		 })
+	       		    }else if(failMessage){
+	       		    	Swal.fire({
+			                icon: 'error',
+			                title: 'Error!',
+			                text: '작업에 실패하셨습니다.',
+	         	  		 })
+	       		    	
+	       		    }
+		</script>
+	
+	
+	
+</body>
+</html>

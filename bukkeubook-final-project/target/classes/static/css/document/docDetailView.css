@@ -1,0 +1,85 @@
+.tbl{
+    border: 2   px solid gray;
+    border-collapse: collapse;
+}
+
+tr,th,td{
+    padding: 12px;
+    border: 1px solid gray;
+}
+
+td,th{
+    text-align: center;
+    font-size: large;
+}
+
+.tbl th{
+    text-align: center;
+    font-size: large;
+}
+
+.sign{
+    width: 120px;
+}
+
+.read{
+    width: 300px;
+}
+
+.cnt{
+    height: 650px;
+}
+
+.coloring{
+    background-color: rgb(206, 206, 206);
+}
+
+.total{
+    float: left;
+    margin-left: 10%;
+    padding: 5%;
+}
+
+.select{
+    float: left;
+    width: 30%;
+    margin-bottom: 30px;
+
+}
+
+.select.btn{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+.select.btn.apply{
+    background-color: rgb(193, 237, 255);
+}
+
+.select.btn.refuse{
+    background-color: rgb(255, 194, 187);
+}
+
+.select.btn:hover{
+    background-color: #FEFCC6;
+}
+
+.search.btn{
+    margin-right: 10%;
+    margin-bottom: 30px;
+    padding: 8px 22px;
+    float: right;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+.search.btn:hover{
+    background-color: #FEFCC6;
+}
+
+#result span{
+	font-size: 18px !important;
+	font-family: "Poppins", Arial, sans-serif !important;
+	font-weight: normal !important;
+	color: gray !important;
+}

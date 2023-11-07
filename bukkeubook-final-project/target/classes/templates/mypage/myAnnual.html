@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">마이페이지</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">연차조회</h5>
+        <br>
+        <div class="annualDiv1">
+            <table class="bor">
+                <thead>
+                    <tr class="bor tabbor" > 
+                        <th class="annualTable1"> 총 연차</th>
+                        <th class="annualTable2"> 누적 사용 연차</th>
+                        <th class="annualTable2"> 잔여 연차</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bor tabbor" th:each="day : ${ dayoffList }">
+                        <td class="annualTable3" th:text="${ day.doffAmount }"></td>
+                        <td th:text="${ day.doffUse }"></td>
+                        <td th:text="${ day.doffRemain }"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        
+        <!--  검색 창 -->
+         <div style="margin-left:35%">
+          <form action="/mypage/myAnnual" method="get" style="width:500px; height:300px" id="searchForm1">
+             <input type="date" class="form-control" style="width:300px" name="attStart" id="startTime">
+             <br>
+              <input type="date" class="form-control" style="width:300px" name="attEnd" id="endTime">
+              <input type="hidden" name="currentPage" value="1">
+            <button class="search btn" type="button" id="searchbtn1" style="margin-right:60%">검색</button> 
+          </form>
+        </div> 
+        <!-- 검색창 마감 -->
+        
+        
+        <div style="margin-right:20%; margin-top:-15%">
+          <table id="sampleTable" class="annualTable4">
+              <tr>
+                <th class="th1">신청 번호</th>
+                <th class="th1">휴가 시작일</th>
+                <th class="th1">휴가 종료일</th>
+                <th class="th1">신청 일자</th>
+              </tr>
+ 				<tr th:if="${#lists.isEmpty(vacationList)}">
+               		    <td class="td1" colspan="4">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
+              <tr class="hover" th:each="vac : ${ vacationList }">
+                <td th:text="${ vac.vacNo }"></td>
+                <td th:text="${ vac.vacStartDate }"></td>
+                <td th:text="${ vac.vacEndDate }"></td>
+                <td th:text="${ vac.vacAppNo }"></td>
+  
+              </tr>
+          </table>
+        </div> 
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+       	  <div th:replace="/mypage/annualPaging.html"></div> 
+		<br><br>
+			
+	<script>
+	/* 검색 시작일이 검색 종료일보다 값이 큰 경우 경곰*/
+    $("#searchbtn1").click(function(){ 
+
+		let start = $("#startTime").val();
+		let end = $("#endTime").val();
+		
+			
+		let startArr = start.split('-');
+		let endArr = end.split('-');
+			
+			
+		let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+		let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+			
+		
+		if(startDateCompare.getTime() > endDateCompare.getTime()){
+			Swal.fire({
+	            icon: 'error',                        
+	            title: '입력값을 확인해 주세요',   
+	            text: '시작 날짜가 종료 날짜보다 값이 큽니다.', 
+	        });
+		}else if(($("#startTime").val() !== "")&& ($("#endTime").val() !== "")){
+			$("#searchForm1").submit();
+		}else{
+			Swal.fire({
+	            icon: 'error',                        
+	            title: '입력값을 확인해 주세요',   
+	            text: '검색 기능을 실행하기 위해 필수적으로 날짜를 입력해 주셔야 합니다.', 
+	        });
+		}
+		 
+	}) 
+	</script>
+	
+</body>
+</html>

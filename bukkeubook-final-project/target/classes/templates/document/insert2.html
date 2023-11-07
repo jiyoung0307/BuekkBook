@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/document/expenditureWrite.css}">
+<link rel="stylesheet" th:href="@{/css/document/HR.css}">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+	</script>
+	 
+	<script src="/js/document/expenditure.js"></script>
+	<h4 class="mb-4" id="main-text">지출결의서 작성</h4>
+	<hr><br><br>
+
+	<div>
+		<button style="float: right; margin-right: 5%;" class="select btn"
+			type="button" id="back">목록으로</button>
+	</div>
+
+	<div class="total">
+		<br><br><br>
+		<h4 style="padding-left:30px;">결재라인 지정</h4>
+		<table class="tbl2" border="1px solid gray">
+			<tr>
+				<th></th>
+				<th>부서명</th>
+				<th>사원명</th>
+			</tr>
+			<tr>
+				<th>1단계 :</th>
+				<td id="selectDept"><select name="deptCode" id="deptCode">
+						<option value="">선택</option>
+						<!-- ajax -->
+				</select></td>
+				<td><select name="empList" id="empList">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>2단계 :</th>
+				<td><select name="deptCode2" id="deptCode2">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList2" id="empList2">
+						<option value=""></option>
+				</select></td>
+			</tr>
+			<tr>
+				<th>3단계 :</th>
+				<td><select name="deptCode3" id="deptCode3">
+						<option value="">선택</option>
+				</select></td>
+				<td><select name="empList3" id="empList3">
+						<option value=""></option>
+				</select></td>
+			</tr>
+		</table>
+		<br>
+		<button style="margin-left:50px;" class="select btn" type="button" id="clear">초기화</button>
+		<button class="select btn" type="button" onclick="selectacc()" style="margin-left:30px;">
+		단계 지정
+		</button>
+		<br><br>
+	</div>
+	<div class="total tbl3">
+		<br><br>
+		<h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          결재자 확인
+          </h4>
+          <table class="tbl3 ck" border="1px solid gray">
+            <tr>
+              <th>단계</th>
+              <th>부서</th>
+              <th>사번</th>
+              <th>결재자</th>
+            </tr>
+            <form action="/document/submitReport" method="post" id="submitReport">
+	            <tr>
+	              <th rowspan="3" id="step">
+	              	<input class="inp" type="hidden">
+	              </th>
+	              <td>
+	              	<input class="inp" type="hidden" id="stepNo" name="app1">
+	              	<input class="inp" type="text" id="deptName1" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco1"readonly> -->
+	              	<input class="inp" type="text" id="account1" name="approver1"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco1" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName2" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco2" readonly> -->
+	              	<input class="inp" type="text" id="account2" name="approver2"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco2" readonly>
+	              </td>
+	            </tr>
+	            <tr>
+	              <td>
+	              	<input class="inp" type="text" id="deptName3" readonly>
+	              </td>
+	              <td>
+	              	<!-- <input class="inp" id="acco3" readonly> -->
+	              	<input class="inp" type="text" id="account3" name="approver3"readonly>
+	              </td>
+	              <td>
+	              	<input class="inp" type="text" id="acco3" readonly>
+	              </td>
+	            </tr>
+	          </table>
+	          <input type="hidden" name="formNo2" value="2" >
+	          <input type="hidden" id="draftcnt2" name="tagCnt2">
+	          <input type="hidden" id="wrDate2" name="wrDate2">
+	          <input type="hidden" id="docStatus2" name="docStatus2">
+	          <!-- <input type="text" value="10" id="empNo2" name="empNo2"> -->
+	          <input type="hidden" id="submitTitle" name="submitTitle" placeholder="여긴 상신 제목이양">
+	          <input type="hidden" id="cnttt2" name="cnt2" readonly>
+          </form>
+          <br>
+      </div>
+	<br clear="both">
+	<div class="total">
+		<div id="writein">
+			<table border="1px solid gray" id="write" class="forms">
+				<tr>
+					<th class="write">제목</th>
+					<td class="write" colspan="6" contenteditable="true" id="title"></td>
+				</tr>
+				<tr>
+					<th class="write">번호</th>
+					<th class="write">내역</th>
+					<th class="write" colspan="2">금액</th>
+					<th class="write" colspan="2">비고</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td class="write ">1</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">2</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">3</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">4</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">5</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">6</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">7</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">8</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">9</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+					<tr>
+						<td class="write ">10</td>
+						<td class="write " contenteditable="true" id="cnt"></td>
+						<td class="write " colspan="2" contenteditable="true" id="amt"></td>
+						<td class="write " contenteditable="true" id="memo"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="margin-left:25px; margin-top:30px;">
+			<form id="temp" action="/document/tempStore" method="post">
+				<input type="hidden" name="formNo1" value="2" >
+		        <input type="hidden" id="draftcnt1" name="tagCnt1" placeholder="여긴 임시저장 태그내용이양">
+		        <input type="hidden" id="wrDate1" name="wrDate1">
+		        <input type="hidden" id="docStatus1" name="docStatus1">
+		        <!-- <input type="text" value="10" id="empNo1" name="empNo1"> -->
+		        <input type="hidden" id="docTitle1" name="docTitle1" placeholder="여긴 임시저장 제목이양">
+		        <input type="hidden" id="cnttt1" name="cnt1" readonly placeholder="여긴 임시저장 내용이양">
+				<button class="select btn" type="button" onclick="takeout()">반영하기</button>
+			</form>
+		</div>
+	</div>
+	<div class="total" id="insertin">
+		<table class="tbl" id="inserttbl">
+			<tr>
+				<th class="coloring view" colspan="7"><h5>지출결의서</h5></th>
+			</tr>
+			<tr>
+				<th class="coloring view">문서<br>번호</th>
+				<th class="read view" id="docnumber"></th>
+				<th rowspan="4" class="coloring view" style="width:60px">결재</th>
+				<th class="coloring view" id="selacc4">담당</th>
+				<th class="coloring view" id="selacc1">결재1</th>
+				<th class="coloring view" id="selacc2">결재2</th>
+				<th class="coloring view" id="selacc3">결재3</th>
+			</tr>
+			<tr>
+				<th class="coloring view">작성<br>일자</th>
+				<th id="date"></th>
+				<th rowspan="3" class="sign view" id="sign1"></th>
+				<th rowspan="3" class="sign view" id="sign2"></th>
+				<th rowspan="3" class="sign view" id="sign3"></th>
+				<th rowspan="3" class="sign view" id="sign4"></th>
+			</tr>
+			<tr>
+				<th class="coloring view">부서명</th>
+				<th class="view" id="dept2"></th>
+
+			</tr>
+			<tr>
+				<th class="coloring view">작성자</th>
+				<th class="view" id="writer2"></th>
+			</tr>
+			<tr>
+				<th class="coloring view">제목</th>
+				<td colspan="6" class="view" id="title2"></td>
+			</tr>
+			<tr>
+				<th class="coloring view">번호</th>
+				<th class="coloring view">내역</th>
+				<th class="coloring view" colspan="2">금액</th>
+				<th class="coloring view" colspan="3">비고</th>
+			</tr>
+			<tbody>
+				<tr>
+					<th class="coloring view">1</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">2</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">3</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">4</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">5</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">6</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">7</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">8</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">9</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+				<tr>
+					<th class="coloring view">10</th>
+					<td class="view" id="cnt"></td>
+					<td class="view" colspan="2" id="amt"></td>
+					<td class="view" colspan="3" id="memo"></td>
+				</tr>
+			</tbody>
+			<tr>
+				<th class="view coloring" colspan="2">합계</th>
+				<th class="view" colspan="2" id="sumamt"></th>
+				<th class="view coloring" colspan="3"></th>
+			</tr>
+		</table>
+		<input type="hidden" id="empSign">
+	</div>
+	<br clear="both">
+	<div class="right">
+		<button class="select btn in" type="button" onclick="sendData()">상신</button>
+		<input type="hidden" id="draftcnt">
+		<button class="select btn in" type="button" id="tempStore">임시저장</button>
+	</div>
+</body>
+</html>	

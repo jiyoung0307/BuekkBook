@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Insert title here</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="..css/common/style.css">
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	
+        <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">휴가 취소 조회</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+          <form class="search select">
+            <select class="searchback">
+              <option value="">None</option>
+              <option value="Department">부서</option>
+              <option value="EmpNo">사번</option>
+              <option value="EmpName">사원명</option>
+            </select>
+            <input class="searchinput" type="text" placeholder="검색어를 입력해주세요">
+          <button class="searchBtn" type="submit">검색하기</button>
+          </form>
+        </div><br><br>
+
+        <div id="restTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">휴가번호</th>
+                <th class="th1">부서</th>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">사용 기간</th>
+                <th class="th1">상세보기</th>
+              </tr>
+              <tr>
+                <td id="restNo">1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>인사부</td>
+                <td>EMP-01</td>
+                <td>장지영</td>
+                <td>2022/06/28 ~ 2022/06/29</td>
+                <td><button type="button" class="detail contents" onclick="location.href='restCancleDetail.html'">상세보기</button></td>
+              </tr>
+          </table>
+
+          <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a class="active" href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">6</a>
+            <a href="#">&raquo;</a>
+          </div>
+        </div>
+</body>
+</html>

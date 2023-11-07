@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/document/vacation.css}">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script>
+		     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+	</script>
+	<script src="/js/document/vacationDetail.js"></script>
+	<h4 class="mb-4" id="main-text">휴가 취소 신청서</h4>
+	<hr>
+	<br>
+	<br>
+
+	<div>
+		<button style="float: right; margin-right: 5%;" class="search btn"
+			type="button" id="back">목록으로</button>
+	</div>
+
+	<div>
+		<div class="total">
+			<table border="1px" class="tbl">
+				<thead>
+					<tr>
+						<th colspan="5" class="th coloring"><h3>휴가 취소 신청서</h3></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th class="th coloring">문서번호</th>
+						<td colspan="2" class="td" th:text="${canc.vacCancNo}">1</td>
+						<th class="th coloring">작성일자</th>
+						<td id="date2" class="td" th:text="${canc.vacCancDate}"></td>
+					</tr>
+					<tr>
+						<th class="th coloring">부서명</th>
+						<td colspan="2" class="td" id="dept2">ddd</td>
+						<th class="th coloring">직급</th>
+						<td class="td" id="empJobCode">dd</td>
+					</tr>
+					<tr>
+						<th class="th coloring">성명</th>
+						<td class="td" colspan="2" id="writer2">
+						</td>
+						<th class="th coloring">취소 휴가 서류 번호</th>
+						<td class="td vac" th:text="${canc.vacNo}" 
+							th:onclick="'location.href = \'' + @{|/document/vacationDetail/${ canc.vacNo }|} + '\''">
+						</td>
+					</tr>
+					<tr>
+						<th class="th coloring cnt">사유</th>
+						<td colspan="4" th:text="${canc.vacCancReason}" style="font-size:large; text-align:center;">
+						</td>
+					</tr>
+							<input type="hidden" id="empNo1" value="10" name="empNo" readonly>
+				</tbody>
+			</table>
+		</div>
+
+</body>
+</html>

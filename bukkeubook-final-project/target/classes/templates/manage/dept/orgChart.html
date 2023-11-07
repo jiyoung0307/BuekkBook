@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/manage/dept/deptSelect.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+    <h2 class="mb-4" id="main-text">조직도</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text">부서 목록</h5>
+    <br>
+
+    <div id="textTable" style="text-align:-webkit-center">
+      <table id="sampleTable">
+          <tr>
+            <th class="th1">부서코드</th>
+            <th class="th1">부서명</th>
+            <th class="th1">부서대표번호</th>
+          </tr>
+          <tr class="trs" th:each="dept : ${ deptList }" th:onclick="'location.href = \'' + @{/deptCommon/chartDetail/(deptCode=${dept.deptCode})} + '\''">
+            <td th:text="${ dept.deptCode }"></td>
+            <td th:text="${ dept.deptName }"></td>
+            <td th:text="${ dept.deptRepPhone }"></td>
+          </tr>
+      </table>
+    </div>
+
+    <script th:inline="javascript">
+    
+	    $(".trs").on( "mouseover", function() {
+			$(this).css( "background-color", "#eeeeee" );
+			$(this).children("td").css( "cursor", "pointer" );
+		});
+		$(".trs").on( "mouseleave", function() {
+			$(this).css( "background-color", "white" );
+		});	
+    
+    </script>
+  </body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/output.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<script>$.noConflict();</script> 
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/output">출고관리</a></h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/output">출고신청</a></h5>
+        <br>
+		
+		<div class="search-area" align="center">
+			<form id="loginForm" name="searchForm" action="/book/output" method="get" style="display: inline-block">
+					<select th:with="searchCondition = ${selectCriteria.searchCondition}"
+						id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+						<option value="no" th:selected="${ searchCondition } == 'no'">도서코드</option>
+						<option value="name" th:selected="${ searchCondition } == 'name'">제목</option>
+						<option value="author" th:selected="${ searchCondition } == 'author'">저자</option>
+					</select>
+				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 -->
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" maxlength=30 th:value="${selectCriteria.searchValue}">
+				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
+			</form>
+		</div>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div class="searchTable1" id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+          	<thead>
+              <tr>
+	            <th class="th1 topTh1">도서코드</th>
+	            <th class="th1 topTh1">제목</th>
+	            <th class="th1 topTh1">저자</th>
+	            <th class="th1 topTh1">가격</th>
+	            <th class="th1 topTh1">창고보유재고</th>
+	            <th class="th1 topTh1">매장보유재고</th>
+	            <th class="th1 topTh1"></th>
+       		  </tr>
+       		 </thead>
+       		  <tbody>
+              <tr class="tr1" th:each="bookList : ${ bookList }">
+                <td class="td1" th:text="${ bookList.no }"></td>
+                <td class="td2" id="td2" th:text="${ bookList.name }"></td>
+                <td class="td3" th:text="${ bookList.author }"></td>
+            	<td class="td4" th:text="${ #numbers.formatInteger(bookList.price, 3, 'COMMA') + '원' }"></td>
+            	<td class="td5" th:text="${ bookList.whSt + ' ea' }"></td>
+            	<td class="td6" th:text="${ bookList.storeSt + ' ea' }"></td>
+            	<td class="td7"><button onclick="addList()" class="productBtn newBookBtn addBtn">추가</button></td>
+              </tr>
+              </tbody>
+          </table>
+          </div><br>
+          <!-- <div th:replace="books/bookList/bookpagingInput2.html"></div> -->
+          <br><br><br><br>   
+          <form id="outputForm" action="/book/outputReceipt" method="post">
+          <div id="textTable" style="text-align:-webkit-center">
+	          <table class="sampleTable" id="bottomTable">
+	              <tr>
+	                <th class="th1">도서코드</th>
+	                <th class="th1">제목</th>
+	                <th class="th1">저자</th>
+	                <th class="th1">가격</th>
+	                <th class="th1">창고보유재고</th>
+	                <th class="th1">매장보유재고</th>
+	                <th class="th1">출고수량</th>
+	                <th class="th1"><button type="button" onclick="AllDel()" class="productBtn delBtn">전체삭제</button></th>
+	              </tr>
+	          </table><br><br>
+	        <div id="newBookDiv">
+	          <input type="hidden" id="rownum" name="rownum" value="0">
+	          <button type="button" class="productBtn newBookBtn" id="formCheck">출고신청</button>
+	          <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+	        </div>      
+         </form> 
+        </div> <!------------------------ 본문 종료---------------------------->
+	
+	<br><br>
+	<script th:inline="javascript">
+		
+		
+	</script>
+	<script th:inline="javascript">
+		var n = 0;
+		var existData = [];
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
+		
+		/* 11 */
+		$('#inputFind').blur(function(){
+			const prodExp = /^[0-9]{1,6}$/;
+			if(!prodExp.test($('#inputFind').val()) && $('#searchCondition').val() == 'no' && $('#inputFind').val() != ""){
+				Swal.fire({
+                    icon: 'error',
+                    title: '숫자로만 검색 가능합니다.',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
+		
+		
+		
+	
+		$('#findBtn').click(function(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+            	Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '검색어를 입력 해 주세요.',
+	                
+            	})} else if(searchCondition.value == 'select'){
+           		Swal.fire({
+   	                icon: 'question',
+   	                title: '',
+   	                text: '분류를 선택 해 주세요.',
+            	})} else{
+		   			/* $('#loginForm').submit(); */
+		   			$.ajax({
+		   				type: "GET",
+		   				url: "/book/getSearchList",
+		   				data: $("form[name=searchForm]").serialize(),
+		   				success: function(result){
+		   					//테이블 초기화
+		   					$("#sampleTable > tbody").empty();
+		   					if(result.length >= 1){
+		   						result.forEach(function(item){
+		   							st=Number(item.whSt)+Number(item.storeSt)
+		   							pr=Number(item.price).toLocaleString();
+		   							str="<tr>";
+		   							str+="<td>"+item.no+"</td>";
+		   							str+="<td>"+item.name+"</td>";
+		   							str+="<td>"+item.author+"</td>";
+		   							str+="<td>"+pr+"원</td>";
+		   							str+="<td>"+item.whSt+"ea</td>";
+		   							str+="<td>"+item.storeSt+"ea</td>";
+		   							/* str+="<td><button class='btn' type='button'>목록에 추가</button></td>"; */
+		   							str+="<td><button class='productBtn newBookBtn addBtn'>추가</button></td>";
+		   							str+="</tr>";
+		   							$("#sampleTable").append(str);
+		   						})
+		   					}
+		   		
+		   		
+		   		
+		   		
+		   		var rownum = 0;
+		   		$('.addBtn').click(function(){
+		   			
+		   			const table = document.getElementById("bottomTable");
+		   			
+		   			var bookInfo = new Array();
+		   	        var checkBtn = $(this);
+		   	        var tr = checkBtn.parent().parent();
+		   	        var td = tr.children();
+		   	        
+		   	    	var success = 1;
+		   	        
+		   	    	for(var i = 0; i < existData.length; i++){
+		            	if(td.eq(0).text() === existData[i]){
+		            		success = 0;
+		            	}
+		            }
+		   	    	
+		   	    	
+		   	        var whSt = td.eq(4).text();
+		   	        var bookNo = td.eq(0).text();
+		   	     if(success == 0){
+						console.log("추가안해");
+						Swal.fire({
+		            		icon: 'error',
+		            		title: '잘못된 요청',
+		            		text: '이미 선택된 도서입니다. 다시 한번 확인해주세요.',
+		            	})
+		            } else if(success == 1){
+		            	console.log("추가함"); 
+			            existData.push(td.eq(0).text());
+			            n += 1;
+		   	        if(whSt.substr(0 , 1) > 0){
+		   	            
+		   	            
+		   	            
+		   	            const newRow = table.insertRow();
+		   	            
+		   	            const newCell1 = newRow.insertCell(0);
+		   	            const newCell2 = newRow.insertCell(1);
+		   	            const newCell3 = newRow.insertCell(2);
+		   	            const newCell4 = newRow.insertCell(3);
+		   	            const newCell5 = newRow.insertCell(4);
+		   	            const newCell6 = newRow.insertCell(5);
+		   	            const newCell7 = newRow.insertCell(6);
+		   	            const newCell8 = newRow.insertCell(7);
+		   	            
+		   	            var index = newRow.rowIndex;
+		   	            var no = "no" + n;
+		   	            var amount = "amount" + n;
+		   	            
+		   	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
+		   	            
+		   	            newCell1.innerHTML = td.eq(0).text()  + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
+		   	            newCell2.innerHTML = td.eq(1).text();
+		   	            newCell3.innerHTML = td.eq(2).text();
+		   	            newCell4.innerHTML = td.eq(3).text();
+		   	            newCell5.innerHTML = td.eq(4).text();
+		   	            newCell6.innerHTML = td.eq(5).text();
+		   	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="0" min="0">';
+		   	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
+		   	            
+		   	            /* rownum = document.getElementById("rownum");
+		   	            rownum.value = index; */
+		   	            
+		   	            $('.outputValue').blur(function(){
+		   	    			const test1 = $('.outputValue').val();
+		   	    			if( $('.outputValue').val() < 0){
+		   	    	  			Swal.fire({
+		   	    	                  icon: 'question',
+		   	    	                  title: '입고수량을 입력 해 주세요!',
+		   	    	                  text: '음수는 불가능 합니다.',
+		   	    	              }).then(function(){
+		   	    		    			$('.outputValue').val(0);
+		   	    		    			$('.outputValue').focus();
+		   	    	              })
+		   	    	 			  return false;
+		   	    	  		}
+		   	    			const prodExp = /^[0-9]{1,6}$/;
+		   	    			if(!prodExp.test($('.outputValue').val())){
+		   	    	  			Swal.fire({
+		   	    	                  icon: 'question',
+		   	    	                  title: '입고수량을 입력 해 주세요!',
+		   	    	                  text: '숫자만 입력 가능 합니다.',
+		   	    	              }).then(function(){
+		   	    		    			$('.outputValue').val(0);
+		   	    		    			$('.outputValue').focus();
+		   	    	              })
+		   	    	 			  return false;
+		   	    	  		}
+		   	    			
+		   	    		});
+		   	            
+		   	         var $outputValue = $('.outputValue');
+				        $outputValue.change(function () {
+				        	
+				        	for (var i = 1; i <= $outputValue.length; i++) {
+				        		var test = document.getElementById("bottomTable").getElementsByTagName("tr")[i].getElementsByTagName("td")[4].innerHTML;
+				        		var store = Number(test.replace('ea',""))
+				        		var input = $outputValue.eq(i-1).val()
+				        		var d =  Number(($('#bottomTable tr:eq(' + i + ')>td:eq(5)').html()).replace('ea', ""));
+				        		
+				        		console.log((i) + ' 행 ' + ' 매장재고 - ' + store);
+				        		console.log((i) + ' 행 ' + ' 입고수량 - ' + input);
+				        		if(input > store){
+		   							Swal.fire({
+		   			                    icon: 'warning',
+		   			                    title: '재고수량을 확인 해 주세요!',
+		   			                    text: '창고보유재고 이상으로 출고할 수 없습니다.',
+		   		              		 }).then(function(){
+		   									$(document).ready(function() {
+		   								        $('.outputValue').val(0);
+		   								   	});
+		   								});
+		   						}
+			        		}
+			        	});
+		   	            
+		   	        } else {
+		   	        	Swal.fire({
+		   	                icon: 'warning',
+		   	                title: '재고수량을 확인 해 주세요!',
+		   	                text: '창고재고 수량이 1ea 이상인 도서만 출고 가능합니다.',
+		   	           		 });
+		   	   		   }
+		            }
+		   		});	
+		   				}
+		   			})
+	   			};
+			});
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		var rownum = 0;
+		$('.addBtn').click(function(){
+			
+			const table = document.getElementById("bottomTable");
+			
+			var bookInfo = new Array();
+            var checkBtn = $(this);
+            var tr = checkBtn.parent().parent();
+            var td = tr.children();
+            
+            var whSt = td.eq(4).text();
+            var bookNo = td.eq(0).text();
+            
+            if(whSt.substr(0 , 1) > 0){
+	            
+	            
+	            
+	            const newRow = table.insertRow();
+	            
+	            const newCell1 = newRow.insertCell(0);
+	            const newCell2 = newRow.insertCell(1);
+	            const newCell3 = newRow.insertCell(2);
+	            const newCell4 = newRow.insertCell(3);
+	            const newCell5 = newRow.insertCell(4);
+	            const newCell6 = newRow.insertCell(5);
+	            const newCell7 = newRow.insertCell(6);
+	            const newCell8 = newRow.insertCell(7);
+	            
+	            var index = newRow.rowIndex;
+	            var no = "no" + index;
+	            var amount = "amount" + index;
+	            console.log(bookNo);
+	            
+	            var test = document.getElementById("bottomTable").getElementsByTagName("tr")[1].getElementsByTagName("td")[0];
+	            console.log(test);
+	            
+	            newCell1.innerHTML = td.eq(0).text()  + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
+	            newCell2.innerHTML = td.eq(1).text();
+	            newCell3.innerHTML = td.eq(2).text();
+	            newCell4.innerHTML = td.eq(3).text();
+	            newCell5.innerHTML = td.eq(4).text();
+	            newCell6.innerHTML = td.eq(5).text();
+	            newCell7.innerHTML = '<input type="number" class="outputValue" name="' + amount + '" value="0" min="0">';
+	            newCell8.innerHTML = '<input class="productBtn delBtn" type="button" value="삭제" onclick="SomeDeleteRowFunction(this)">';
+	            
+	            rownum = document.getElementById("rownum");
+	            rownum.value = index;
+	            
+	            $('.outputValue').blur(function(){
+	    			const test1 = $('.outputValue').val();
+	    			if( $('.outputValue').val() < 0){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '음수는 불가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			const prodExp = /^[0-9]{1,6}$/;
+	    			if(!prodExp.test($('.outputValue').val())){
+	    	  			Swal.fire({
+	    	                  icon: 'question',
+	    	                  title: '입고수량을 입력 해 주세요!',
+	    	                  text: '숫자만 입력 가능 합니다.',
+	    	              }).then(function(){
+	    		    			$('.outputValue').val(0);
+	    		    			$('.outputValue').focus();
+	    	              })
+	    	 			  return false;
+	    	  		}
+	    			
+	    		});
+	            
+	           
+	    		
+	            
+	            $(document).ready(function(){
+		        	$('.outputValue').change( function(){
+						var apap = $(this);
+						var tr2 = apap.parent().parent();
+		       			var td2 = tr2.children();
+				        var a = Number(td2.eq(4).text().substr(0, 2));
+				        var b = $('.outputValue').val();
+				        const afaf = '';
+				        console.log('a' + a);
+				        console.log('b' + b);
+				        
+			            if(a < b){
+							Swal.fire({
+			                    icon: 'warning',
+			                    title: '재고수량을 확인 해 주세요!',
+			                    text: '창고보유재고 이상으로 출고할 수 없습니다.',
+		              		 }).then(function(){
+									$(document).ready(function() {
+								        $('.outputValue').val(a);
+								   	});
+								});
+						}
+			        });
+	            });
+	            
+            } else {
+            	Swal.fire({
+                    icon: 'warning',
+                    title: '재고수량을 확인 해 주세요!',
+                    text: '수량이 1ea 이상인 도서만 출고 가능합니다.',
+                });
+            }
+		});
+		
+		
+		 $('#formCheck').click(function(){
+			 const table = document.getElementById("bottomTable");
+			 row = table.rows.length;
+			 console.log(row);
+ 			if( row == 1 ){
+ 	  			Swal.fire({
+ 	                  icon: 'question',
+ 	                  title: '출고하실 도서를 추가해 주세요',
+ 	                  text: '',
+ 	              })
+ 	 			  return false;
+ 	  		};
+ 	  		if( $('.outputValue').val() == 0){
+ 	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '수량을 다시 확인 해 주세요.',
+	                  text: '',
+	              })
+	 			  return false;
+ 	  		}
+ 	  		/* const table3 = document.getElementById('bottomTable');
+	  		var tableRows = table3.rows.length - 1; */
+	  		$('#rownum').val(n);
+ 	  		$("#outputForm").submit();
+         });
+		
+		
+	
+	    /* 행 전체삭제 */
+	    function AllDel(){
+	      $('#bottomTable tr:not(:first)').remove();
+	    }
+	
+	    /* 선택한 행 삭제 */
+	    function SomeDeleteRowFunction(o){
+	      var p=o.parentNode.parentNode;
+	         p.parentNode.removeChild(p);
+	    }   
+	</script>
+	
+	<script th:inline="javascript">
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		            	location.href="/book/outputList";
+		            }
+		        })
+		    });
+		});
+      </script> 
+
+</body>
+</html>

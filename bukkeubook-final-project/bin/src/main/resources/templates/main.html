@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<style>
+	
+</style>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	
+	
+        <div class="border-test9">
+          <div class="profile">
+            <div class="leftMar50p">
+                  <img class="proimg"src="/images/main/orgChart/logo2.jpg">
+                </div>
+              </div>
+              <h5 class="mainNick1">부서 : 총무부</h5>
+              <h5 class="mainNick2">이름 : 김총무</h5>
+            </div>
+            <div class="mainDiv1">
+              <div id="textTable" class="mainDiv2">
+                <div>
+                  <h4 class="mainh4">Authoriztion</h4>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                      </tr>
+                      <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                      </tr>
+                      <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                      </tr>
+                      <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div> 
+              
+            </div>
+            <div class="container p-5 my-5 border maindiv3" style="width: 90%; height: 300px; float:left; margin-top: 50px; margin-left: 50px;">
+              <div>
+                <h4 style="text-align: left; font-family: Bold;">EnterPrise Board List</h4>
+                <table id="sampleTable">
+                  <tr>
+                    <th class="th1">샘플입니다.</th>
+                    <th class="th1">샘플입니다.</th>
+                    <th class="th1">샘플입니다.</th>
+                    <th class="th1">샘플입니다.</th>
+                </tr>
+                <tr>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                </tr>
+                <tr>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                </tr>
+                <tr>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                  <td>샘플입니다.</td>
+                </tr>
+                
+              </table>
+            </div>
+            
+          </div>
+         <div id='calendar' style="width: 80%; float:left; margin-left: 50px; margin-top: 20px;">
+
+        </div>  
+       
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+    
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'listDay,listWeek'
+          },
+    
+          // customize the button names,
+          // otherwise they'd all just say "list"
+          views: {
+            listDay: { buttonText: 'list day' },
+            listWeek: { buttonText: 'list week' }
+          },
+    
+          initialView: 'listWeek',
+          initialDate: '2020-09-12',
+          navLinks: true, // can click day/week names to navigate views
+          editable: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+          events: [
+            {
+              title: 'All Day Event',
+              start: '2020-09-01'
+            },
+            {
+              title: 'Long Event',
+              start: '2020-09-07',
+              end: '2020-09-10'
+            },
+            {
+              groupId: 999,
+              title: 'Repeating Event',
+              start: '2020-09-09T16:00:00'
+            },
+            {
+              groupId: 999,
+              title: 'Repeating Event',
+              start: '2020-09-16T16:00:00'
+            },
+            {
+              title: 'Conference',
+              start: '2020-09-11',
+              end: '2020-09-13'
+            },
+            {
+              title: 'Meeting',
+              start: '2020-09-12T10:30:00',
+              end: '2020-09-12T12:30:00'
+            },
+            {
+              title: 'Lunch',
+              start: '2020-09-12T12:00:00'
+            },
+            {
+              title: 'Meeting',
+              start: '2020-09-12T14:30:00'
+            },
+            {
+              title: 'Happy Hour',
+              start: '2020-09-12T17:30:00'
+            },
+            {
+              title: 'Dinner',
+              start: '2020-09-12T20:00:00'
+            },
+            {
+              title: 'Birthday Party',
+              start: '2020-09-13T07:00:00'
+            },
+            {
+              title: 'Click for Google',
+              url: 'http://google.com/',
+              start: '2020-09-28'
+            }
+          ]
+        });
+    
+        calendar.render();
+      });
+    
+    </script>
+</body>
+</html>

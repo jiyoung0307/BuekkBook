@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/finance/tradeRegist.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+  <body>
+		<div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래내역 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래내역 등록</h5>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+        	<form id="registForm" action="/trade/regist" method="post">
+	            <table id="sampleTable" align="center">
+	                <tr>
+	                    <td>거래일자</td>
+	                    <td><input id="tlDate" type="date" name="tlDate" required></td>
+	                </tr>
+	                <tr>
+	                    <td>도서번호</td>
+	                    <td>
+	                    	<input type="text" id="bkNo" name="bkNo" placeholder="도서번호를 입력하세요." disabled required>
+	                    	<input type="hidden" id="bkNo1" name="bkNo">
+	                    	<button class="btn" onclick="popupForBook()" type="button">검색</button>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>도서수량</td>
+	                    <td><input type="number" id="tlAmount" name="tlAmount" min="1" value="1" required></td>
+	                </tr>
+	                <tr>
+	                    <td>거래처번호</td>
+	                    <td>
+	                    	<input type="text" id="cntNo" name="cntNo" placeholder="거래처 번호를 입력하세요." disabled required>
+	                    	<input type="hidden" id="cntNo1" name="cntNo">
+	                    	<button class="btn" onclick="popupForClient()" type="button">검색</button>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                    	상세내용<br>
+	                    	(100자 제한)
+	                    </td>
+	                    <td>
+	                    	<input id="tlDetail" type="text" name="tlDetail" maxlength="100" placeholder="상세내용을 입력하세요.">
+	                    </td>
+	                </tr>
+	            </table>
+                <button class="btn bb" type="button" onclick="checkComplete()">등록</button>
+	            <button class="btn bb" type="button" onclick="checkCancel()">취소</button>
+        	</form>
+    </div> <!------------------------ 본문 종료---------------------------->
+
+    <script th:inline="javascript">
+    
+	    $('#tlAmount').blur(function(){
+			const test1 = $('#tlAmount').val();
+			if( $('#tlAmount').val() < 0){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '입력한 수량을 확인해 주세요!',
+	                  text: '음수는 불가능 합니다.',
+	              }).then(function(){
+		    			$('#tlAmount').val(1);
+		    			$('#tlAmount').focus();
+	              })
+	 			  return false;
+	  		}
+			if($('#tlAmount').val() > 999){
+				Swal.fire({
+	                  icon: 'question',
+	                  title: '입력한 수량을 확인해 주세요!',
+	                  text: '999보다 큰 수는 입력이 불가능 합니다.',
+	              }).then(function(){
+		    			$('#tlAmount').val(1);
+		    			$('#tlAmount').focus();
+	              })
+	 			  return false;
+			}
+			const prodExp = /^[0-9]{1,3}$/;
+			if(!prodExp.test($('#tlAmount').val())){
+	  			Swal.fire({
+	                  icon: 'question',
+	                  title: '입력한 수량을 확인해 주세요!',
+	                  text: '숫자만 입력 가능 합니다.',
+	              }).then(function(){
+		    			$('#tlAmount').val(1);
+		    			$('#tlAmount').focus();
+	              })
+	 			  return false;
+	  		}
+			
+		});	
+    
+        function popupForClient(){
+            var url = "/trade/clientPopup";
+            var name = "client_search";
+            var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        }
+
+        function popupForBook(){
+            var url = "/trade/bookPopup";
+            var name = "book_search";
+            var option = "width = 1000, height = 600, top = 100, left = 200, location = no"
+            window.open(url, name, option);
+        }
+
+        function addClient(cntNo){
+            $("#cntNo").val(cntNo);
+            $("#cntNo1").val(cntNo);
+        }
+
+        function addBook(bkNo){
+            $("#bkNo").val(bkNo);
+            $("#bkNo1").val(bkNo);
+        }
+
+        function checkComplete(){
+        	const prodExp = /^[0-9]{1,6}$/;
+        	const pattern_spc = /[~!@#$%^&*()+|<>?:{}]/;
+        	
+        	if($('#tlDate').val() == ""){
+        		Swal.fire({
+  					icon: 'error',
+  					title: '입력 오류',
+  					text: '거래날짜를 입력해주세요'
+  				})
+        	} else if($('#bkNo1').val() == ""){
+        		Swal.fire({
+  					icon: 'error',
+  					title: '입력 오류',
+  					text: '도서번호를 입력해주세요'
+  				})
+        	} else if($('#cntNo1').val() == ""){
+        		Swal.fire({
+  					icon: 'error',
+  					title: '입력 오류',
+  					text: '거래처번호를 입력해주세요'
+  				})
+        	} else if($('#tlAmount').val() == ""){
+        		Swal.fire({
+  					icon: 'error',
+  					title: '입력 오류',
+  					text: '수량을 입력해주세요'
+  				})
+        	} else if($('#tlDetail').val() == "" || pattern_spc.test($('#tlDetail').val())){
+        		Swal.fire({
+  					icon: 'error',
+  					title: '입력 오류',
+  					text: '공백이거나 태그 문자가 포함되어 있습니다.'
+  				})
+        	} else{
+        		Swal.fire({
+            		icon: 'warning',
+            		title: '등록 확인',
+            		text: '거래내역 등록을 진행하시겠습니까?',
+            		showCancelButton: true,
+            		confirmButtonText: '확인',
+            		cancelButtonText: '취소'
+            	}).then((result) => {
+            		if(result.isConfirmed){
+            			$("#registForm").submit();
+            		}
+            	});
+        	}
+          }
+          
+          function checkCancel(){
+        	  Swal.fire({
+      	      		icon: 'warning',
+      	      		title: '취소 확인',
+      	      		text: '정말로 거래내역 등록을 취소하시겠습니까? 입력한 내용들은 저장되지 않습니다.',
+      	      		showCancelButton: true,
+      	      		confirmButtonText: '확인',
+      	      		cancelButtonText: '취소'
+      	      	}).then((result) => {
+      	      		if(result.isConfirmed){
+      	      			location="/trade/select"
+      	      		}
+      	      	});
+          }
+    </script>
+  </body>
+</html>

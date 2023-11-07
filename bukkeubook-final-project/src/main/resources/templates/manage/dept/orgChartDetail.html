@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+    
+        <h2 class="mb-4" id="main-text">조직도</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">상세 정보</h5>
+        <br>
+
+        <div id="textTable" style="text-align:-webkit-center">
+		      <table id="sampleTable">
+		          <tr>
+		          	<td>부서번호 : </td>
+		          	<td th:text="${ dept.deptCode }"></td>
+		          </tr>
+		          <tr>
+		          	<td>부서명 : </td>
+		          	<td th:text="${ dept.deptName }"></td>
+		          </tr>
+		          <tr>
+		          	<td>부서 대표 번호 : </td>
+		          	<td th:text="${ dept.deptRepPhone }"></td>
+		          </tr>
+		    </table>
+		    <br><br>
+		    <table id="sampleTable">
+		    	<tr>
+		    		<td colspan="4">부서원</td>
+		    	</tr>
+		    	<tr>
+		    		<th>사원번호</th>
+		    		<th>사원명</th>
+		    		<th>직책</th>
+		    		<th>연락처</th>
+		    	</tr>
+      			<tr th:each="emp : ${ dept.empList }" >
+		            <td th:text="${ emp.empNo }"></td>
+		            <td th:text="${ emp.empName }"></td>
+		            <td th:text="${ emp.empJobCode }"></td>
+		            <td th:text="${ emp.empPhone1 + '-' + emp.empPhone2 + '-' + emp.empPhone3}"></td>
+		        </tr>
+       		</table>
+		  </div>
+
+          <div class="btnMenu" style="text-align:-webkit-center">
+	          <button class="btn" type="button" onclick="location.href='/dept/select'">목록으로</button>
+          </div>
+
+  </body>
+</html>

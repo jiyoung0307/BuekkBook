@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/finance/clientRegist.css}">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+
+        <h2 class="mb-4" id="main-text">거래처 관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">거래처 등록</h5>
+        <br>
+
+        <div id="textTable" style="text-align:-webkit-center">
+            <form id="registForm" action="/client/regist" method="post">
+                <table id="sampleTable" align="center">
+                    <tr>
+                        <th class="th1" colspan="4">거래처 정보 입력</th>
+                    </tr>
+                    <tr>
+                        <td>거래처명</td>
+                        <td colspan="3"><input id="cntName" type="text" name="cntName" placeholder="거래처 이름을 입력하세요." maxlength="30"></td>
+                    </tr>
+                    <tr>
+                        <td>업종</td>
+                        <td><input id="cntCate" type="text" name="cntCate" placeholder="업종을 입력하세요." maxlength="30"></td>
+                        <td>사업자등록번호</td>
+                        <td><input id="cntRegNo" type="text" name="cntRegNo" placeholder="사업자등록번호를 입력하세요"></td>
+                    </tr>
+                    <tr>
+                        <td>업태</td>
+                        <td><input id="cntType" type="text" name="cntType" placeholder="업태를 입력하세요." maxlength="30"></td>
+                        <td>법인등록번호</td>
+                        <td><input id="corpRegNo" type="text" name="corpRegNo" placeholder="법인등록번호를 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <td>대표자</td>
+                        <td colspan="3"><input id="cntRepName" type="text" name="cntRepName" placeholder="대표자명을 입력하세요." maxlength="10"></td>
+                    </tr>
+                    <tr>
+                        <td>개업일</td>
+                        <td colspan="3"><input id="cntOpenDate" type="date" name="cntOpenDate"></td>
+                    </tr>
+                    <tr>
+                        <td>소재지</td>
+                        <td colspan="3"><input id="cntAddress" class="addr" type="text" name="cntAddress" maxlength="100" placeholder="소재지를 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td><input id="cntPhone" type="text" name="cntPhone" placeholder="연락처를 입력하세요."></td>
+                        <td>담당자</td>
+                        <td><input id="cntManaName" type="text" name="cntManaName" placeholder="담당자명을 입력하세요" maxlength="10"></td>
+                    </tr>
+                    <tr>
+                        <td>이메일</td>
+                        <td><input id="cntEmail" type="email" name="cntEmail" placeholder="이메일을 입력하세요."></td>
+                        <td>담당자 연락처</td>
+                        <td><input id="cntManaPhone" type="text" name="cntManaPhone" placeholder="담당자 연락처를 입력하세요."></td>
+                    </tr>
+                    <tr>
+                        <td>FAX</td>
+                        <td><input id="cntFax" type="text" name="cntFax" placeholder="FAX를 입력하세요."></td>
+                        <td>담당자 이메일</td>
+                        <td><input id="cntManaEmail" type="email" name="cntManaEmail" placeholder="담당자 이메일을 입력하세요."></td>
+                    </tr>
+                </table>
+                <button class="btn" type="button" onclick="checkComplete()">등록</button>
+                <button class="btn" type="button" onclick="checkCancel()">취소</button>
+            </form>
+        </div> <!------------------------ 본문 종료---------------------------->
+
+    <script>
+    
+    $('#cntRegNo').blur(function(){
+		const prodExp = /([0-9]{3})-?([0-9]{2})-?([0-9]{5})/;
+		if(!prodExp.test($('#cntRegNo').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 사업자등록번호 양식을 입력해주세요',
+              }).then(function(){
+	    			$('#cntRegNo').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#corpRegNo').blur(function(){
+		const prodExp = /^([0-9]{6})\-([0-9]{6})$/;
+		if(!prodExp.test($('#corpRegNo').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 법인등록번호 양식을 입력해주세요',
+              }).then(function(){
+	    			$('#corpRegNo').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntPhone').blur(function(){
+		const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		if(!prodExp.test($('#cntPhone').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 전화번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntPhone').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntManaPhone').blur(function(){
+		const prodExp = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		if(!prodExp.test($('#cntManaPhone').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 전화번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntManaPhone').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntFax').blur(function(){
+		const prodExp = /([0-9]{2})-?([0-9]{3})-?([0-9]{4})/;
+		if(!prodExp.test($('#cntFax').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 FAX번호 형식을 입력하세요.',
+              }).then(function(){
+	    			$('#cntFax').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntEmail').blur(function(){
+    	const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		if(!regEmail.test($('#cntEmail').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 이메일 주소를 입력해주세요.',
+              }).then(function(){
+	    			$('#cntEmail').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    $('#cntManaEmail').blur(function(){
+    	const regEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+		if(!regEmail.test($('#cntManaEmail').val())){
+  			Swal.fire({
+                  icon: 'question',
+                  title: '잘못된 입력 형식!',
+                  text: '올바른 이메일 주소를 입력해주세요.',
+              }).then(function(){
+	    			$('#cntManaEmail').val("");
+              })
+ 			  return false;
+  		}
+	});	
+    
+    function checkComplete(){
+    	const prodExp = /^[0-9]{1,6}$/;
+    	const pattern_spc = /[~!#$%^&*()+|<>?:{}]/;
+    	
+    	if($('#cntName').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '거래처명을 입력해주세요'
+				})
+    	} else if($('#cntCate').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '업종을 입력해주세요'
+				})
+    	} else if($('#cntRegNo').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '사업자등록번호를 입력해주세요'
+				})
+    	} else if($('#cntType').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '업태를 입력해주세요'
+				})
+    	} else if($('#corpRegNo').val() == ""){
+    		Swal.fire({
+					icon: 'error',
+					title: '입력 오류',
+					text: '법인등록번호를 입력해주세요.'
+				})
+    	} else if($('#cntRepName').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '대표자명을 입력해주세요'
+			})
+		} else if($('#cntOpenDate').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '개업일을 입력해주세요'
+			})
+		} else if($('#cntAddress').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '소재지를 입력해주세요.'
+			})
+		} else if($('#cntPhone').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '연락처를 입력해주세요.'
+			})
+		} else if($('#cntManaName').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자명을 입력해주세요.'
+			})
+		} else if($('#cntEmail').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '이메일을 입력해주세요.'
+			})
+		} else if($('#cntManaPhone').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자 연락처를 입력해주세요.'
+			})
+		} else if($('#cntFax').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '팩스를 입력해주세요.'
+			})
+		} else if($('#cntManaEmail').val() == ""){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '담당자 이메일을 입력해주세요.'
+			})
+		} else if(pattern_spc.test($('#cntName').val()) || pattern_spc.test($('#cntCate').val()) || 
+				pattern_spc.test($('#cntType').val()) || pattern_spc.test($('#cntRepName').val()) ||
+				pattern_spc.test($('#cntAddress').val()) || pattern_spc.test($('#cntManaName').val())){
+    		Swal.fire({
+				icon: 'error',
+				title: '입력 오류',
+				text: '특수문자 및 태그 문자가 포함되어 있습니다.'
+			})
+		} else{
+    		Swal.fire({
+        		icon: 'warning',
+        		title: '등록 확인',
+        		text: '거래처 등록을 진행하시겠습니까?',
+        		showCancelButton: true,
+        		confirmButtonText: '확인',
+        		cancelButtonText: '취소'
+        	}).then((result) => {
+        		if(result.isConfirmed){
+        			$("#registForm").submit();
+        		}
+        	});
+    	}
+      }
+    
+    function checkCancel(){
+  	  Swal.fire({
+	      		icon: 'warning',
+	      		title: '취소 확인',
+	      		text: '정말로 거래처 등록을 취소하시겠습니까?',
+	      		showCancelButton: true,
+	      		confirmButtonText: '확인',
+	      		cancelButtonText: '취소'
+	      	}).then((result) => {
+	      		if(result.isConfirmed){
+	      			location="/client/select"
+	      		}
+	      	});
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+        <h2 class="mb-4" id="main-text">근태관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원근태내역</h5>
+        <br>
+        
+	        <div>
+         	 <form action="/check/findCheck" method="get" style="width:500px; height:300px; margin:auto;" id="searchForm">
+         	 	<div style="margin-left:50px;">
+          		<label>시작일
+	            	 <input type="date" class="form-control" style="width:300px;" name="attStart" id="startDay">
+	             </label>
+	            	 <br>
+	            <label>종료일
+		              <input type="date" class="form-control" style="width:300px; margin:auto;" name="attEnd" id="endDay">
+		              <input type="hidden" name="currentPage" value="1">
+	             </label>
+	             </div>
+             	 <div>
+		             <button class="search btn" type="button" id="submitButton">검색</button> 
+		            <input class="search in" type="text" placeholder="검색어 입력" name="searchValue" th:value="${selectCriteria.searchValue}">
+		            <select class="search select" name="searchCondition" th:with="searchCondition = ${selectCriteria.searchCondition}"  required>
+		              <option value="select">분류</option>
+		              <option value="empNo" th:selected="${ searchCondition } == 'empNo'">사원번호</option>
+             		  <option value="empName" th:selected="${ searchCondition } == 'empName'">이름</option>
+		            </select>
+            	</div>
+         	 </form>
+		   </div>
+        
+        <div>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">출근일</th>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">출근시간</th>
+                <th class="th1">퇴근시간</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(attendList)}">
+               		    <td class="td1" colspan="5">검색 결과가 존재하지 않습니다.</td>
+        	  	</tr>
+              <tr class="hover" th:each="att : ${ attendList }">
+                <td th:text="${ att.attDate }"></td>
+                <td th:text="${ att.emp.empNo }"></td>
+                <td th:text="${ att.emp.empName }"></td>
+                <td th:text="${#dates.format(att.attStart, 'HH:mm:ss')}"></td>
+                <td th:text="${#dates.format(att.attEnd, 'HH:mm:ss')}"></td>
+              </tr>
+          </table><br>
+        </div>
+        <br><br>
+        <div th:replace="/manage/empAnnual/attendPaging.html"></div>
+        
+        
+        
+        
+        <script>
+        
+        $("#submitButton").click(function(){ 
+			let date = new Date();
+			
+
+			let start = $("#startDay").val();
+			let end = $("#endDay").val();
+			
+				
+			let startArr = start.split('-');
+			let endArr = end.split('-');
+				
+				
+			let startDateCompare = new Date(startArr[0], parseInt(startArr[1])-1, startArr[2]);
+			let endDateCompare = new Date(endArr[0], parseInt(endArr[1])-1, endArr[2]);
+        
+			if(startDateCompare.getTime() > endDateCompare.getTime()){
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '시작 날짜가 종료 날짜보다 값이 큽니다.', 
+		        });
+			}else if(($("#startDay").val() !== "")&& ($("#endDay").val() !== "")){
+				$("#searchForm").submit();
+			}else{
+				Swal.fire({
+		            icon: 'error',                        
+		            title: '입력값을 확인해 주세요',   
+		            text: '검색 기능을 실행하기 위해 필수적으로 날짜를 입력해 주셔야 합니다.', 
+		        });
+			}
+			
+        })
+        
+        
+        
+        </script>
+</body>
+</html>

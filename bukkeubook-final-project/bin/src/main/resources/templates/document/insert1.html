@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script src="/js/summernote/summernote-lite.js"></script>
+	<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+    <link rel="stylesheet"  th:href="@{/css/document/draftwriteStyle.css}">
+    <link rel="stylesheet"  th:href="@{/css/summernote/summernote-lite.css}">
+<title>Write Draft</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/document/draftWrite.js"></script>
+	<h4 class="mb-4" id="main-text">기안서 작성</h4>
+    <hr><br><br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+        	<button style="float:right; margin-right:5%;"class="btnin" type="button" id="back">목록으로</button>
+        </div>
+        
+        <div class="totals left">
+          <h4>결재라인 지정</h4>
+          <table class="tbl2" border="1px solid gray">
+              <tr>
+                <th></th>
+                <th>부서명</th>
+                <th>사원명</th>
+              </tr>
+              <tr>
+                  <th>1단계 : </th>
+                  <td id="selectDept">
+                      <select name="deptCode" id="deptCode">
+                      	<option value="">선택</option>
+					  	<!-- ajax -->
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList" id="empList">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <th>2단계 : </th>
+                  <td>
+                      <select name="deptCode2" id="deptCode2">
+                          <option value="">선택</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList2" id="empList2">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+              <tr>
+                  <th>3단계 : </th>
+                  <td>
+                      <select name="deptCode3" id="deptCode3">
+                          <option value="">선택</option>
+                      </select>
+                  </td>
+                  <td>
+                      <select name="empList3" id="empList3">
+                          <option value=""></option>
+                      </select>
+                  </td>
+              </tr>
+          </table>
+          <br>
+          <div>
+            <button class="btnin" type="button" onclick="selectacc()">결재라인 지정</button><br><br>
+          </div>
+      </div>
+      <div class="totals">
+          <h4>참조자 설정</h4>
+          <table class="tbl2" border="1px solid gray">
+            <tr>
+              <th></th>
+              <th>부서명</th>
+              <th>사원명</th>
+            </tr>
+          </table>
+          <br>
+          <button class="btnin" type="button">참조자 지정</button><br><br>
+      </div>
+      <br clear="both">
+      <div class="totals left" >
+      	<form action="/document/tempStore" method="post" id="temp">
+          <table border="1px solid black" class="tbl">
+              <tr class="tbl">
+                  <th class="tbl th">제목</th>
+                  <td class="tbl"><input type="text" id="title" name="docTitle" required></td>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th">내용</th>
+                  <td class="tbl wid">
+                    <textarea class="description" id="desc"></textarea>
+                    <input type="hidden" name="formNo" value="1" >
+                    <input type="hidden" id="draftcnt" name="tagCnt">
+                    <input type="hidden" id="wrDate" name="wrDate">
+                    <input type="hidden" id="docStatus" name="docStatus">
+                    <input type="text" value="10" id="empNo" name="empNo">
+                    <input type="text" id="cnttt" name="cnt" readonly>
+                  </td>
+              </tr>
+          </table>
+      	</form>
+      </div>
+      <div class="totals draft">
+          <table class="tbl">
+              <tr class="tbl">
+                  <th class="tbl th coloring" colspan="7"><h4>기안서</h4></th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">문서번호</th>
+                  <th class="tbl th read">1</th>
+                  <th rowspan="4" class="th coloring">결재</th>
+                  <th class="tbl th coloring">담당</th>
+                  <th class="tbl th coloring" id="selacc1">결재1</th>
+                  <th class="tbl th coloring" id="selacc2">결재2</th>
+                  <th class="tbl th coloring" id="selacc3">결재3</th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">작성일자</th>
+                  <th class="tbl th" id="date2"><p id="day"></p></th>
+                  <th rowspan="3" class="tbl th sign"></th>
+                  <th rowspan="3" class="tbl th sign"></th>
+                  <th rowspan="3" class="tbl th sign"></th>
+                  <th rowspan="3" class="tbl th sign"></th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">부서명</th>
+                  <th class="tbl th" id="dept2"></th>
+                  
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">작성자</th>
+                  <th class="tbl th" id="writer2"></th>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th coloring">제목</th>
+                  <td class="tbl" colspan="6" id="title2">제목을 입력해주세요</td>
+              </tr>
+              <tr class="tbl">
+                  <th class="tbl th cnt coloring">내용</th>
+                  <td class="tbl cnt" colspan="6" id="cnt2">
+                      <div id="result">내용을 입력해주세요</div>
+                  </td>
+              </tr>
+          </table>
+          <br>
+          
+      </div>
+      <br clear="both">
+      <div class="right">
+        <button class="buto" type="button" onclick="sendData()">상신</button>
+        <button class="buto" type="button" id="tempStore">임시저장</button>
+      </div>
+</body>
+
+<script>
+        $("#writer").val();
+        let writer = $("#writer").val();
+        
+        
+        /* 버튼 눌렀을 때 알림창 */
+         /* Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '승인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+                  }
+              }) */
+
+        
+</script>
+</html>

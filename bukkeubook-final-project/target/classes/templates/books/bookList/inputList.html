@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/inputList">입고관리</a></h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/book/inputList">입고내역</a></h5>
+        <br>
+		
+		<div class="search-area" align="center">
+			<form id="loginForm" action="/book/inputList" method="get" style="display: inline-block">
+					<select th:with="searchCondition = ${selectCriteria.searchCondition}"
+						id="searchCondition" name="searchCondition">
+						<!-- <option value="select">--분류--</option>
+						<option value="date" th:selected="${ searchCondition } == 'date'">입고날짜</option> -->
+						<option value="name" th:selected="${ searchCondition } == 'name'">입고자</option>
+					</select>
+				<!-- <input type="hidden" id="searchDate" name="searchValue"> -->
+				<input type="text" style="display:none;"><!-- 엔터키 새로고침 방지용 --> 
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" maxlength=50 th:value="${selectCriteria.searchValue}">
+				<button class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
+			</form>
+		</div>
+        <br>
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="textTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">입고번호</th>
+                <th class="th1">입고날짜</th>
+                <th class="th1">입고시간</th>
+                <th class="th1">입고자</th>
+                <th class="th1">직급</th>
+                <th class="th1">구분</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(inputList)}">
+                 <td colspan="6">검색 결과가 없습니다.</td>
+              </tr>
+              <tr class="tr1" th:each="inputList : ${ inputList }" th:onclick="'location.href = \'' + @{/book/inputDetail/(no=${inputList.stCode})} + '\''">
+                <td th:text="${ inputList.stCode }"></td>
+                <td th:text="${ inputList.stDate }"></td>
+                <td th:text="${#dates.format(inputList.stDate, 'HH:mm:ss')}"></td>
+            	<td th:text="${ inputList.emp.empName }"></td>
+            	<td th:text="${ inputList.emp.empJobCode }"></td>
+            	<td th:text="${ inputList.stType }"></td>
+              </tr>
+          </table>
+          <br>    
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn" onclick="location.href='/book/input'">입고등록</button>
+          </div>      
+        </div> <!------------------------ 본문 종료---------------------------->
+	<div th:replace="books/bookList/bookpaginginput.html"></div>
+	<br><br>
+	<script>
+		$('#findBtn').click(function(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+	        	Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '검색어를 입력 해 주세요.',
+	                
+	        	})} else if(searchCondition.value == 'select'){
+	       		Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '분류를 선택 해 주세요.',
+	        	})} else{
+		   			$('#loginForm').submit();
+	   			};
+			});
+		$('#inputFind').blur(function(){
+			const tagExp = /(<([^>]+)>)/gi;
+			if(tagExp.test($('#inputFind').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('#inputFind').val('');
+	    			$('#inputFind').focus();
+                })
+			}
+		});
+	</script>
+	<script>
+		const inputSuccessmessage = "[[${inputSuccessMessage}]]"
+		const inputFailMessage = "[[${inputFailMessage}]]"
+	
+		if(inputSuccessmessage == '성공'){
+			Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '입고등록이 성공적으로 완료되었습니다!',
+            })
+		}
+		if(inputFailMessage == '실패'){
+			Swal.fire({
+                icon: 'warning',
+                title: 'Warning!',
+                text: '입고신청에 실패했습니다. 다시 시도 해 주세요.',
+            })
+		}
+	</script>
+	<!-- <script>
+		$(document).ready(function(){
+	       	$('#searchCondition').change( function(){
+			     if($('#searchCondition').val() == "date"){
+			     	$('#searchDate').prop("type", "date");
+			     	$('#inputFind').prop("type", "hidden");
+	       	     }
+			     if($('#searchCondition').val() == "name"){
+			     	$('#searchDate').prop("type", "hidden");
+			     	$('#inputFind').prop("type", "search");
+	       	     }
+			     if($('#searchCondition').val() == "select"){
+			     	$('#searchDate').prop("type", "hidden");
+			     	$('#inputFind').prop("type", "search");
+	       	     }
+	       	});
+       	});
+	</script> -->
+</body>
+</html>

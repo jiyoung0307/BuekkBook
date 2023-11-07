@@ -1,0 +1,250 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/common/style.css}">
+</head>
+<body>
+
+    
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+        <div class="p-4 pt-5">
+          <a href="/"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
+          <div>&nbsp</div>
+		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
+          <div id="welcomeLogin" style="text-align: center">${Scope.name}님 반갑습니다!</div>
+          <div>&nbsp</div>
+
+          <!-- 사이드바 시작 -->
+          <!-- 마이페이지 -->
+          <ul class="list-unstyled components mb-5">
+           <li class="active">
+	            <a href="#myPage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">마이페이지</a>
+	            <ul class="collapse list-unstyled" id="myPage">
+                <li>
+                    <a href="/mypage/calendar">일정관리</a>
+                </li>
+                <li>
+                    <a href="#">근태현황</a>
+                </li>
+                <li>
+                    <a href="/mypage/myAnnual">연차조회</a>
+                </li>
+	            </ul>
+	          </li>
+            
+            <!-- 전자결재 -->
+            <li class="active">
+	            <a href="#approval" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">전자결재</a>
+	            <ul class="collapse list-unstyled" id="approval">
+                <li>
+                    <a href="/document/insert">결재작성</a>
+                </li>
+                <li>
+                    <a href="/document/docList">결재내역</a>
+                </li>
+                <li>
+                    <a href="/document/docTempList">임시저장 내역</a>
+                </li>
+	            </ul>
+	          </li>
+	          
+            <!-- 재무부 -->
+	          <li>
+              <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">재무부</a>
+              <ul class="collapse list-unstyled" id="finance">
+                <li>
+                    <a href="#">거래처 관리</a>
+                </li>
+                <li>
+                    <a href="#">거래내역 관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 인사부 -->
+            <li>
+              <a href="#management1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">인사부</a>
+              <ul class="collapse list-unstyled" id="management1">
+                <li>
+                  <a href="#management2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">사원관리</a>
+                  <ul class="collapse list-unstyled" id="management2">
+                    <li>
+                       <a href="/manage/empList">사원조회</a>
+                    </li>
+                    <li>
+                      <a href="/manage/leaveEmpList">퇴사사원조회</a>
+                    </li>
+                    <li>
+                      <a href="#">인원현황</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">급여관리</a>
+                  <ul class="collapse list-unstyled" id="management3">
+                    <li>
+                      <a href="/empPayList">급여계산</a>
+                    </li>
+                    <li>
+                      <a href="/severancePay">퇴직금관리</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근태관리</a>
+                  <ul class="collapse list-unstyled" id="management4">
+                    <li>
+                      <a href="/empAnnual/empAnnualList">연차조회</a>
+                    </li>
+                    <li>
+                      <a href="/empAnnual/restSelect">휴가조회</a>
+                    </li>
+                    <li>
+                      <a href="#">휴가취소조회</a>
+                    </li>
+                    <li>
+                      <a href="/empAttendanceList">사원근태 내역</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">부서관리</a>
+                  <ul class="collapse list-unstyled" id="management5">
+                    <li>
+                      <a href="#">부서조회</a>
+                    </li>
+                    <li>
+                      <a href="#">부서등록</a>
+                    </li>
+                  </ul>
+                </li>
+                
+              </ul>
+	          </li>
+
+            <!-- 총무부 -->
+            <li>
+              <a href="#General" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">총무부</a>
+              <ul class="collapse list-unstyled" id="General">
+                <li>
+                    <a href="#">비품관리</a>
+                </li>
+                <li>
+                    <a href="#">행사관리</a>
+                </li>
+                <li>
+                    <a href="#">회의관리</a>
+                </li>
+                <li>
+                    <a href="#">게시판관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 도서 물류부 -->
+            <li>
+              <a href="#product1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">도서물류부</a>
+              <ul class="collapse list-unstyled" id="product1">
+                <li>
+                  <a href="#product2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">판매현황 및 통계</a>
+                  <ul class="collapse list-unstyled" id="product2">
+                    <li>
+                      <a href="#">판매현황</a>
+                    </li>
+                    <li>
+                      <a href="#">통계(입출고 수량, 순위)</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#product3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">입출고관리</a>
+                  <ul class="collapse list-unstyled" id="product3">
+                    <li>
+                      <a href="#">입고관리</a>
+                    </li>
+                    <li>
+                      <a href="/book/outputList">출고관리</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/book/lookupList">재고관리</a>
+                </li>
+                <li>
+                  <a href="/order/selectHistory">발주관리</a>
+                </li>
+                <li>
+                  <a href="#">훼손도서관리</a>
+                </li>
+              </ul>
+	          </li>
+
+            <!-- 전사게시판 -->
+            <li>
+              <a href="#">전사게시판</a>
+            </li>
+
+            <!-- 휴가자현황 -->
+            <li>
+              <a href="#">휴가자현황</a>
+            </li>
+
+            <!-- 조직도 -->
+            <li>
+              <a href="#">조직도</a>
+            </li>
+	        </ul>
+
+          <!-- 사이드바 하단 내용입니다.-->
+	        <div class="footer">
+	        	
+	        </div>
+	      </div>
+    	</nav> <!-- 사이드바 종료 -->
+
+      
+      <div id="content" class="p-4 p-md-5">
+        <!-- 헤더시작 배경색 -->  
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #515151 !important">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+
+            <!-- 반응형 버튼인데 필요없을 것 같아 주석처리합니다.-->
+            <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button> -->
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">${SessionScope.name} (직책)</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">로그아웃</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- 헤더 종료 -->
+
+      <!--</div> ---------------------- 본문 종료--------------------------
+      </div> 헤더 포함 본문 종료 div -->
+
+	<script src="/js/common/jquery.min.js"></script>
+    <script src="/js/common/popper.js"></script>
+    <script src="/js/common/bootstrap.min.js"></script>
+    <script src="/js/common/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  	<title>Sidebar 01</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/common/style.css}">
+	<!-- 개발자도구 수정 방지 스크립트 -->
+	<!-- <script src="/js/common/devBan.js"></script> -->
+</head>
+<body>
+
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+        <div class="p-4 pt-5">
+          <a href="/main"><img src="/images/ManageMent.png" alt="" style="width: 247px;"></a>
+          <div>&nbsp;</div>
+		  		<!-- <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo2.jpg);"></a> -->
+  		  <th:block sec:authorize="isAnonymous()">
+          	<div id="welcomeLogin" style="text-align: center">로그인을 해주세요</div>
+          	<div>&nbsp;</div>
+          </th:block>
+          <th:block sec:authorize="isAuthenticated()">
+          	<div id="welcomeLogin" style="text-align: center" th:text="${#authentication.principal.empName} + '님 환영합니다.'"></div>
+			<div>&nbsp;</div>
+		  </th:block>
+          <!-- 사이드바 시작 -->
+          <!-- 마이페이지 -->
+          <ul class="list-unstyled components mb-5">
+           <li class="active">
+	            <a href="#myPage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">마이페이지</a>
+	            <ul class="collapse list-unstyled" id="myPage">
+                <li>
+                    <a href="/mypage/calendar">일정관리</a>
+                </li>
+                <li>
+                    <a href="/attend/findPage">근태현황</a>
+                </li>
+                <li>
+                    <a href="/mypage/myAnnual">연차조회</a>
+                </li>
+	            </ul>
+	          </li>
+            
+            <!-- 전자결재 -->
+            <li class="active">
+	            <a href="#approval" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">전자결재</a>
+	            <ul class="collapse list-unstyled" id="approval">
+                <li>
+                    <a href="/document/insert">결재작성</a>
+                </li>
+                <li>
+                    <a href="/document/docTempList">임시저장 내역</a>
+                </li>
+                
+                <li>
+                  <a href="#management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">상신함</a>
+                  <ul class="collapse list-unstyled" id="management">
+                    <li>
+                       <a href="/document/reqApprovalList">결재서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allVacationList">휴가서류</a>
+                    </li>
+                    <li>
+                      <a href="/document/allCancelVacationList">휴가취소서류</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                    <a href="/document/docInboxList">수신함</a>
+                </li>
+	            </ul>
+	          </li>
+	          
+            <!-- 재무부 -->
+            <th:block sec:authorize="hasAnyRole('FINANCE', 'MASTER')">
+	          <li>
+              <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">재무부</a>
+              <ul class="collapse list-unstyled" id="finance">
+                <li>
+                    <a href="/client/select">거래처 관리</a>
+                </li>
+                <li>
+                    <a href="/trade/select">거래내역 관리</a>
+                </li>
+              </ul>
+	          </li>
+			</th:block>
+			
+            <!-- 인사부 -->
+            <th:block sec:authorize="hasAnyRole('MANAGE', 'MASTER')">
+            <li>
+              <a href="#management1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">인사부</a>
+              <ul class="collapse list-unstyled" id="management1">
+                <li>
+                  <a href="#management2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">사원관리</a>
+                  <ul class="collapse list-unstyled" id="management2">
+                    <li>
+                       <a href="/manage/empList">사원조회</a>
+                    </li>
+                    <li>
+                      <a href="/manage/leaveEmpList">퇴사사원조회</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">급여관리</a>
+                  <ul class="collapse list-unstyled" id="management3">
+                    <li>
+                      <a href="/empPay/empPayList">급여 관리</a>
+                    </li>
+
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근태관리</a>
+                  <ul class="collapse list-unstyled" id="management4">
+                    <li>
+                      <a href="/empDayOff/empDayOffList">연차조회</a>
+                    </li>
+                    <li>
+                      <a href="/empAnnual/restSelect">휴가조회</a>
+                    </li>
+                    <li>
+                      <a href="/empAnnual/restCancelSelect">휴가취소조회</a>
+                    </li>
+                    <li>
+                      <a href="/check/findCheck">사원근태 내역</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">부서관리</a>
+                  <ul class="collapse list-unstyled" id="management5">
+                    <li>
+                      <a href="/dept/select">부서조회</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#management6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">근로계약서 관리</a>
+                  <ul class="collapse list-unstyled" id="management6">
+                    <li>
+                      <a href="/cont/findCont">근로계약서 조회</a>
+                    </li>
+                    <li>
+                      <a href="/cont/registPage">근로계약서 등록</a>
+                    </li>
+                  </ul>
+                </li>              
+              </ul>
+	          </li>
+			</th:block>
+			
+            <!-- 총무부 -->
+            <th:block sec:authorize="hasAnyRole('SECRETARY', 'MASTER')">
+            <li>
+              <a href="#General" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">총무부</a>
+              <ul class="collapse list-unstyled" id="General">
+                <li>
+                    <a href="/secretary/board">게시판관리</a>
+                </li>
+              </ul>
+	          </li>
+			</th:block>
+			
+            <!-- 도서 물류부 -->
+            <th:block sec:authorize="hasAnyRole('BOOK', 'MASTER')">
+            <li>
+              <a href="#product1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">도서물류부</a>
+              <ul class="collapse list-unstyled" id="product1">
+                <li>
+                  <a href="#product3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">입출고관리</a>
+                  <ul class="collapse list-unstyled" id="product3">
+                    <li>
+                      <a href="/book/inputList">입고관리</a>
+                    </li>
+                    <li>
+                      <a href="/book/outputList">출고관리</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/book/lookupList">재고관리</a>
+                </li>
+                <li>
+                  <a href="/order/selectHistory">발주관리</a>
+                </li>
+                <li>
+                  <a href="/book/damageList">훼손도서관리</a>
+                </li>
+              </ul>
+	          </li>
+			</th:block>
+            <!-- 전사게시판 -->
+            <li>
+              <a href="/secretary/commonBoard">전사게시판</a>
+            </li>
+
+            <!-- 조직도 -->
+            <li>
+              <a href="/deptCommon/chart">조직도</a>
+            </li>
+	        </ul>
+
+          <!-- 사이드바 하단 내용입니다.-->
+	        <div class="footer">
+	        	
+	        </div>
+	      </div>
+    	</nav> <!-- 사이드바 종료 -->
+
+      
+      <div id="content" class="p-4 p-md-5">
+        <!-- 헤더시작 배경색 -->  
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #515151 !important">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+
+            <!-- 반응형 버튼인데 필요없을 것 같아 주석처리합니다.-->
+            <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button> -->
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <th:block sec:authorize="isAnonymous()">
+			          	<a class="nav-link" href="/">로그인</a>
+			          </th:block>
+			          <th:block sec:authorize="isAuthenticated()">
+			          	<a class="nav-link" href="/myInfo/updatePage" th:text="${#authentication.principal.empName} +' ' + ${#authentication.principal.memberRoleAndRoleList[0].role.roleDesc}"></a>
+					  </th:block>
+                </li>
+                <th:block sec:authorize="isAuthenticated()">
+	                <li class="nav-item active">
+	                	<form action="/member/logout" method="post" id="logout">
+	                		<input type="hidden">
+	                    </form>
+	                    	<a class="nav-link" href="#" onclick="document.getElementById('logout').submit();">로그아웃</a>
+	                </li>
+                </th:block>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- 헤더 종료 -->
+
+      <!--</div> ---------------------- 본문 종료--------------------------
+      </div> 헤더 포함 본문 종료 div -->
+
+	<script src="/js/common/jquery.min.js"></script>
+    <script src="/js/common/popper.js"></script>
+    <script src="/js/common/bootstrap.min.js"></script>
+    <script src="/js/common/main.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 정보 수정</h5>
+        <br>
+         <form action="/manage/empDetailUpdate" method="post" id="updateForm"> 
+          <div class="emp detail list"> 
+           <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">사원 정보 수정</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp2">
+                <td>사원번호</td>
+                <td>
+                <input type="text" th:value="${ emp.empNo }" name="empNo" readonly style="border:none;">
+                </td>
+                <td class="deempfile">도장사진</td>
+                <td class="deempfile">프로필사진</td>
+              </tr>
+              <tr class="deemp2">
+                <td>사원명</td>
+                <td><input type="text" th:value="${ emp.empName }" name="empName"></td>
+                <td rowspan="4"><img class="card-img-top" th:src="@{/images/sign/{signFile}(signFile=${sign2.signSavedName})}" alt="Card image" style="width:50%; height: 250px; margin-left: 25%;"></td>
+                <td rowspan="4"><img class="card-img-top" th:src="@{/images/manage/employee/{imageFile}(imageFile=${profile[0].photoSavedName})}" alt="Card image" style="width:50%; height: 70%; margin-left: 25%;"></td>
+              </tr>
+               <tr class="deemp2">
+                <td>부서명</td>
+                <td>
+                본 부서코드 : <input type="text" name="deptCode1" th:value="${ emp.deptCode }" readonly style="width:70px;">
+                변경 : 
+                 <select class="sel3" name="deptCode2" >
+                  <option value="">--</option>
+                  <option value="2">2.재무부</option>
+                  <option value="3">3.인사부</option>
+                  <option value="4">4.총무부</option>
+                  <option value="5">5.도서물류부</option>
+                </select> 
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>직급</td>
+                <td>
+                	본 직급 : <input type="text" name="empJobCode1" th:value="${ emp.empJobCode }" readonly style="width:70px;">
+                	변경 : 
+                	<select class="sel3" name="empJobCode2">
+                    <option value="">--</option>
+                    <option value="부장">부장</option>
+                    <option value="팀장">팀장</option>
+                    <option value="대리">대리</option>
+                    <option value="사원">사원</option>
+                  </select> 
+                </td>
+              </tr>
+          </div>
+         </form>
+              <tr class="deemp2" >
+                <td>입사일자</td>
+                <td>
+                <input type="text" th:value="${ emp.empEntDate }" name="empEntDate" readonly style="border:none;">
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>퇴사여부</td>
+                <td><input type="text" th:value="${ emp.empEndYn }" name="empEndYn" readonly style="border:none;"></td>
+                <td>
+                <form action="/manage/detailUpdate" method="post" encType="multipart/form-data">
+			     	<input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
+			     	<input type="submit" class="btn btn-primary" value="수정하기" style="margin-right: 26%; margin-top:10px;">
+		         </form>
+                </td>
+                <td>
+                    <form action="/manage/detailUpdate2" method="post" encType="multipart/form-data">
+			     	<input type="file" name="singleFile" style="margin-left: 25%;" value="수정하기" required>
+			     	<input type="submit" class="btn btn-primary" value="수정하기" style="margin-right: 26%; margin-top:10px;">
+		         </form>
+		       </td>
+              </tr>
+              <tr class="deemp" >
+                <td>성별</td>
+                <td colspan="3">
+                	<input type="text" th:value="${ emp.empGender }" name="empGender" readonly style="border:none;">
+                </td>
+              </tr>
+              <tr class="deemp" >
+                <td>생년월일</td>
+				 <td colspan="3"><input type="text" th:value="${ emp.empBirth }" readonly style="border:none;">
+              </tr>
+              <tr class="deemp" >
+                <td>연락처</td>
+                <td>
+                <select class="sel1" th:value="${ emp.empPhone1 }" name="empPhone1">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="019">019</option>
+                    <option value="016">016</option>
+                  </select>
+<!--                 <input type="text" th:value="${ emp.empPhone1 }" name="empPhone1"> -->
+                </td>
+                <td><input type="text" th:value="${ emp.empPhone2 }" name="empPhone2"></td>
+                <td><input type="text" th:value="${ emp.empPhone3 }" name="empPhone3"></td>
+              </tr>
+              <tr class="deemp">
+                <td>이메일</td>
+                <td colspan="3"><input type="text" th:value="${ emp.empEmail }" name="empEmail"></td>
+              </tr>
+              <tr class="deemp" >
+                <td>우편번호</td>
+                <td colspan="3">
+                  <input type="text" id="zipCode" th:value="${ emp.empAddress }" name="empAddress">
+                  <input type="button" value="검색" class="input2" id="searchZipCode">
+                </td>  
+              </tr>
+              <tr class="deemp" >
+                <td>상세주소</td>
+                <td colspan="3"><input type="text" th:value="${ emp.empDAddress }" name="empDAddress"></td>
+              </tr>
+              <tr class="deemp">
+                <td>비밀번호</td>
+                <td colspan="3"><input type="text" th:value="${ emp.empPwd }" name="empPwd"></td>
+              </tr>
+            </tbody>
+          </table><br>
+          <input type="hidden" name="empNo" th:value="${emp.empNo}">
+          <div id="newBookDiv">
+          	<button id="leaveUpdateEmp" class="modify btn">퇴사처리</button>
+          	<button id="update" class="modify btn updateBtn">등록하기</button>
+          	<button id="button" class="list btn backBtn" >목록으로</button>
+          </div>
+          <!-- </div> -->
+         <!-- </form> --> 
+       </div> <!------------------------ 본문 종료---------------------------->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		const $searchZipCode = document.getElementById("searchZipCode");
+		
+		
+		$searchZipCode.onclick = function() {
+		
+			new daum.Postcode({
+				oncomplete: function(data){
+					document.getElementById("zipCode").value = data.zonecode;
+					document.getElementById("address1").value = data.address;
+					document.getElementById("address2").focus();
+				}
+			}).open();
+		}
+	</script>
+	<script th:inline="javascript">
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '확인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+          $("#update").click(function () {
+  			$("#updateForm").submit();
+          });  
+      </script> 
+</body>
+</html>

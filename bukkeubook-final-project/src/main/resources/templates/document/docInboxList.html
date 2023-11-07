@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{/css/document/HR.css}">
+<link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/document/inbox.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<title>Document docList</title>
+</head>
+<body>
+	<script>
+		const successMessage = "[[${ insertSuccess }]]";
+		if(successMessage){
+			 Swal.fire({
+	                icon: 'success',
+	                title: '성공!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+		}
+	</script>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">수신함</h2>
+        <hr><br><br>
+
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div style="text-align:-webkit-center; width:80%; margin-left:8%">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">No</th>
+                <th class="th1">문서번호</th>
+                <th class="th1">제목</th>
+                <th class="th1">작성일자</th>
+                <th class="th1">결재여부</th>
+                <th class="th1">단계</th>
+                <th class="th1">문서상태</th>
+                <th class="th1">문서종류</th>
+              </tr>
+              <tr th:if="${#lists.isEmpty(all)}">
+              	<td class="td1" colspan="8">결재하실 서류가 존재하지 않습니다.</td>
+              </tr>
+              <tr class="hover" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''" style="cursor: pointer;">
+                <td class="td1" th:text="${allStat.count}"></td>
+                <td class="td1" th:text="${all.document.docNo1}"></td>
+                <td class="td1" th:text="${all.document.docTitle1}" style="width:400px;"></td>
+                <td class="td1" th:text="${all.document.wrDate1}"></td>
+                <td class="td1" th:text="${all.appStatus}"></td>
+                <td class="td1" th:text="${all.stepName}"></td>
+                <td class="td1" th:text="${all.document.docStatus1}" id="status"></td>
+                <td class="td1" th:text="${all.formName}"></td>
+              </tr>
+          </table>
+          <br>
+          <button type="button" class="insert btn" onclick="location.href='/document/insert'">결재작성</button>
+          <br><br><br><br><br><br><br><br><br>
+        </div> <!------------------------ 본문 종료---------------------------->
+        <script>
+        	const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:blue;';
+				}
+				if (status[i].innerText=="반려") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:red;';
+				}
+				if (status[i].innerText=="진행중") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:green;';
+				}
+			}
+        </script>
+</body>
+</html>

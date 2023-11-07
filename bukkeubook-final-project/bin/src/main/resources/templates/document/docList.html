@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"  th:href="@{/css/document/HR.css}">
+<link rel="stylesheet"  th:href="@{/css/document/Listdetail.css}">
+<title>Document docList</title>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">전자 결재 내역</h2>
+        <hr><br><br>
+
+
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div>
+          <form action="">
+            <button class="search btn" type="submit">검색</button> 
+            <input class="search in" type="text" placeholder="검색어 입력" required>
+            <select class="search select" required>
+              <option value="">None</option>
+              <option value="empCode">사원번호</option>
+              <option value="empName">사원명</option>
+              <option value="dept">부서</option>
+              <option value="position">직급</option>
+            </select>
+          </form>
+        </div>
+        <div>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">번호</th>
+                <th class="th1">제목</th>
+                <th class="th1">결재 상태</th>
+                <th class="th1">작성자</th>
+                <th class="th1">문서종류</th>
+                <th class="th1"></th>
+              </tr>
+              <tr class="hover">
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td>샘플입니다.</td>
+                <td><button type="button" class="select btn" onclick="location.href=''">보기</button></td>
+              </tr>
+          </table>
+          <br>
+          <button type="button" class="insert btn" onclick="location.href='/document/insert'">등록</button>
+        </div> <!------------------------ 본문 종료---------------------------->
+</body>
+</html>

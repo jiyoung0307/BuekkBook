@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">전사 게시판</h2>
+    <hr><br><br>
+    	
+        <h5 class="mb-4" id="sub-text">상세조회</h5>
+        <br>
+        
+        <div>
+          <table class="type04" style="width: 80%; margin-left: 10%;">
+            <tr>
+              <th>제목</th>
+              <td th:text="${ board.title }"></td>
+              <th>카테고리</th>
+              <td th:text="${ board.cate.cateName }"></td>
+            </tr>
+            <tr>
+              <th>작성일</th>
+              <td colspan="3" th:text="${ board.date }"></td> 
+            </tr>
+            <tr>
+              <th>작성자</th>
+              <td colspan="3" th:text="${ board.emp.empName }"></td>
+            </tr>
+            <tr>
+              <td colspan="4" style="height: 500px;" th:text="${ board.content }"></td>
+            </tr>
+          </table>
+          <button class="btn btn-success" style="margin-left:10%"  type="button" onclick="location.href='/secretary/board'">목록으로</button>
+          <button class="btn btn-info" style="margin-left:50%"  type="submit" th:onclick="'location.href = \'' +  @{/secretary/boardUpdate/(no=${board.no})} + '\''">수정하기</button>
+          <button class="btn btn-dark" style="margin-left:20px" type="button" id="deleteBtn">삭제하기</button>
+
+      </div>
+        
+		
+	<br><br>
+		
+		<script th:inline="javascript">
+		 $().ready(function () {
+	            $("#deleteBtn").click(function () {
+	                Swal.fire({
+	                    title: '해당 게시글을 삭제하시겠습니까?',
+		                    text: "삭제된 일정은 전사게시판에서 제거됩니다.",
+		                    icon: 'warning',
+		                    showCancelButton: true,
+		                    confirmButtonColor: '#3085d6',
+		                    cancelButtonColor: '#d33',
+		                    confirmButtonText: '확인',
+		                    cancelButtonText: '취소'
+		                }).then((result) => {
+		                    if (result.isConfirmed) {
+		                    		const no = [[${board.no}]];
+									location.href= '/secretary/deleteBoard/?no=' + no              
+		                    }
+		                })
+		            });
+	 		    });
+		
+		</script>
+	
+	
+	
+</body>
+</html>

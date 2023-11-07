@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<meta charset="utf-8">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/main/login/login.css}">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="login_img">
+      <img src="/images/main/login/mainImage.png" alt="">
+    </div>
+    <br><br>
+	<div align=center>
+		<img src="/images/main/fail/404Error2.png" alt="" style="width: 500px;">
+	</div><br>
+	<h1 align="center" style="color:white">원하시는 페이지를 찾을 수 없습니다.</h1>
+	<br>
+	<h4 align="center" style="color:#d3d3d3">찾으려는 페이지의 주소가 잘못 입력되었거나,</h4>
+	<h4 align="center" style="color:#d3d3d3">주소의 변경 혹은 삭제로 인해 사용하실 수 없습니다.</h4>
+	<h4 align="center" style="color:#d3d3d3">입력하신 페이지의 주소가 정확한지 다시 한번 확인해 주세요.</h4>
+	<br><br>
+	<div style="text-align: center">
+		<input type="button" class="errorBtn" value="메인으로"
+			style="width:150px; height:30px; color:black; font-weight: bold; border-radius: 20px; border-style: none; cursor: pointer">
+		<input type="button" class="errorBtn2" value="이전 페이지로"
+			style="width:150px; height:30px; color:black; font-weight: bold; border-radius: 20px; border-style: none; cursor: pointer">
+	</div>
+	
+	<script>
+		$('.errorBtn').click(function(){
+			location.href="/main"
+		})
+		$('.errorBtn2').click(function(){
+			window.history.back();
+		})
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 상세정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/lookupList">재고관리</a></h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text"></h5>
+    <div id="textTable" style="text-align:-webkit-center">
+        <form action="/book/newBook2" method="post" id="updateForm">
+            <table id="bookInfoTable" border="1">
+                <tr>
+                    <th>도서코드</th>
+                    <!-- <td th:text="${bookCode}"></td> -->
+                    <td><input class="updateInput" type="text" th:value="${bookCode}" name="no" readonly></td>
+                </tr>
+                <tr>
+                    <th>도서명</th>
+                    <td><input class="updateInput bookName" type="text" name="name"></td>
+                </tr>
+                <tr>
+                    <th>저자</th>
+                    <td><input class="updateInput author" type="text" name="author"></td>
+                </tr>
+                <tr>
+                    <th>출판사</th>
+                    <td><input class="updateInput pub" type="text" name="pub"></td>
+                </tr>
+                <tr>
+                    <th>장르</th>
+                    <!-- <td><input class="updateInput cate" type="text" name="cate"></td> -->
+                    <td>
+                    	<select name="cate" id="category">
+                    		<option value="category">--장르--</option>
+                    		<option value="문학">문학</option>
+                    		<option value="IT">IT</option>
+                    		<option value="잡지">잡지</option>
+                    		<option value="교육">교육</option>
+                    		<option value="기타">기타</option>
+                    	</select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>가격</th>
+                    <td><input class="updateInput price" type="text" name="price"></td>
+                </tr>
+                <tr>
+                    <th>ISBN</th>
+                    <td><input class="updateInput isbn" type="text" name="isbn"></td>
+                </tr>
+                <tr>
+                    <th>발행일</th>
+                    <td><input class="updateInput pubDate" type="Date" name="pubDate"></td>
+                </tr>
+                <tr>
+                    <th>판매여부</th>
+                    <td>
+                    	<!-- <button type="button" class="btnYn btnY">Y</button>
+                        <button type="button" class="btnYn btnN">N</button> -->
+                        <label for="Y">Y&nbsp;</label><input type="radio" value="Y" id="Y" name="sellYn">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="N">N&nbsp;</label><input type="radio" value="N" id="N" name="sellYn">
+                    </td>
+                </tr>
+            </table>
+            
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn updateBtn" onclick='formCheck();'>등록완료</button>
+            <button type="button" class="productBtn newBookBtn backBtn">뒤로가기</button>
+          </div>
+          </form>
+        </div> <!------------------------ 본문 종료---------------------------->
+      </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+    	  $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+      </script> 
+      <script>
+      function formCheck(){
+    		if( $('.bookName').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '도서명을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.bookName').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.author').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '저자를 입력 해 주세요.',
+                }).then(function(){
+	    			$('.author').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.pub').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '출판사를 입력 해 주세요.',
+                }).then(function(){
+	    			$('.pub').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('#category').val() == 'category' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '장르를 선택 해 주세요.',
+                }).then(function(){
+	    			$('#category').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.price').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '도서가격을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.price').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.isbn').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: 'ISBN을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.isbn').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.pubDate').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '발행일을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.pubDate').focus();
+                })
+   				return false;
+    		};
+    		
+    		if(!$("input[name='sellYn']:checked").val()){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '도서정보가 부족합니다!',
+                    text: '판매여부를 선택 해 주세요.',
+                })
+    			return false;
+    		};
+    		$("#updateForm").submit();
+    	};
+
+      </script>
+      
+      <script>
+      	/* 정규표현식 */
+		
+		// 도서명 [태그제외 20글자 이하]
+		const tagExp = /(<([^>]+)>)/gi;
+		const length = /^.{0,20}$/
+		$(function() {
+			$('.bookName').blur(function(){
+				if(tagExp.test($('.bookName').val())){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '태그쓰지마세요',
+	                    text: '',
+	                }).then(function(){
+	                	$('.bookName').val('');
+		    			$('.bookName').focus();
+	                })
+				} else if(!length.test($('.bookName').val())){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '1 ~ 20 글자 사이로 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.bookName').val('');
+		    			$('.bookName').focus();
+	                })
+				}
+			});
+		});
+		
+		// 저자, 출판사 [영문, 한글 1~30]
+		const authorExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|.,]{1,30}$/;
+				$('.author').blur(function(){
+					if(tagExp.test($('.author').val())){
+						Swal.fire({
+		                    icon: 'error',
+		                    title: '태그쓰지마세요',
+		                    text: '',
+		                }).then(function(){
+		                	$('.author').val('');
+			    			$('.author').focus();
+		                })
+					} else if(!authorExp.test($('.author').val()) && $('.author').val() != ''){
+						Swal.fire({
+		                    icon: 'error',
+		                    title: '입력 오류!',
+		                    text: '영문, 한글 30자이하로 입력 해 주세요.',
+		                }).then(function(){
+		                	$('.author').val('');
+			    			$('.author').focus();
+		                })
+					}
+				});
+		$(function() {
+			$('.pub').blur(function(){
+				if(tagExp.test($('.pub').val())){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '태그쓰지마세요',
+	                    text: '',
+	                }).then(function(){
+	                	$('.pub').val('');
+		    			$('.pub').focus();
+	                })
+				} else if(!authorExp.test($('.pub').val()) && $('.pub').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '영문, 한글 30자이하로 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.pub').val('');
+		    			$('.pub').focus();
+	                })
+				}
+			});
+		});
+		
+		// 가격 [숫자 3 ~ 6글자]
+		const priceExp = /^[0-9]{3,6}$/;
+		$('.price').blur(function(){
+			if(tagExp.test($('.price').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('.price').val('');
+	    			$('.price').focus();
+                })
+			} else if(!priceExp.test($('.price').val()) && $('.price').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '100 ~ 999,999 사이의 가격을 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.price').val('');
+		    			$('.price').focus();
+	                })
+				}
+			});
+		// ISBN [13글자 숫자]
+		const isbnExp = /^[0-9]{13,13}$/;
+		$('.isbn').blur(function(){
+			if(tagExp.test($('.price').val())){
+				Swal.fire({
+                    icon: 'error',
+                    title: '태그쓰지마세요',
+                    text: '',
+                }).then(function(){
+                	$('.isbn').val('');
+	    			$('.isbn').focus();
+                })
+			} else if(!isbnExp.test($('.isbn').val()) && $('.isbn').val() != ''){
+					Swal.fire({
+	                    icon: 'error',
+	                    title: '입력 오류!',
+	                    text: '등록된 13자리의 ISBN을 입력 해 주세요.',
+	                }).then(function(){
+	                	$('.isbn').val('');
+		    			$('.isbn').focus();
+	                })
+				}
+			});
+      </script>
+</body>
+</html>

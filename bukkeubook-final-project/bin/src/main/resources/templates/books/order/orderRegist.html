@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+	<link rel="stylesheet"  th:href="@{/css/books/order/orderDetail.css}">
+</head>
+<body>
+    <div th:replace="/common/topSideBar.html"></div>
+  
+		<h2 class="mb-4" id="main-text">발주관리</h2>
+		<hr><br><br>
+	       <h5 class="mb-4" id="sub-text">발주신청</h5>
+	       <br>
+	
+	       <div class="search-area" align="center">
+			<form id="loginForm" action="/order/regist" method="get" style="display: inline-block">
+					<select th:with="searchCondition = ${selectCriteria.searchCondition}"
+						id="searchCondition" name="searchCondition">
+						<option value="select">--분류--</option>
+						<option value="no" th:selected="${ searchCondition } == 'no'">도서코드</option>
+						<option value="name" th:selected="${ searchCondition } == 'name'">도서명</option>
+						<option value="author" th:selected="${ searchCondition } == 'author'">저자</option>
+					</select>
+				<input type="text" style="display:none;"> <!-- 엔터키 새로고침 방지용 -->
+				<input type="hidden" name="currentPage" value="1">
+				<input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}">
+				<button onclick="findTest()" class="productBtn findBtn" id="findBtn" type="button">검색하기</button>
+			</form>
+		</div>
+	       <br>
+	
+	       <table id="searchTable">
+	           <tr>
+	             <th class="th1">도서코드</th>
+	             <th class="th1">제목</th>
+	             <th class="th1">저자</th>
+	             <th class="th1">출판사</th>
+	             <th class="th1">가격</th>
+	             <th class="th1">보유재고</th>
+	             <th class="th1"></th>
+	           </tr>
+	           <tr class="tr1" th:each="book : ${ bookList }">
+	           	<td th:text="${ book.no }"></td>
+	               <td th:text="${ book.name }"></td>
+	               <td th:text="${ book.author }"></td>
+	               <td th:text="${ book.pub }"></td>
+	               <td th:text="${ #numbers.formatInteger(book.price, 3, 'COMMA') + '원' }"></td>
+	               <td th:text="${ book.whSt + book.storeSt } + ' ea'"></td>
+	               <td><button class="btn" type="button">목록에 추가</button></td>
+	             </tr>
+	        </table>
+		<div th:replace="books/order/OrderRegistpaging.html"></div>
+		
+	       <br><br><br>
+	
+	       <button onclick="deleteRows()">목록에서 삭제</button>
+	       <div id="textTable" style="text-align:-webkit-center">
+	       	<form action="/order/regist" method="post">
+				<table id="sampleTable">
+					<tr>
+		                <th class="th1"></th>
+		                <th class="th1">도서코드</th>
+		                <th class="th1">제목</th>
+		                <th class="th1">저자</th>
+		                <th class="th1">가격</th>
+		                <th class="th1">보유재고</th>
+		                <th class="th1">발주수량</th>
+		                <th class="th1">월평균 판매수량</th>
+					</tr>
+				</table>
+				<input type="hidden" id="rownum" name="rownum" value="0">
+			    <button type="submit" onclick="checkComplete()">등록</button>
+			    <button type="button" onclick="checkCancel()">취소</button>
+	       	</form>
+			<div id="test">
+			</div>
+	   </div>
+
+	<script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script th:inline="javascript">
+    	
+        $(".btn").click(function(){ 
+
+            const table = document.getElementById("sampleTable");
+            var bookInfo = new Array();
+            var checkBtn = $(this);
+
+            // checkBtn.parent() : checkBtn의 부모는 <td>이다.
+            // checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+            var tr = checkBtn.parent().parent();
+            var td = tr.children();
+
+            console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+
+            console.log(td.eq(0).text());
+            console.log(td.eq(1).text());
+            console.log(td.eq(2).text());
+            console.log(td.eq(3).text());
+
+            const newRow = table.insertRow();
+            
+            const newCell1 = newRow.insertCell(0);
+            const newCell2 = newRow.insertCell(1);
+            const newCell3 = newRow.insertCell(2);
+            const newCell4 = newRow.insertCell(3);
+            const newCell5 = newRow.insertCell(4);
+            const newCell6 = newRow.insertCell(5);
+            const newCell7 = newRow.insertCell(6);
+            const newCell8 = newRow.insertCell(7);
+
+            var index = newRow.rowIndex;
+            var no = "no" + index;
+            var amount = "amount" + index;
+            
+            newCell1.innerHTML = '<input type="checkbox" name="del">';
+            newCell2.innerHTML = td.eq(0).text() + '<input type="hidden" name="' + no + '" value="' + td.eq(0).text() + '">';
+            newCell3.innerHTML = td.eq(1).text();
+            newCell4.innerHTML = td.eq(2).text();
+            newCell5.innerHTML = td.eq(4).text();
+            newCell6.innerHTML = td.eq(5).text();
+            newCell7.innerHTML = '<input type="number" name="' + amount + '" value="1" min="1">';
+            newCell8.innerText = "27";
+            
+            var rownum = document.getElementById("rownum");
+            rownum.value = index;
+            
+            console.log(rownum);
+        });
+
+        function deleteRows(){
+            const table = document.getElementById("sampleTable");
+
+            for(var i = 1; i < table.rows.length; i++){
+                var chkbox = table.rows[i].cells[0].childNodes[0].checked;
+
+                if(chkbox){
+                    table.deleteRow(i);
+                    i--;
+                }
+            }
+        }
+
+        function checkComplete(){
+        var result = confirm("발주 신청을 진행하시겠습니까?");
+
+        console.log(result);
+
+        if(result == true){
+
+          alert("발주 신청이 완료되었습니다.");
+
+          location = "/order/detail";
+        }
+      }
+      
+      function checkCancel(){
+        var result = confirm("발주 신청을 취소하시겠습니까?\n수정사항은 저장되지 않습니다.");
+
+        console.log(result);
+
+        if(result == true){
+
+          alert("발주 신청을 취소하셨습니다.");
+
+          location = "/order/selectHistory";
+        }
+      }
+      
+      function findTest(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				alert('분류와 검색어를 입력 해 주세요.');
+				return;
+			} else if(searchCondition.value == 'select'){
+				alert('분류를 선택 해 주세요.');
+				return;
+			} else if(inputFind.value == ""){
+				alert('검색어를 입력 해 주세요.')
+				return;
+			} else {
+				$('#loginForm').submit();
+			}
+		}
+    </script>
+  </body>
+</html>

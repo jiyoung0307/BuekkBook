@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>Insert title here</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="../css/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+  </head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원조회</h5>
+        <br>
+
+        <div>
+          <form action="/manage/empList" method="get">
+           <button class="search btn">검색</button> 
+           <input type="hidden" name="currentPage" value="1">
+		   <input type="search" id="inputFind" name="searchValue" th:value="${selectCriteria.searchValue}" class="search in">
+           <select class="search select" th:with="searchCondition = ${selectCriteria.searchCondition}" 
+            id="searchCondition" name="searchCondition">
+              <option value="select">--분류--</option>
+              <option value="empName" th:selected="${ searchCondition } == 'empName'">사원명</option>
+              <option value="empJobCode" th:selected="${ searchCondition } == 'empJobCode'">직급명</option>
+           </select>
+         </form>
+       </div>
+        <div>
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">사원번호</th>
+                <th class="th1">사원명</th>
+                <th class="th1">부서명</th>
+                <th class="th1">직급</th>
+                <th class="th1">상세보기</th>
+              </tr>
+               <tr th:each="emp : ${ empList }" class="hover">
+ 				<td th:text="${ emp.empNo }"></td>
+                <td th:text="${ emp.empName }"></td>
+                <td th:text="${ emp.dept.deptName }"></td>
+                <td th:text="${ emp.empJobCode }"></td>
+      <td><button type="button" class="select btn"  th:onclick="'location.href = \'' + @{/manage/empDetail/(empNo=${emp.empNo})} + '\''">확인</button></td>
+              </tr>
+          </table><br>
+          <button type="button" class="insert btn" onclick="location.href='empInsert.html'">등록</button>
+        </div>
+	<div th:replace="/manage/employee/emppaging.html"></div>
+      
+        <br><br>
+	
+	<script>
+
+	</script>
+</body>
+</html>

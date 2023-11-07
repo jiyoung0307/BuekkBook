@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/mypage/youchan.css}">
+<link rel="stylesheet"  th:href="@{/css/mypage/mainStyle.css}">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookList.css}">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet'/>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>  
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+<style>
+	
+</style>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	
+	 <div id='calendar' style="width: 90%; float:left; margin-left: 50px; ">
+
+        </div>
+       
+            <div  style="width: 80%; height: 300px; width: 40%; float:left; margin-top: 50px; margin-left: 50px; ">
+              <div id="textTable" style="text-align:-webkit-center">
+                <h4 style="text-align: center; font-family: Bold;">전사 게시판</h4>
+                <table id="sampleTable" style="width: 100%;">
+                  <tr>
+                    <th class="th1" style="width:30%;">제목</th>
+                    <th class="th1" style="width:10%;">작성일</th>
+                </tr>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[0].no})} + '\''">
+                  <td th:text="${boardList[0].title}"></td>
+                  <td th:text="${boardList[0].date}"></td>
+                </tr>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[1].no})} + '\''">
+                  <td th:text="${boardList[1].title}"></td>
+                  <td th:text="${boardList[1].date}"></td>
+                </tr>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[2].no})} + '\''">
+                  <td th:text="${boardList[2].title}"></td>
+                  <td th:text="${boardList[2].date}"></td>
+                </tr>
+                <tr class="tr1" th:onclick="'location.href = \'' + @{/mainBoardDetail/(no=${boardList[3].no})} + '\''">
+                  <td th:text="${boardList[3].title}"></td>
+                  <td th:text="${boardList[3].date}"></td>
+                </tr>
+                
+              </table>
+            </div>
+            
+          </div>
+          <div style=" width:40%; height: 300px; float:left; margin-top: 50px; margin-left:10%;">
+          	<div id="textTable" style="text-align:-webkit-center; ">
+                <div>
+                  <h4 style="text-align: center;">전자결재 수신함</h4>
+               		<table  id="sampleTable">
+                      <tr>
+                        <th class="th1" style="width:50%;">제목</th>
+                        <th class="th1">결재여부</th>
+                        <th class="th1">문서상태</th>
+                        <th class="th1">문서종류</th>
+                      </tr>
+                      <tr th:if="${#lists.isEmpty(all)}">
+               		    <td class="td1" colspan="4">결재할 서류가 존재하지 않습니다.</td>
+          		      </tr>
+          		      
+          		      <!--  샘플 데이터가 4개 이상 존재한다는 가정하에 최신 4개 적용  -->
+          		       <!-- <tr  th:unless="${#strings.isEmpty(all[0])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[0].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[0].document.docTitle1}"></td>
+                        <td th:text="${all[0].appStatus}"></td>
+                        <td th:text="${all[0].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[0].formName}"></td>
+	               	  </tr> 
+	               	  <tr  th:if="${#lists.size(all[1])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[1].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[1].document.docTitle1}"></td>
+                        <td th:text="${all[1].appStatus}"></td>
+                        <td th:text="${all[1].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[1].formName}"></td>
+	               	  </tr>
+	               	  <tr  th:if="${#lists.size(all[2])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[2].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[2].document.docTitle1}"></td>
+                        <td th:text="${all[2].appStatus}"></td>
+                        <td th:text="${all[2].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[2].formName}"></td>
+	               	  </tr>
+	               	  <tr  th:if="${#lists.size(all[3])}" class="tr1" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all[3].document.docNo1 }|} + '\''">
+	                  	<td th:text="${all[3].document.docTitle1}"></td>
+                        <td th:text="${all[3].appStatus}"></td>
+                        <td th:text="${all[3].document.docStatus1}" id="status"></td>
+                        <td th:text="${all[3].formName}"></td>
+	               	  </tr>  -->
+	        		  
+	               	   
+	               	  
+                	   <tr class="tr1" th:each="all : ${ all }" th:onclick="'location.href = \'' + @{|/document/indoxDetail/${ all.document.docNo1 }|} + '\''">
+                        <td th:text="${all.document.docTitle1}"></td>
+                        <td th:text="${all.appStatus}"></td>
+                        <td th:text="${all.document.docStatus1}" id="status"></td>
+                        <td th:text="${all.formName}"></td>
+                      </tr>   
+                    </table>
+                </div>
+              </div> 
+          </div>
+         
+        
+       
+    <script th:inline="javascript">
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+    
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'listDay,listWeek'
+          },
+    
+          // customize the button names,
+          // otherwise they'd all just say "list"
+          views: {
+            listDay: { buttonText: 'list day' },
+            listWeek: { buttonText: 'list week' }
+          },
+          locale : "ko",
+    	  height: '500px',
+          initialView: 'listWeek',
+          initialDate: '2022-07-27',
+          navLinks: true, // can click day/week names to navigate views
+          editable: true,
+          dayMaxEvents: true, // allow "more" link when too many events
+          events: [
+        	  
+	          /*[# th:each="cal : ${ calendar }"]*/
+	            {
+	              title: /*[[${cal.title}]]*/,
+	              start: /*[[${cal.start}]]*/,
+	              url: '/mypage/detailCal/'+/*[[${cal.code}]]*/,
+	              end: /*[[${cal.end}]]*/
+	            },
+	          /*[/]*/
+	          
+	          ]
+        });
+    
+        calendar.render();
+      });
+    
+    </script>
+    <script>
+			const successMessage = "[[${ successMessage }]]";
+			const memberInfoUpdate = "[[${ memberInfoUpdate }]]";
+			const failMessage = "[[${ failMessage }]]";
+			
+
+			if(successMessage){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '성공적으로 완료되었습니다!',
+	            })
+			}else if(memberInfoUpdate){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '해당 회원의 개인정보를 수정하였습니다.',
+	            })
+			}else if(failMessage){
+				Swal.fire({
+	                icon: 'error',
+	                title: 'Error!',
+	                text: '작업 실패 하셨습니다.',
+	            })
+			}
+			
+			/* 전자결재 관련 Js */
+			const status = document.querySelectorAll('table tr td#status');
+        	console.log("status"+status);
+        	for (let i = 0; i < status.length; i++) {
+				if (status[i].innerText=="승인") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:blue;';
+				}
+				if (status[i].innerText=="반려") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:red;';
+				}
+				if (status[i].innerText=="진행중") {
+					let font = status[i];
+					console.log(font);
+					font.style.cssText = 'color:green;';
+				}
+			}
+			
+	</script>
+	
+</body>
+</html>

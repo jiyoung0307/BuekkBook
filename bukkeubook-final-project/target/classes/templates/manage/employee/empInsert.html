@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+     <title>사원 정보등록</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="/css/common/style.css">
+      <link th:href="@{/css/manage/employee/HR.css}" rel="stylesheet">
+      <link th:href="@{/css/manage/employee/Listdetail.css}" rel="stylesheet">
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+	<script> 
+     $.noConflict(); //이때부터 jQuery는 $ 식별자를 포기하고 jQuery() 를 사용함    
+    </script> 
+	<script src="/js/manage/empPay.js"></script>
+   <h2 class="mb-4" id="main-text">사원관리</h2>
+        <hr><br><br>
+        <h5 class="mb-4" id="sub-text">사원 정보등록</h5>
+        <br>
+   <form action="/manage/insert" method="post" id="insertForm" encType="multipart/form-data">
+        <div class="emp detail list"> 
+          <table border="2">
+            <thead>
+              <tr class="detailtitle">
+                <th colspan="4">신규 사원정보 등록</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="deemp2">
+                <td>사원명</td>
+                <td><input type="text" name="empName" id="name" maxlength="4"></td>
+                <td>프로필 사진</td>
+                <td>서명 사진</td>
+              </tr>
+              <tr class="deemp2">
+                <td>연봉</td>
+                <td><input type="number" name="empTotalSal" id="tatalsal" required></td>
+                <td rowspan="4"></td>
+                <td rowspan="4"></td>
+              </tr>
+              <tr class="deemp2">
+                <td id="selectDept">부서명</td>
+             	<td>
+              	  <select name="deptCode" id="deptCode">
+                 	<option value=""></option>
+				  <!-- ajax -->
+               	  </select>
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>직급</td>
+                <td>
+                  <select class="sel3" name="empJobCode" id="empJobCode">
+                    <option value="">--</option>
+                    <option value="부장">부장</option>
+                    <option value="팀장">팀장</option>
+                    <option value="대리">대리</option>
+                    <option value="사원">사원</option>
+                  </select> 
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>입사일자</td>
+                <td><input type="date" name="empEntDate" id="empEntDate"></td>
+              </tr>
+              <tr class="deemp2">
+                <td>퇴사여부</td>
+                <td>
+                  <select class="sel3" name="empEndYn">
+                  <option value="N">N</option>
+                  <option value="Y">Y</option>
+                </select> 
+              </td>
+              <!-- 프로필 사진과 도장 사진 위치 -->
+                <td>
+                  <input type="file" id="proFile" name="proFile" style="margin-left: 25%;">
+                </td>
+                <td>
+                  <input type="file" id="nameFile" name="nameFile" style="margin-left: 25%;">
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>성별</td>
+                <td colspan="3">
+                  <select class="sel3" name="empGender" id="empGender">
+                    <option value="">--</option>
+                    <option value="남">남</option>
+                    <option value="여">여</option>
+                  </select> 
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>생년월일</td>
+                <td colspan="3"><input type="date" class="input1" name="empBirth" id="empBirth"></td>
+              </tr>
+              <tr class="deemp2">
+                <td>연락처</td>
+                <td colspan="3">
+                  <input type="tel" class="sel1" maxlength="3" name="empPhone1" id="phone1">
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone2" id="phone2">
+                  <input type="tel" class="sel1" maxlength="4" name="empPhone3" id="phone3">
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>이메일</td>
+                <td colspan="3"><input type="email" class="input1" name="empEmail" id="empEmail1" maxlength="30"></td>
+              </tr>
+              <tr class="deemp2">
+                <td>우편번호</td>
+                <td colspan="3">
+                <div>
+                  <input type="text" id="zipCode" name="empAddress">
+                  <input type="button" value="검색" class="input2" id="searchZipCode">
+                </div>
+                </td>
+              </tr>
+              <tr class="deemp2">
+                <td>상세주소</td>
+                <td colspan="3"><input type="text" id="address1" class="input1" name="empDAddress"></td>
+              </tr>
+              <tr class="deemp2">
+                <td>초기비밀번호</td>
+                <td colspan="3"><input type="text" class="input1" name="empPwd" id="empPwd" maxlength="20"></td>
+              </tr>
+            </tbody>
+          </table><br>
+          <div id="newBookDiv">
+             <button id="save" type="button" class="modify btn updateBtn">등록하기</button>
+             <button type="button" class="list btn backBtn">목록으로</button>
+          </div>
+        </div>
+       </form> 
+       <!--  주소 검색 -->
+     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+     <script>
+      const searchZipCode = document.getElementById("searchZipCode");
+         
+         searchZipCode.onclick = function() {
+         
+            new daum.Postcode({
+               oncomplete: function(data){
+                  document.getElementById("zipCode").value = data.zonecode;
+                  document.getElementById("address1").value = data.address;
+               }
+            }).open();
+         }
+         
+         $().ready(function () {
+             $(".backBtn").click(function () {
+                 Swal.fire({
+                     title: '작성내용이 모두 사라집니다.',
+                     text: "진행 하시겠습니까?",
+                     icon: 'warning',
+                     showCancelButton: true,
+                     confirmButtonColor: '#c5bfbf',
+                     cancelButtonColor: '#c5bfbf',
+                     confirmButtonText: '확인',
+                     cancelButtonText: '취소'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                         window.history.back();
+                     }
+                 })
+             });
+         });
+         $("#save").click(function(){
+        	 
+        	let check = 0;
+        	 
+            if($('#name').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',         
+                     text: '이름 입력칸을 확인해 주십시오.',  
+                 });
+               
+            } else{check++;}
+            
+            if($('#tatalsal').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '연봉 입력칸을 확인해 주십시오.',  
+                 });
+            } else{check++;}
+            
+            if($('#deptCode').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '부서 입력칸을 확인해 주십시오.',  
+                 });      
+            } else{check++;}
+            
+            if($('#empJobCode').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '직급 입력칸을 확인해 주십시오.',  
+                 });      
+            } else{check++;}
+            
+            if($('#empEntDate').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '입사일자 입력칸을 확인해 주십시오.',  
+                 });
+            } else{check++;}
+            
+            if($('#empGender').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '성별 입력칸을 확인해 주십시오.',  
+                 });   
+            } else{check++;}
+            
+            if($('#empBirth').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '생년월일 입력칸을 확인해 주십시오.',  
+                 });         
+            } else{check++;}
+            
+            if(!(Number($("#phone1").val())&&Number($("#phone2").val())&&Number($("#phone3").val()))){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '전화번호 입력칸을 확인해 주십시오.',  
+                 });
+            } else{check++;}
+            
+            if($('#empEmail1').val() == ""){
+               Swal.fire({
+                     icon: 'error',                        
+                     title: '입력이 되지 않았습니다.',          
+                     text: '이메일 입력칸을 확인해 주십시오.',  
+                 });
+            } else{check++;}
+            
+            if($('#zipCode').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '주소 입력칸을 확인해 주십시오.',  
+                  });   
+            } else{check++;}
+            
+            if($('#empPwd').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '초기비밀번호 입력칸을 확인해 주십시오.',  
+                  });  
+            } else{check++;}
+            
+            if($('#proFile').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '프로필사진 입력칸을 확인해 주십시오.',  
+                  });
+            }  else{check++;}
+            
+            if($('#nameFile').val() == ""){
+                Swal.fire({
+                      icon: 'error',                        
+                      title: '입력이 되지 않았습니다.',          
+                      text: '서명사진 입력칸을 확인해 주십시오.',  
+                  });      
+            } else{check++;}
+            
+            if($("#tatalsal").val() < 0 ){
+            	Swal.fire({
+	                  icon: 'error',
+	                  title: '연봉을 올바르게 등록 해주세요.',
+	                  text: '음수는 불가능 합니다.',
+	              })
+            } else{check++;}
+            
+            if(check == 14){
+               Swal.fire({
+                     title: '등록 하시겠습니까?',
+                     text: "입력한 정보로 해당 직원의 정보를 등록합니다.",
+                     icon: 'question',
+                     showCancelButton: true,
+                     confirmButtonColor: '#3085d6',
+                     cancelButtonColor: '#d33',
+                     confirmButtonText: '승인',
+                     cancelButtonText: '취소'
+                 }).then((result) => {
+                     if (result.isConfirmed) {
+                        $("#insertForm").submit();
+                     }
+                 })
+             }
+         })
+     </script>
+     
+     <script th:inline="javascript">
+          $(".backBtn").click(function () {
+              Swal.fire({
+                  title: '작성내용이 모두 사라집니다.',
+                  text: "진행 하시겠습니까?",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#c5bfbf',
+                  cancelButtonColor: '#c5bfbf',
+                  confirmButtonText: '확인',
+                  cancelButtonText: '취소'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.history.back();
+              }
+          })
+      });
+
+      </script> 
+	</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>훼손도서 상세정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"  th:href="@{/css/books/bookList/bookInfo.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+<div th:replace="/common/topSideBar.html"></div>
+	<h2 class="mb-4" id="main-text"><a id="sub-a" href="/book/damageList">훼손도서관리</a></h2>
+    <hr><br><br>
+    <div id="textTable" style="text-align:-webkit-center">
+        <h5 class="mb-4" id="sub-text"></h5>
+        	<form>
+            <table id="bookInfoTable" border="1">
+                <tr th:each="book : ${ bookList }">
+                    <th>도서코드</th>
+                    <td th:text="${ book.no }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>도서 명</th>
+                    <td th:text="${ book.name }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>저자</th>
+                    <td th:text="${ book.author }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>출판사</th>
+                    <td th:text="${ book.pub }"></td>
+                </tr>
+                
+                <tr th:each="book : ${ bookList }">
+                    <th>가격</th>
+                    <td th:text="${ book.price }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>현재 훼손도서 수량</th>
+                    <td th:text="${ book.damBook.damAmount }"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>추가수량</th>
+                    <td><input id="damAmount" type="number" min=0 value=0 style="text-align: center;"></td>
+                </tr>
+                <tr th:each="book : ${ bookList }">
+                    <th>창고 재고수량</th>
+                    <td><input id="whStAmount" type="number" th:value="${ book.whSt }" min=0 readonly style="text-align: center;"></td>
+                </tr>
+                
+                
+            </table>
+            </form>
+          <br>
+          <div id="newBookDiv">
+            <button type="button" class="productBtn newBookBtn updateBtn">수정하기</button>
+            <button type="button" class="productBtn newBookBtn backBtn">목록으로</button>
+          </div>
+        </div> <!------------------------ 본문 종료---------------------------->
+      </div> <!-- 헤더 포함 본문 종료 div-->
+      <script th:inline="javascript">
+		 
+		   $('#findBtn').click(function(){
+			if(inputFind.value == "" && searchCondition.value == 'select'){
+				Swal.fire({
+	                icon: 'question',
+	                title: '',
+	                text: '분류와 검색어를 입력 해 주세요.',
+	            })} else if(inputFind.value == ""){
+          				Swal.fire({
+		                icon: 'question',
+		                title: '',
+		                text: '검색어를 입력 해 주세요.',
+	                
+          	})} else if(searchCondition.value == 'select'){
+	         			Swal.fire({
+	 	                icon: 'question',
+	 	                title: '',
+	 	                text: '분류를 선택 해 주세요.',
+          	})} else{
+		   			$('#loginForm').submit();
+	   			};
+			});
+      	
+    	 var aa = [[${bookList[0].no}]];
+    	 var bb = [[${bookList[0].damBook.damAmount}]]
+    	 var cc = $('#damAmount').val();
+    	 var dd = $('#whStAmount').val();
+    	 var ee = [[${bookList[0].whSt}]];
+    	 $("#damAmount").change(function(){
+	    	 cc = $('#damAmount').val();
+	    	 dd = $('#whStAmount').val();
+	    	 if(cc > ee){
+				Swal.fire({
+                icon: 'warning',
+                title: 'warning!',
+                text: '창고 재고수량 이상으로 훼손도서 등록이 불가능합니다.',
+                
+           		});
+				$('#damAmount').val(ee);
+				cc = $('#damAmount').val();
+	    	 }
+		 });
+    	 
+    	 $('.updateBtn').click(function(){
+    		 if( $('#damAmount').val() == '' ){
+     			Swal.fire({
+                     icon: 'question',
+                     title: '도서정보가 부족합니다!',
+                     text: '수량을 입력 해 주세요.',
+                 }).then(function(){
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+     		};
+     		
+    		location.href='/book/damAmountUpdate?no=' + aa + '&amount=' + bb + '&updateAmount=' + cc;
+     	 });
+    	 
+    	 $('#damAmount').blur(function(){
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			 }
+			if( $('#damAmount').val() < 0 ){
+				Swal.fire({
+                     icon: 'warning',
+                     title: '도서정보가 부족합니다!',
+                     text: '음수는 입력 불가능 합니다.',
+                 }).then(function(){
+					$('#damAmount').val(0);
+ 	    			$('#damAmount').focus();
+                 })
+    				return false;
+			}
+			const prodExp = /^[0-9]{1,6}$/;
+			if(!prodExp.test($('#damAmount').val())){
+				Swal.fire({
+                  icon: 'warning',
+                  title: '도서정보가 부족합니다!',
+                  text: '숫자만 입력 가능합니다.',
+              }).then(function(){
+              		$('#damAmount').val(0);
+	    			$('#damAmount').focus();
+              })
+			}
+		 })
+    	 
+      </script>
+      
+	 <script>
+	   $().ready(function () {
+		    $(".backBtn").click(function () {
+		        Swal.fire({
+		            title: '작성내용이 모두 사라집니다.',
+		            text: "진행 하시겠습니까?",
+		            icon: 'warning',
+		            showCancelButton: true,
+		            confirmButtonColor: '#c5bfbf',
+		            cancelButtonColor: '#c5bfbf',
+		            confirmButtonText: '승인',
+		            cancelButtonText: '취소'
+		        }).then((result) => {
+		            if (result.isConfirmed) {
+		                window.history.back();
+		            }
+		        })
+		    });
+		});
+	 </script>
+	 
+</body>
+</html>

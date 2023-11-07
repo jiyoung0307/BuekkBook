@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" th:href="@{/css/manage/empAnnual/rest.css}">
+<link rel="stylesheet" th:href="@{css/manage/employee/persist.css}">
+<link rel="stylesheet" th:href="@{/css/manage/employee/Listdetail.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+	<div th:replace="/common/topSideBar.html"></div>
+    <h2 class="mb-4" id="main-text">근로계약서 관리</h2>
+    <hr><br><br>
+    <h5 class="mb-4" id="sub-text"><a id="sub-a" href="/labor/select">근로계약서 조회</a></h5>
+    <br>
+        <div class="searchEmp"  align="center">
+            <form class="search select" action="/labor/select" method="get">
+              <select class="searchback" th:with="searchCondition = ${selectCriteria.searchCondition}"
+            id="searchCondition" name="searchCondition">
+                <option value="select">None</option>
+                <option value="Dept" th:selected="${ searchCondition } == 'Dept'">부서</option>
+                <option value="EmpName" th:selected="${ searchCondition } == 'EmpName'">사원명</option>
+              </select>
+              <input type="hidden" name="currentPage" value="1">
+              <input class="searchinput" type="search" placeholder="검색어를 입력해주세요" name="searchValue" th:value="${selectCriteria.searchValue}">
+            <button class="searchBtn" type="submit">검색하기</button>
+            </form>
+          </div><br><br>
+          
+        <!-- 이곳부터 화면구현 시작(샘플 테이블 지우고 구현 시작하시면 됩니다.) -->
+        <div id="restTable" style="text-align:-webkit-center">
+          <table id="sampleTable">
+              <tr>
+                <th class="th1">파일번호</th>
+                <th class="th1">개시일</th>
+                <th class="th1">계약서명</th>
+                <th class="th1">작성자</th>
+                <th class="th1">부서</th>
+                <th class="th1">사원명</th>
+                <th class="th1">만료일</th>	<!-- 등록할 때 추가 -->
+                <th class="th1">상세보기</th>
+              </tr>
+              <tr th:each="labor : ${ laborList }">
+                <td th:text="${ labor.contNo }"></td>
+                <td th:text="${ labor.contDate }"></td>
+                <td th:text="${ labor.contName }"></td>
+                <td th:text="${ labor.contWriter }"></td>
+                <td th:text="${ labor.empDept.deptName }"></td>
+                <td th:text="${ labor.empDept.empName }"></td>
+                <td th:text="${ labor.contExpDate }"></td>
+                <td><button type="button" class="detail contents" th:onclick="'location.href = \'' + @{/labor/select/(contNo=${labor.contNo})} + '\''">상세보기</button></td>
+              </tr>
+          </table><br><br>
+        <div th:replace="manage/labor/laborSelectPaging.html"></div>
+        
+        </div>
+</body>
+</html>

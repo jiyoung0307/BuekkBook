@@ -1,0 +1,146 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+  <head>
+  	<title>LOGIN</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet"  th:href="@{/css/main/login/login.css}">
+  </head>
+  <body>
+    <div class="login_img">
+      <a href="/member/login"><img src="/images/main/login/mainImage.png" alt=""></a>
+    </div>
+    <div class="wrap">
+      <div class="login">
+        <form action="/member/changePw" method="post" id="changePw"><!-- 액션바꿈 -->
+          <div class="login_input">
+            <div class="login_id">
+              <h4>사번</h4>
+              <input type="text" class="userNo" name="username" maxlength=30 id="userInput" placeholder="사번">
+            </div>
+			
+            <div class="login_pw">
+              <h4>비밀번호</h4>
+              <input type="password" class="password1" name="password1" maxlength=30 id="" placeholder="Password">
+            </div>
+            
+            <div class="login_pw">
+              <h4>변경 할 비밀번호</h4>
+              <input type="password" class="password2" name="password2" maxlength=30 id="" placeholder="변경 할 비밀번호">
+            </div>
+			
+			<div class="login_pw">
+              <h4>비밀번호 확인</h4>
+              <input type="password" class="password3" name="password3" maxlength=30 id="" placeholder="비밀번호 확인">
+            </div>
+			
+            <div class="login_submit">
+              <input class="loginBtn" type="button" onclick="formCheck();" name="" id="" value="변경하기">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      function formCheck(){
+    		if( $('.userNo').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '회원정보가 부족합니다!',
+                    text: '사번을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.userNo').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.password1').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '회원정보가 부족합니다!',
+                    text: '비밀번호를 입력 해 주세요.',
+                }).then(function(){
+	    			$('.password1').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.password2').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '회원정보가 부족합니다!',
+                    text: '변경하실 비밀번호를 입력 해 주세요.',
+                }).then(function(){
+	    			$('.password2').focus();
+                })
+   				return false;
+    		};
+    		
+    		if( $('.password3').val() == '' ){
+    			Swal.fire({
+                    icon: 'question',
+                    title: '회원정보가 부족합니다!',
+                    text: '비밀번호 확인을 입력 해 주세요.',
+                }).then(function(){
+	    			$('.password3').focus();
+                })
+   				return false;
+    		};
+    		
+    		$("#changePw").submit();
+    	};
+
+      </script>
+    <script>
+	    const notMatched = "[[${notMatched}]]";
+	    const fail = "[[${fail}]]";
+	    console.log(notMatched);
+	    console.log(fail);
+	    if(notMatched == "정보조회실패"){
+				Swal.fire({
+	                icon: 'warning',
+	                title: '변경 실패!',
+	                text: '입력하신 회원정보에 일치하는 회원이 없습니다.',
+	            })
+			}
+	    if(fail == "실패"){
+	    	Swal.fire({
+                icon: 'warning',
+                title: '변경 실패!',
+                text: '변경 할 비밀번호와 비밀번호 확인값이 다릅니다.',
+            })
+	    }
+	    const updateSuccessMessage = "[[${updateSuccessMessage}]]";
+	    console.log(updateSuccessMessage);
+			if(updateSuccessMessage == "성공"){
+				Swal.fire({
+	                icon: 'success',
+	                title: 'Success!',
+	                text: '비밀번호 변경이 성공적으로 완료되었습니다!',
+	            }).then(function(){
+	            	location.href="/member/login";
+	            })
+			}
+    </script>
+    <script>
+    $('#userInput').blur(function(){
+	    const prodExp = /^[0-9]{0,10}$/;
+		if(!prodExp.test($('#userInput').val())){
+				Swal.fire({
+	              icon: 'warning',
+	              title: 'Error!',
+	              text: '사번은 숫자만 입력 가능합니다!',
+	          }).then(function(){
+	    			$('#userInput').val("");
+	    			$('#userInput').focus();
+	          })
+				  return false;
+			}
+    })
+    </script>
+  </body>
+</html>
