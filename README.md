@@ -1,10 +1,7 @@
 # BuekkBook
-[부끄부크(BuekkBook)] - 물류창고를 보유한 국내 서점 ERP 프로그램
-
-
 ## :book: Intro : 서비스 소개
 <br/>
-<strong>부끄부크(BuekkBook)</strong>
+<strong>부끄부크(BuekkBook) : 물류창고를 보유한 서점 ERP 프로그램</strong>
 <br/>
 육안으로 보이는 서점의 업무가 아닌 그 안에 포함된 물류과정을 좀 더 이해하고 공부하여 사용자입장에서 편리하게 관리하는 프로그램<br />
 <br />
